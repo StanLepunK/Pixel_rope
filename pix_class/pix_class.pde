@@ -1,24 +1,21 @@
 
 
 void setup() {
-  size(600,600) ;
+  size(600,600, P3D) ;
   colorMode(HSB,360,100,100,100) ;
   background(0) ;
 }
 
 
 void draw() {
-  background_norm_P3D(Vec4(0,0,0 ,.1)) ;
+  background_rope(Vec4(0,0,0 ,.1)) ;
 
-  /**
-  CLASSIC
-  */
-   pixel_classic() ;
 
-   /**
-   CLOUD
-   */
-   //pixel_cloud() ;
+   // pixel_classic() ;
+
+
+
+   pixel_cloud() ;
 
 
 }

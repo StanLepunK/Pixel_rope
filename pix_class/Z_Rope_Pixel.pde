@@ -1,58 +1,32 @@
 /**
-CLASS PIX 0.1.8
+CLASS PIX 0.2.0
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Pixel
 */
+
 public interface Pixel_Constants {
   static public final String RANDOM = "RANDOM";
-
-  // BASIC SHAPES 2D
-  static public final String POINT = "POINT";
-  static public final String LINE = "LINE";
-  static public final String TRIANGLE = "TRI";
-  static public final String TETRAGON = "TETRA";
-  static public final String RECTANGLE = "RECT";
-  static public final String PENTAGON = "PENTA";
-  static public final String HEXAGON = "HEXA";
-  static public final String HEPTAGON = "HEPTA";
-  static public final String OCTAGON = "OCTA";
-  static public final String ENNEAGON = "ENNE";
-  static public final String DECAGON = "DECA";
-  static public final String HENDECAGON = "HENDE";
-  static public final String DODECAGON = "DODE";
-
-  static public final String POLYGONE = "POLY";
-
-
-  // BASIC SHAPES 3D
-  static public final String CUBE = "CUBE";
-  static public final String BOX = "BOX";
-  
-  // SPECIAL SHAPES
-  static public final String RING = "RING";
-  static public final String DISC = "DISC";
-  static public final String SPHERE = "SPHERE";
-  static public final String STAR = "STAR";
-  static public final String CROSS = "CROSS";
-
 }
+
 
 
 // MOTHER CLASS
 // No contructor in this Class
 
-class Pix implements Pixel_Constants{
+abstract class Pix implements Pixel_Constants  {
+// class Pix implements Pixel_Constants{
   // P3D mode
   Vec3 pos, new_pos ;
   Vec3 size  ;
-  Vec2 angle ;
+  // Vec2 angle ;
+  float angle = 0 ;
   
   // in cartesian mode
-  Vec3 dir = Vec3() ;
+  Vec3 dir = null ;
 
   Vec3 grid_position ;
   int ID, rank ;
-  String costume  ;
+  int costume_ID = 0 ; // 0 is for point
   Vec4 colour, new_colour  ;
   
   // use for the motion
@@ -63,7 +37,7 @@ class Pix implements Pixel_Constants{
     pos = Vec3(width/2, height/2,0 ) ;
     new_pos = pos.copy() ;
     size = Vec3(1) ;
-    angle = Vec2(0);
+    // angle = Vec2(0);
     grid_position = pos.copy() ;
     // give a WHITE color to the pixel
     if(g.colorMode == 3 ) colour = Vec4(0, 0, g.colorModeZ, g.colorModeA) ; else colour = Vec4(g.colorModeX, g.colorModeY, g.colorModeZ, g.colorModeA) ;
@@ -71,7 +45,6 @@ class Pix implements Pixel_Constants{
 
     int ID = 0 ;
     int rank = -1 ;
-    costume = POINT ;
   }
   
   
@@ -90,47 +63,39 @@ class Pix implements Pixel_Constants{
 
 
   /** 
-  ID
-  change ID after analyze if this one is good
+  SETTING
   */
-  void changeID(int ID) {  
+  // ID
+  void change_ID(int ID) {  
     this.ID = ID ; 
   }
   
-  /**
-  size
-  */
+
+  // size
   void size(float size_pix) {
-    size = Vec3(size_pix,size_pix,size_pix) ;
+    size = Vec3(size_pix) ;
   }
   void size(float size_x, float size_y) {
-    size = Vec3(size_x,size_y,1) ;
+    size = Vec3(size_x, size_y, 1) ;
   }
   void size(float size_x, float size_y, float size_z) {
-    size = Vec3(size_x,size_y,size_z) ;
+    size = Vec3(size_x, size_y, size_z) ;
   }
 
   void size(Vec2 size_pix) {
-    size = Vec3(size_pix.x,size_pix.y,1) ;
+    size = Vec3(size_pix.x, size_pix.y, 1) ;
   }
   void size(Vec3 size_pix) {
-    size = Vec3(size_pix.x,size_pix.y,size_pix.z) ;
+    size = Vec3(size_pix.x, size_pix.y, size_pix.z) ;
   }
 
-  /**
-  angle
-  */
-  void angle(float angle_x) {
-    this.angle = Vec2(angle_x,0) ;
-  }
-
-  void angle(Vec2 angle) {
+  // angle
+  void angle(float angle) {
     this.angle = angle ;
   }
+
   
-  /**
-  normal direction
-  */
+  // normal direction
   void direction(Vec3 dir) {
     this.dir = dir ;
   }
@@ -150,7 +115,10 @@ class Pix implements Pixel_Constants{
     dir.z = z ;
   }
 
-
+  // set costume
+  void costume(int costume_ID) {
+    this.costume_ID = costume_ID ;
+  }
 
 
 
@@ -159,92 +127,8 @@ class Pix implements Pixel_Constants{
 
 
   /**
-  COSTUME
+  ASPECT
   */
-  // mother method
-  void costume_2D(Vec3 p, Vec3 s, Vec2 ang) {
-    if (costume == POINT) point(p.x, p.y) ;
-    else if(costume == DISC ) ellipse(p.x, p.y, s.x, s.y) ;
-    else if(costume == LINE ) primitive(p, s.x, 2, ang.x) ;
-    else if(costume == TRIANGLE ) primitive(p, s.x, 3, ang.x) ;
-    else if(costume == TETRAGON ) primitive(p, s.x, 4, ang.x) ;
-    else if(costume == RECTANGLE ) rect(p.x -(s.x/2), p.y -(s.y/2), s.x, s.y) ;
-    else if(costume == PENTAGON ) primitive(p, s.x, 5, ang.x) ;
-    else if(costume == HEXAGON ) primitive(p, s.x, 6, ang.x) ;
-    else if(costume == HEPTAGON ) primitive(p, s.x, 7, ang.x) ;
-    else if(costume == OCTAGON ) primitive(p, s.x, 8, ang.x) ;
-    else if(costume == ENNEAGON ) primitive(p, s.x, 9, ang.x) ;
-    else if(costume == DECAGON ) primitive(p, s.x, 10, ang.x) ;
-    else if(costume == HENDECAGON ) primitive(p, s.x, 11, ang.x) ;
-    else if(costume == DODECAGON ) primitive(p, s.x, 12, ang.x) ;
-    else point(p.x, p.y) ;
-  }
-
-  // costume 3D
-  /////////////
-    // local translation      
-  //float cor_x = 0 ;
-  // float cor_y = 0 ;
-  void costume_3D(Vec3 pos, Vec3 s, Vec2 ang, Vec2 dir_polar){
-    display_costume(pos, s, ang, dir_polar) ;
-
-  }
-
-  void costume_3D(Vec3 pos, Vec3 s, Vec2 ang, Vec3 dir_cart) {
-    // change cartesian direction to polar direction
-    Vec3 dir = to_polar(dir_cart) ;
-    Vec2 dir_polar = Vec2(dir.x, dir.y) ;
-    display_costume(pos, s, ang, dir_polar) ;
-  }
-
-  void display_costume(Vec3 pos, Vec3 size_shape, Vec2 ang, Vec2 dir) {
-    if (costume == POINT) point(pos) ;
-    else if(costume == DISC ) {
-      ellipse(pos.x,pos.y,size_shape.x, size_shape.y) ;
-    } else if(costume == LINE ) {
-      primitive(pos, size_shape.x, 2, ang.x, dir) ;
-    } else if(costume == TRIANGLE ) {
-      primitive(pos, size_shape.x, 3, ang.x, dir) ;
-    } else if(costume == TETRAGON ) {
-      primitive(pos, size_shape.x, 4, ang.x, dir) ;
-    } else if(costume == RECTANGLE ) {
-      rect(pos.x -(size.x/2), pos.y -(size.y/2), size.x, size.y) ;
-    } else if(costume == PENTAGON ) {
-      primitive(pos, size_shape.x, 5, ang.x, dir) ;
-    } else if(costume == HEXAGON ) {
-      primitive(pos, size_shape.x, 6, ang.x, dir) ;
-    } else if(costume == HEPTAGON ) {
-      primitive(pos, size_shape.x, 7, ang.x, dir) ;
-    } else if(costume == OCTAGON ) {
-      primitive(pos, size_shape.x, 8, ang.x, dir) ;
-    } else if(costume == ENNEAGON ) {
-      primitive(pos, size_shape.x, 9, ang.x, dir) ;
-    } else if(costume == DECAGON ) {
-      primitive(pos, size_shape.x, 10, ang.x, dir) ;
-    } else if(costume == HENDECAGON ) {
-      primitive(pos, size_shape.x, 11, ang.x, dir) ;
-    } else if(costume == DODECAGON ) {
-      primitive(pos, size_shape.x, 12, ang.x, dir) ;
-    } else {
-      point(pos) ;
-    }
-  }
-
-  // end local translation
-  // End costume 3D
-
-  // END COSTUME
-  //////////////
-
-
-
-
-
-
-
-  //ASPECT
-  /////////
-
   //without effect
   // basic
 
@@ -315,8 +199,7 @@ class Pix implements Pixel_Constants{
       if (renderer_P3D()) {
         // stroke part
         if(thickness <= 0 || color_stroke.a <= 0 ) noStroke() ; else {
-          if(costume == POINT ) {
-            println("Costume is POINT, the Vec size is used for the strokeWeight") ;
+          if(costume_ID == POINT_ROPE) {
             strokeWeight((size.x + size.y + size.z)/3) ; 
           } else strokeWeight(thickness) ;
           stroke(color_stroke.r, color_stroke.g, color_stroke.b, color_stroke.a) ;
@@ -327,9 +210,8 @@ class Pix implements Pixel_Constants{
         // stroke part
         if(thickness <= 0 || color_stroke.a <= 0 ) noStroke() ; 
         else {
-          if(costume == POINT ) { 
+          if(costume_ID == POINT_ROPE) { 
             strokeWeight((size.x + size.y + size.z)/3) ;
-            println("Costume is POINT, the diameter is used for the strokeWeight") ;
           } else strokeWeight(thickness) ;
           stroke(color_stroke.r, color_stroke.g, color_stroke.b, color_stroke.a) ;
         }
@@ -359,8 +241,9 @@ class Pix implements Pixel_Constants{
   
   
   
-    // CHANGE COLOR
-  ////////////////
+  /**
+  CHANGE COLOR
+  */
   //direct change HSB
   void change_hue(int new_hue, int target_color, boolean use_new_colour) {
     change_hue(new_hue, target_color, target_color +1, use_new_colour) ;
@@ -499,15 +382,15 @@ class Pix implements Pixel_Constants{
 
 
 /**
+CHILD CLASS
 
-// CHILD CLASS
-////////////////
 */
 /**
-// PIXEL CLOUD
-/////////////////////
+PIXEL CLOUD
+
 */
-class Pixel_cloud extends Pix implements Pixel_Constants {
+class Pixel_cloud extends Pix {
+// class Pixel_cloud extends Pix implements Pixel_Constants {
   int num ;
   float beat_ref = .001 ;
   float beat = .001 ;
@@ -545,7 +428,7 @@ class Pixel_cloud extends Pix implements Pixel_Constants {
     point = new Vec3[num] ;
     point_normal = new Vec3[num] ;
     init(cloud_2D_or_3D, order_or_Chaos) ;
-    costume = DISC ;
+    costume_ID = ELLIPSE_ROPE ;
   }
 
 /**
@@ -652,12 +535,8 @@ class Pixel_cloud extends Pix implements Pixel_Constants {
 
 
 
-  // angle
-  void angle(float angle) {
-    if(costume != RECTANGLE ) this.angle = Vec2(angle,0) ; else println("This method don't work with 'RECTANGLE' because it's basic processing shape") ;
-  }
 
-
+  // pattern
   void pattern(String pattern) {
     this.pattern = pattern ;
   }
@@ -794,12 +673,7 @@ class Pixel_cloud extends Pix implements Pixel_Constants {
   // COSTUME and display
   // child method
   */
-
-  void costume() {
-    costume(this.costume) ;
-  }
-  void costume(String costume) {
-    this.costume = costume ;
+  void show() {
     if (renderer_P3D()) give_points_to_costume_3D() ; else  give_points_to_costume_2D() ;
   }
   
@@ -807,14 +681,14 @@ class Pixel_cloud extends Pix implements Pixel_Constants {
   void give_points_to_costume_2D() {
     for(int i  = 0 ; i < point.length ;i++) {
       // method from mother class need pass info arg
-      costume_2D(point[i], size, angle) ;
+      costume_rope(point[i], size, angle, costume_ID) ;
     }
   }
   void give_points_to_costume_3D() {
     if(!polar_build) {
       for(int i  = 0 ; i < point.length ;i++) {
         // method from mother class need pass info arg
-        costume_3D(point[i], size, angle,point_normal[i]) ;
+        costume_rope(point[i], size, angle, costume_ID) ;
       }
     } else {
       // method from here don't need to pass info about arg
@@ -824,10 +698,10 @@ class Pixel_cloud extends Pix implements Pixel_Constants {
   
   // internal
   void costume_3D_local_polar() {
-   matrix_start() ;
+   start_matrix() ;
    translate(pos) ;
     for(int i = 0 ; i < num ;i++) {
-      matrix_start() ;
+      start_matrix() ;
       /**
       super effect
       float rot = (map(mouseX,0,width,-PI,PI)) ;
@@ -838,16 +712,15 @@ class Pixel_cloud extends Pix implements Pixel_Constants {
       Vec3 pos_primitive = Vec3(radius,0,0) ;
       translate(pos_primitive) ;
 
-      matrix_start() ;
+      start_matrix() ;
       rotateXYZ(orientation) ;
-    //  int summits = 5 ;
       Vec3 pos_local_primitive = Vec3() ;
       Vec2 orientation_polar = Vec2() ;
-      costume_3D(pos_local_primitive, size, angle, orientation_polar) ;
-      matrix_end() ;
-      matrix_end() ;
+      costume_rope(pos_local_primitive, size, angle, orientation_polar, costume_ID) ;
+      stop_matrix() ;
+      stop_matrix() ;
     }
-   matrix_end() ;
+   stop_matrix() ;
 
   }
   /**
@@ -875,7 +748,7 @@ END CLASS PIXEL CLOUD
 Class pixel Basic
 
 */
-class Pixel extends Pix implements Pixel_Constants {
+class Pixel extends Pix  {
   // CONSTRUCTOR
   
   // PIXEL 2D
@@ -908,26 +781,26 @@ class Pixel extends Pix implements Pixel_Constants {
   }
 
   // Constructor with costume indication
-  Pixel(Vec2 pos_2D, Vec2 size_2D, String costume) {
+  Pixel(Vec2 pos_2D, Vec2 size_2D, int costume_ID) {
     init_mother_arg() ;
-    this.costume = costume ;
+    this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
     this.size = new Vec3(size_2D.x,size_2D.y,0) ; ;
   }
   
   // Constructor plus color components
-  Pixel(Vec2 pos_2D, Vec4 color_vec, String costume) {
+  Pixel(Vec2 pos_2D, Vec4 color_vec, int costume_ID) {
     init_mother_arg() ;
-    this.costume = costume ;
+    this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
     colour = color_vec.copy() ;
     new_colour = colour.copy() ;
     
   }
 
-  Pixel(Vec2 pos_2D, Vec2 size_2D, Vec4 color_vec, String costume) {
+  Pixel(Vec2 pos_2D, Vec2 size_2D, Vec4 color_vec, int costume_ID) {
     init_mother_arg() ;
-    this.costume = costume ;
+    this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
     this.size = new Vec3(size_2D.x,size_2D.y,0) ;
     colour = color_vec.copy() ;
@@ -935,49 +808,24 @@ class Pixel extends Pix implements Pixel_Constants {
   }
 
   // Constructor plus color components
-  Pixel(Vec2 pos_2D, int colour_int, String costume) {
+  Pixel(Vec2 pos_2D, int colour_int, int costume_ID) {
     init_mother_arg() ;
-    this.costume = costume ;
+    this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
     colour = int_color_to_vec4_color(colour_int) ;
     new_colour = Vec4(colour) ;
   }
 
-  Pixel(Vec2 pos_2D, Vec2 size_2D, int colour_int, String costume) {
+  Pixel(Vec2 pos_2D, Vec2 size_2D, int colour_int, int costume_ID) {
     init_mother_arg() ;
-    this.costume = costume ;
+    this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
     this.size = new Vec3(size_2D.x,size_2D.y,0) ;
     colour = int_color_to_vec4_color(colour_int) ;
     new_colour = Vec4(colour) ;
   }
 
-  // Constructor with costume indication
-  Pixel(Vec2 pos_2D, Vec2 size_2D, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
-    this.size = new Vec3(size_2D.x,size_2D.y,0) ; ;
-  }
-  
-  // Constructor plus color components
-  Pixel(Vec2 pos_2D, Vec4 color_vec, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
-    colour = color_vec.copy() ;
-    new_colour = colour.copy() ;
-    
-  }
 
-  Pixel(Vec2 pos_2D, Vec2 size_2D, Vec4 color_vec, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
-    this.size = new Vec3(size_2D.x,size_2D.y,0) ;
-    colour = color_vec.copy() ;
-    new_colour = colour.copy() ;
-  }
 
   //PIXEL 3D
   Pixel(Vec3 pos_3D) {
@@ -1007,141 +855,29 @@ class Pixel extends Pix implements Pixel_Constants {
   }
 
   // with costume indication
-  Pixel(Vec3 pos_3D, Vec3 size_3D, String costume) {
+  Pixel(Vec3 pos_3D, Vec3 size_3D, int costume_ID) {
     init_mother_arg() ;
-    this.costume = costume ;
+    this.costume_ID = costume_ID ;
     this.pos = pos_3D ;
     this.size = size_3D ;
   }
   // constructor plus color component
-  Pixel(Vec3 pos_3D,  Vec4 color_vec, String costume) {
+  Pixel(Vec3 pos_3D,  Vec4 color_vec, int costume_ID) {
     init_mother_arg() ;
-    this.costume = costume ;
+    this.costume_ID = costume_ID ;
     this.pos = pos_3D ;
     colour = color_vec.copy() ;
     new_colour = colour.copy() ;
   }
   
-  Pixel(Vec3 pos_3D, Vec3 size_3D, Vec4 color_vec, String costume) {
+  Pixel(Vec3 pos_3D, Vec3 size_3D, Vec4 color_vec, int costume_ID) {
     init_mother_arg() ;
-    this.costume = costume ;
+    this.costume_ID = costume_ID ;
     this.pos = pos_3D ;
     this.size = size_3D ;
     colour = color_vec.copy() ;
     new_colour = colour.copy() ;
   }
-
-  // with costume indication
-  Pixel(Vec3 pos_3D, Vec3 size_3D, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = pos_3D ;
-    this.size = size_3D ;
-  }
-  // constructor plus color component
-  Pixel(Vec3 pos_3D,  Vec4 color_vec, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = pos_3D ;
-    colour = color_vec.copy() ;
-    new_colour = colour.copy() ;
-  }
-  
-  Pixel(Vec3 pos_3D, Vec3 size_3D, Vec4 color_vec, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = pos_3D ;
-    this.size = size_3D ;
-    colour = color_vec.copy() ;
-    new_colour = colour.copy() ;
-  }
-/*
-  Pixel(Vec2 pos_2D, int colour_int) {
-    init_mother_arg() ;
-    this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-
-  Pixel(Vec2 pos_2D, Vec2 size_2D, int colour_int) {
-    init_mother_arg() ;
-    this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
-    this.size = new Vec3(size_2D.x,size_2D.y,0) ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-  Pixel(Vec2 pos_2D, int colour_int, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-
-  Pixel(Vec2 pos_2D, Vec2 size_2D, int colour_int , int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
-    this.size = new Vec3(size_2D.x,size_2D.y,0) ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-
-  Pixel(Vec3 pos_3D,  int colour_int) {
-    init_mother_arg() ;
-    this.pos = pos_3D ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-  
-  Pixel(Vec3 pos_3D, Vec3 size_3D, int colour_int) {
-    init_mother_arg() ;
-    this.pos = pos_3D ;
-    this.size = size_3D ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-
-  Pixel(Vec3 pos_3D,  int colour_int, String costume) {
-    init_mother_arg() ;
-    this.costume = costume ;
-    this.pos = pos_3D ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-  
-  Pixel(Vec3 pos_3D, Vec3 size_3D, int colour_int, String costume) {
-    init_mother_arg() ;
-    this.costume = costume ;
-    this.pos = pos_3D ;
-    this.size = size_3D ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-
-
-  Pixel(Vec3 pos_3D,  int colour_int, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = pos_3D ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-  
-  Pixel(Vec3 pos_3D, Vec3 size_3D, int colour_int, int summits) {
-    init_mother_arg() ;
-    choice_costume(summits) ;
-    this.pos = pos_3D ;
-    this.size = size_3D ;
-    colour = int_color_to_vec4_color(colour_int) ;
-    new_colour = Vec4(colour) ;
-  }
-*/
-
-
-  
-
-
 
   
   //RANK PIXEL CONSTRUCTOR
@@ -1161,49 +897,40 @@ class Pixel extends Pix implements Pixel_Constants {
     this.grid_position = grid_position ;
   }
   
+  // METHOD
 
-  void choice_costume(int summits) {
-    if(summits == 1) this.costume = "POINT" ;
-    else if(summits == 2) this.costume = "LINE" ;
-    else if(summits == 3) this.costume = "TRI" ;
-    else if(summits == 4) this.costume = "SQUARE" ;
-    else if(summits == 5) this.costume = "PENTA" ;
-    else if(summits == 6) this.costume = "HEXA" ;
-    else if(summits == 7) this.costume = "HEPTA" ;
-    else if(summits == 8) this.costume = "OCTA" ;
-    else if(summits == 9) this.costume = "ENNE" ;
-    else if(summits == 10) this.costume = "DECA" ;
-    else if(summits == 11) this.costume = "HENDE" ;
-    else if(summits == 12) this.costume = "DODE" ;
-    else if(summits > 12) this.costume = "DISC" ;
+  // set summit
+  void set_summits(int summits) {
+    if(summits == 1) this.costume_ID = POINT_ROPE ;
+    else if(summits == 2) this.costume_ID  = LINE_ROPE ;
+    else if(summits == 3) this.costume_ID  = TRIANGLE_ROPE ;
+    else if(summits == 4) this.costume_ID  = SQUARE_ROPE ;
+    else if(summits == 5) this.costume_ID  = PENTAGON_ROPE ;
+    else if(summits == 6) this.costume_ID  = HEXAGON_ROPE ;
+    else if(summits == 7) this.costume_ID  = HEPTAGON_ROPE ;
+    else if(summits == 8) this.costume_ID  = OCTOGON_ROPE ;
+    else if(summits == 9) this.costume_ID  = NONAGON_ROPE ;
+    else if(summits == 10) this.costume_ID  = DECAGON_ROPE ;
+    else if(summits == 11) this.costume_ID  = HENDECAGON_ROPE ;
+    else if(summits == 12) this.costume_ID  = DODECAGON_ROPE ;
+    else if(summits > 12) this.costume_ID  = ELLIPSE_ROPE ;
   }
 
 
 
-
-   
-
-
-  // METHOD
-  ///////////////
-
-  // COSTUME
-  // child method
-  void costume() {
+  // show
+  void show() {
     if (renderer_P3D()) {
-      costume_3D(pos, size, angle, dir) ;
+      costume_rope(pos, size, angle, dir, costume_ID) ;
     } else {
-      costume_2D(pos, size, angle) ;
+      costume_rope(pos, size, angle, costume_ID) ;
     }
   }
-
-  void costume(String costume) {
-    this.costume = costume ;
-    costume() ;
-  }
 }
-// END CLASS PIXEL
-/////////////////
+/**
+END CLASS PIXEL
+
+*/
 
 
 
@@ -1230,7 +957,7 @@ class Pixel extends Pix implements Pixel_Constants {
 /**
 PIXEL MOTION 0.0.2
 */
-class Pixel_motion extends Pix implements Pixel_Constants {
+class Pixel_motion extends Pix  {
     /**
     Not sure I must keep the arg field and life
   */

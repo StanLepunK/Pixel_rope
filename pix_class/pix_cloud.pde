@@ -1,13 +1,13 @@
 // CLOUD
 /////////
 void pixel_cloud() {
-   // pixel_cloud_list_point() ;
+   pixel_cloud_list_point() ;
 
  // pixel_cloud_pattern_random() ;
-  //pixel_cloud_beat_pattern() ;
+  // pixel_cloud_beat_pattern() ;
   // pixel_cloud_costume() ;
   // pixel_cloud_orientation_angle() ;
-  pixel_cloud_orientation_angle_pattern() ;
+  // pixel_cloud_orientation_angle_pattern() ;
 }
 
 void pixel_cloud_orientation_angle_pattern() {
@@ -29,7 +29,8 @@ void pixel_cloud_orientation_angle_pattern() {
   Vec3 pos = Vec3(width/2, height/2,0) ;
   p.distribution(pos, radius) ;
 
-  p.costume("PENTA") ;
+  p.costume(PENTAGON_ROPE) ;
+  p.show() ;
 }
 
 
@@ -51,7 +52,8 @@ void pixel_cloud_orientation_angle() {
   int radius = 175;
   Vec3 pos = Vec3(width/2, height/2,0) ;
   p.distribution(pos, radius) ;
-  p.costume("RECT") ;
+  p.costume(RECT_ROPE) ;
+  p.show() ;
 }
 
 
@@ -80,7 +82,8 @@ void pixel_cloud_costume() {
   */
 
   // p.costume() ; // default costume fro POLAR distribution is DISC, for CARTESIAN distribution is POINT
-  p.costume("RECT") ;
+  p.costume(RECT_ROPE) ;
+  p.show() ;
 }
 
 

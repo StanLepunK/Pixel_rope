@@ -1,94 +1,96 @@
-Guide PIXEL 0.1.7
-Class to storage a pixel data, with different info like
-position, color, alpha...
+PIXEL_ROPE 0.2.0 – 2016-2016
+--
+>Class to storage a pixel data, with different info like position, color, alpha...
 
-
-The Pix class use VEC class
-/////////////////////////////
 
 Information
------------
-When you use the color component of the MOTHER class Pix, the colorMode is checked and the color data is adapted.
------------
+--
+> When you use the color component of the MOTHER class Pix, the colorMode is checked and the color data is adapted.
+
+>By default the shape is POINT, and the argument size is use for the strokeWeight to give the pixel size
+
+>For the moment the argument direction cartesian or polar is not used.
+
+
+--
 Default Arg of the class
-  // P3D mode
-  Vec3 pos, new_pos ;
-  Vec3 size = Vec3(1) ;
-  /**
-  may be change wind to direction
-  */
-  //Vec3 direction, acceleration, velocity ; 
-  Vec2 orientation ;
+--
+P3D mode
+--
+Vec3 pos, new_pos ;
 
-  Vec3 grid_position ;
+Vec3 size = Vec3(1) ;
 
-  Vec4 color_fill, color_stroke, new_color_fill, new_color_stroke ;
-  int ID = 0 ;
-  int rank = -1 ;
-  String costume = "DISC" ;
+Vec3 direction, acceleration, velocity ; 
 
-  Vec4 original_color, new_color   ;
+Vec2 orientation ;
+
+Vec3 grid_position ;
+
+Vec4 color_fill, color_stroke, new_color_fill, new_color_stroke ;
+
+int ID = 0 ;
+
+int rank = -1 ;
+int costume_ID = POINT_ROPE ;
 
 
-  /**
-    Not sure I must keep the arg field and life
-  */
-  float field = 1.0 ;
-  float life = 1.0 ;
+Vec4 original_color, new_color   ;
 
 
 
-
-
---------
 SHAPE available for the PIXEL
-String "POINT";"TRI";"TETRA";"RECT";"PENTA";"HEXA";"HEPTA";"OCTO";"ENNE";"DECA";"HENDE";"DODE";"DISC";
-
-SHAPE not available for the PIXEL but sure in the future
-String "LINE";"POLY";"CUBE";"BOX";"RING";"SPHERE";"STAR";"CROSS";
+--
+>see https://github.com/StanLepunK/Costume_rope
 
 
 
-
-
+CLASS
+--
 
 
 
 
+METHODS
 -----------
-There is Two Class : Pixel and Pixel_cloud
-Pixel use an only position in 2D or 3D
-Pixel_cloud can use a cloud of position around a main position, in 2D or 3D
+show
+--
+pix.show() ; 
 
-// Method used by all the class
+set
+--
+pix.set_costume(int ID) ;
 
-// COSTUME
-@ define the type of shape must be display
-! It's better to use the method costume() before the aspect() method
-> list of String arg : "POINT", "DISC", "TRI", "SQUARE", "PENTA", "HEXA"
-pix.costume() ; use the Disc like a default shape or the shape define by the Constructor
-pix.costume(String arg_type) ;
-pix.costume(float arg_angle) ; give the starting position of the shape, give the angle in radians
-pix.costume(String arg_type,float arg_angle) ;
+size
+--
+pix.size(float x) ;
+
+pix.size(float x, float y) ;
+
+pix.size(float x, float y, float y) ;
+
+pix.size(Vec2 xy) ;
+
+pix.size(Vec2 xyz) ;
 
 
+normal direction
+--
+>Not used now
+
+pix.direction(Vec3 dir) ;
+
+pix.direction(float x, float y, float z) ;
+
+pix.direction_x(float x) ;
+
+pix.direction_y(float y) ;
+
+pix.direction_z(float z) ;
 
 
-// SIZE
-pix.size(float x)
-pix.size(float x, float y)
-pix.size(float x, float y, float y)
-pix.size(Vec2 xy)
-pix.size(Vec2 xyz)
-
-// NORMAL DIRECTION
-pix.direction(Vec3 dir)
-pix.direction(float x, float y, float z)
-pix.direction_x(float x)
-pix.direction_y(float y)
-pix.direction_z(float z)
-
-// ASPECT
+ASPECT
+--
 @ aspect define fill, stroke and strokeWeight
 > basic
 pix.aspect() ;  : use the size for the strokeWeight, and the int original color for the fill and the stroke
@@ -257,7 +259,6 @@ void orientation(float x, float y, float z)
 ANGLE
 --
 void angle(float angle)
-change the start angle of the primitive, don't work with the RECT because it's primitive Processing without this option :)
 
 you can call the list of point of your pix_cloud class with list()
 @ return Vec3 array
