@@ -1,5 +1,8 @@
+
 /**
-CLASS PIX 0.2.0
+CLASS PIX 
+v 0.2.0
+2016-2017
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Pixel
 */

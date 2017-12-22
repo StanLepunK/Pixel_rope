@@ -1,4 +1,6 @@
-PIXEL_ROPE 0.2.0 – 2016-2016
+
+
+PIXEL_ROPE 0.2.0 – 2016-2017
 --
 >Class to storage a pixel data, with different info like position, color, alpha...
 
