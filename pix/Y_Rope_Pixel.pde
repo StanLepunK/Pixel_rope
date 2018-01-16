@@ -35,7 +35,7 @@ abstract class Pix {
 
 
   void init_mother_arg() {
-    pos = Vec3(width/2, height/2,0 ) ;
+    pos = Vec3(width/2, height/2,0) ;
     new_pos = pos.copy() ;
     size = Vec3(1) ;
     // angle = Vec2(0);
@@ -67,57 +67,57 @@ abstract class Pix {
   SETTING
   */
   // ID
-  void change_ID(int ID) {  
+  public void set_ID(int ID) {  
     this.ID = ID ; 
   }
   
 
   // size
-  void size(float size_pix) {
+  public void size(float size_pix) {
     size = Vec3(size_pix) ;
   }
-  void size(float size_x, float size_y) {
+  public void size(float size_x, float size_y) {
     size = Vec3(size_x, size_y, 1) ;
   }
-  void size(float size_x, float size_y, float size_z) {
+  public void size(float size_x, float size_y, float size_z) {
     size = Vec3(size_x, size_y, size_z) ;
   }
 
-  void size(Vec2 size_pix) {
+  public void size(Vec2 size_pix) {
     size = Vec3(size_pix.x, size_pix.y, 1) ;
   }
-  void size(Vec3 size_pix) {
+  public void size(Vec3 size_pix) {
     size = Vec3(size_pix.x, size_pix.y, size_pix.z) ;
   }
 
   // angle
-  void angle(float angle) {
+  public void angle(float angle) {
     this.angle = angle ;
   }
 
   
   // normal direction
-  void direction(Vec3 dir) {
+  public void direction(Vec3 dir) {
     this.dir = dir ;
   }
 
-  void direction(float x, float y, float z) {
+  public void direction(float x, float y, float z) {
     this.dir = Vec3(x,y,z) ;
   }
 
-  void direction_x(float x) {
+  public void direction_x(float x) {
     dir.x = x ;
   }
 
-  void direction_y(float y) {
+  public void direction_y(float y) {
     dir.y = y ;
   }
-  void direction_z(float z) {
+  public void direction_z(float z) {
     dir.z = z ;
   }
 
   // set costume
-  void costume(int costume_ID) {
+  public void costume(int costume_ID) {
     this.costume_ID = costume_ID ;
   }
 
@@ -136,63 +136,63 @@ abstract class Pix {
   /**
   improve methode to check if the stroke must be Stroke or noStroke()
   */
-  void aspect() {
+  public void aspect() {
     float thickness = 1 ;
     aspect(colour, colour, thickness) ;
   }
 
-  void aspect(boolean new_colour_choice) {
+  public void aspect(boolean new_colour_choice) {
     float thickness = 1 ;
     Vec4 color_choice = Vec4() ;
     if(new_colour_choice) color_choice = new_colour.copy() ; else color_choice = colour.copy() ;
     aspect(color_choice, color_choice, thickness) ;
   }
 
-  void aspect(boolean new_colour_choice, float thickness) {
+  public void aspect(boolean new_colour_choice, float thickness) {
     Vec4 color_choice = Vec4() ;
     if(new_colour_choice) color_choice = new_colour.copy() ; else color_choice = colour.copy() ;
 
     if(thickness <= 0) { 
       noStroke() ;
-      fill(color_choice.r,color_choice.g,color_choice.b,color_choice.a) ;
+      fill(color_choice) ;
 
     } else { 
       strokeWeight(thickness) ;
-      stroke(color_choice.r,color_choice.g,color_choice.b,color_choice.a) ;
-      fill(color_choice.r,color_choice.g,color_choice.b,color_choice.a) ;
+      stroke(color_choice) ;
+      fill(color_choice) ;
     }
   }
 
-  void aspect(float thickness) {
+  public void aspect(float thickness) {
     if(thickness <= 0) { 
       noStroke() ;
-      fill(colour.r,colour.g,colour.b,colour.a) ;
+      fill(colour) ;
 
     } else { 
       strokeWeight(thickness) ;
-      stroke(colour.r,colour.g,colour.b,colour.a) ;
-      fill(colour.r,colour.g,colour.b,colour.a) ;
+      stroke(colour) ;
+      fill(colour) ;
     }
   }
 
-  void aspect(int c) {
+  public void aspect(int c) {
     float thickness = 1 ;
     Vec4 color_pix = int_color_to_vec4_color(c).copy() ;
     aspect(color_pix, color_pix, thickness) ;
   }
 
-  void aspect(Vec4 color_pix) {
+  public void aspect(Vec4 color_pix) {
     float thickness = 1 ;
     aspect(color_pix, color_pix, thickness) ;
   }
 
-  void aspect(Vec4 color_pix, float thickness) {
+  public void aspect(Vec4 color_pix, float thickness) {
     aspect(color_pix, color_pix, thickness) ;
   }
   
   
   // main method aspect
-  void aspect(Vec4 color_fill, Vec4 color_stroke, float thickness) {
+  public void aspect(Vec4 color_fill, Vec4 color_stroke, float thickness) {
     if(color_fill.a <= 0 && color_stroke.a <= 0) {
       noStroke() ; 
       noFill() ;
@@ -203,10 +203,14 @@ abstract class Pix {
           if(costume_ID == POINT_ROPE) {
             strokeWeight((size.x + size.y + size.z)/3) ; 
           } else strokeWeight(thickness) ;
-          stroke(color_stroke.r, color_stroke.g, color_stroke.b, color_stroke.a) ;
+          stroke(color_stroke) ;
         }
         // fill part
-        if (color_fill.a <= 0 ) noFill() ; else fill(color_fill.r,color_fill.g, color_fill.b, color_fill.a) ;
+        if (color_fill.a <= 0 ) {
+          noFill() ; 
+        } else {
+          fill(color_fill) ;
+        }
       } else {
         // stroke part
         if(thickness <= 0 || color_stroke.a <= 0 ) noStroke() ; 
@@ -214,10 +218,14 @@ abstract class Pix {
           if(costume_ID == POINT_ROPE) { 
             strokeWeight((size.x + size.y + size.z)/3) ;
           } else strokeWeight(thickness) ;
-          stroke(color_stroke.r, color_stroke.g, color_stroke.b, color_stroke.a) ;
+          stroke(color_stroke) ;
         }
         // fill part
-        if (color_fill.a <= 0 ) noFill() ; else fill(color_fill.r,color_fill.g, color_fill.b, color_fill.a) ;
+        if (color_fill.a <= 0 ) {
+          noFill() ; 
+        } else {
+          fill(color_fill) ;
+        }
       }
     }
   }
