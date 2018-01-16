@@ -265,18 +265,18 @@ void set_alpha	(int new_component_color, int min_range, int max_range, boolean u
 
 
 
-Pixcloud
+Cloud
 --
 this class use a pixel position to make a cloud pixel.
 
 Constructor
 --
-Pixcloud(int num);
+Cloud(int num);
 > the render default is P2D, and an r.ORDER distribution whith a r.CARTESIAN build
 
-Pixcloud(int num, String renderer_dimension, int distribution);
+Cloud(int num, String renderer_dimension, int distribution);
 
-Pixcloud(int num, String renderer_dimension, int distribution, int build);
+Cloud(int num, String renderer_dimension, int distribution, int build);
 
 
 Parameters:

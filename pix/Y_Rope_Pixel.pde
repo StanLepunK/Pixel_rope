@@ -398,13 +398,13 @@ CHILD CLASS
 PIXEL CLOUD
 
 */
-class Pixcloud extends Pix implements Rope_Constants {
-// class Pixcloud extends Pix implements Pixel_Constants {
+class Cloud extends Pix implements Rope_Constants {
+// class Cloud extends Pix implements Pixel_Constants {
   int num ;
   float beat_ref = .001 ;
   float beat = .001 ;
   String pattern = "RADIUS" ;
-  Vec3 [] polar_point, cartesian_point ;
+  Vec3 [] coord ;
   String renderer_dimension;
   int distribution ;
   boolean polar_build = false ;
@@ -412,33 +412,33 @@ class Pixcloud extends Pix implements Rope_Constants {
   Vec3 orientation = Vec3(0,PI/2,0) ; 
   float radius = 1 ;
   
-  public Pixcloud(int num) {
+  public Cloud(int num) {
     init_mother_arg() ;
     this.num = num ;
     choice_renderer_dimension(renderer_dimension);
 
     this.distribution = ORDER;
-    polar_point = new Vec3[num] ;
-    cartesian_point = new Vec3[num] ;
+    coord = new Vec3[num] ;
+    coord = new Vec3[num] ;
     init() ;
   }
 
 
 
-  public Pixcloud(int num, String renderer_dimension, int distribution) {
+  public Cloud(int num, String renderer_dimension, int distribution) {
     init_mother_arg() ;
     this.num = num ;
     choice_renderer_dimension(renderer_dimension);
     this.distribution = distribution ;
-    polar_point = new Vec3[num] ;
-    cartesian_point = new Vec3[num] ;
+    coord = new Vec3[num] ;
+    coord = new Vec3[num] ;
     init() ;
   }
   
   /*
   Use this constructor if you want build a cartesian sphere with a real coord in the 3D space, you must ask a "POINT" costume
   */
-  public Pixcloud(int num, String renderer_dimension, int distribution, int build) {
+  public Cloud(int num, String renderer_dimension, int distribution, int build) {
     init_mother_arg() ;
     if(build == POLAR) {
       polar_build = true ; 
@@ -449,8 +449,8 @@ class Pixcloud extends Pix implements Rope_Constants {
     choice_renderer_dimension(renderer_dimension);
 
     this.distribution = distribution ;
-    polar_point = new Vec3[num] ;
-    cartesian_point = new Vec3[num] ;
+    coord = new Vec3[num] ;
+    coord = new Vec3[num] ;
     init() ;
     costume_ID = ELLIPSE_ROPE ;
   }
@@ -471,7 +471,7 @@ class Pixcloud extends Pix implements Rope_Constants {
   //////////
 */
     // internal method
-  void init() {
+  private void init() {
     if(renderer_dimension == P2D) {
       cartesian_pos_2D() ; 
     } else {
@@ -483,31 +483,31 @@ class Pixcloud extends Pix implements Rope_Constants {
     }
   }
 
-  void cartesian_pos_2D() {
+  private void cartesian_pos_2D() {
     float angle = TAU / num ;
     float tetha  = angle ;
     for(int i = 0 ; i < num ; i++ ) {
       if(distribution == ORDER) {
-        cartesian_point[i] = Vec3(cos(tetha),sin(tetha), 0 ) ; 
+        coord[i] = Vec3(cos(tetha),sin(tetha), 0 ) ; 
       } else {
         tetha = random(-PI, PI) ;
-        cartesian_point[i] = Vec3(cos(tetha),sin(tetha), 0 ) ;
+        coord[i] = Vec3(cos(tetha),sin(tetha), 0 ) ;
       }
       tetha += angle ;
     }
   }
 
-  void cartesian_pos_3D() {
+  private void cartesian_pos_3D() {
     if(distribution == ORDER) {
       // sted and root maybe must be define somewhere ????
       float step = PI * (3 - sqrt(5.)) ; 
       float root = PI ;
-      cartesian_point = list_cartesian_fibonacci_sphere (num, step, root) ;
+      coord = list_cartesian_fibonacci_sphere (num, step, root) ;
     } else {
-      for(int i = 0 ; i < polar_point.length ; i++ ) {
+      for(int i = 0 ; i < coord.length ; i++ ) {
         float tetha  = random(-PI, PI) ;
         float phi  = random(-TAU, TAU) ;
-        cartesian_point[i] = Vec3(cos(tetha) *cos(phi),
+        coord[i] = Vec3(cos(tetha) *cos(phi),
                         cos(tetha) *sin(phi), 
                         sin(tetha) ) ; 
       }
@@ -515,22 +515,22 @@ class Pixcloud extends Pix implements Rope_Constants {
   }
 
 
-  void polar_pos_3D() {
+  private void polar_pos_3D() {
     float step = TAU ;
     if(distribution == ORDER) {
-      for (int i = 0; i < polar_point.length ; i++) {      
-        polar_point[i] = Vec3() ;
-        polar_point[i].x = distribution_polar_fibonacci_sphere(i, num, step).x ;
-        polar_point[i].y = distribution_polar_fibonacci_sphere(i, num, step).y ;
-        polar_point[i].z = 0  ;
+      for (int i = 0; i < coord.length ; i++) {      
+        coord[i] = Vec3() ;
+        coord[i].x = distribution_polar_fibonacci_sphere(i, num, step).x ;
+        coord[i].y = distribution_polar_fibonacci_sphere(i, num, step).y ;
+        coord[i].z = 0  ;
       }
     } else {
-      for (int i = 0; i < polar_point.length ; i++) {
+      for (int i = 0; i < coord.length ; i++) {
         int which = floor(random(num)) ;
-        polar_point[i] = Vec3() ;
-        polar_point[i].x = distribution_polar_fibonacci_sphere(which, num, step).x ;
-        polar_point[i].y = distribution_polar_fibonacci_sphere(which, num, step).y ;
-        polar_point[i].z = 0  ;
+        coord[i] = Vec3() ;
+        coord[i].x = distribution_polar_fibonacci_sphere(which, num, step).x ;
+        coord[i].y = distribution_polar_fibonacci_sphere(which, num, step).y ;
+        coord[i].z = 0  ;
       }
     }
   }
@@ -547,36 +547,34 @@ class Pixcloud extends Pix implements Rope_Constants {
   //////////////
   
   // external method
-  void beat(int n) {
+  public void beat(int n) {
     this.beat = beat_ref *n ;
   }
 
 
-   // return list of point
-  Vec3 [] list() {
-    if(polar_build) {
-      return polar_point;
-    } else {
-      return cartesian_point;
-    }
+   // return list of coord point
+  public Vec3 [] list() {
+    return coord;
     
   }
   // change orientation
-  void orientation(Vec3 orientation) {
+  public void orientation(Vec3 orientation) {
     this.orientation = orientation ;
   }
 
-   void orientation(float x, float y, float z) {
+  public void orientation(float x, float y, float z) {
     this.orientation = Vec3(x,y,z) ;
   }
 
-  void orientation_x(float orientation_x) {
+  public void orientation_x(float orientation_x) {
     this.orientation = Vec3(orientation_x,0,0) ;
   }
-  void orientation_y(float orientation_y) {
+
+  public void orientation_y(float orientation_y) {
     this.orientation = Vec3(0,orientation_y,0) ;
   }
-  void orientation_z(float orientation_z) {
+
+  public void orientation_z(float orientation_z) {
     this.orientation = Vec3(0,0,orientation_z) ;
   }
 
@@ -597,7 +595,7 @@ class Pixcloud extends Pix implements Rope_Constants {
     this.pos = pos ;
     float new_radius = radius  ;
     for (int i = 0 ; i < point.length ; i++) {
-      point[i] = cartesian_point[i].copy() ;
+      point[i] = coord[i].copy() ;
       new_radius = distribution_pattern(radius, pattern) ;
       point[i].mult(new_radius) ;
       point[i].add(pos) ;
@@ -609,7 +607,7 @@ class Pixcloud extends Pix implements Rope_Constants {
   void distribution_inside(Vec3 pos, int radius, String pattern_distribution) {
     float new_radius = radius  ;
     for (int i = 0 ; i < point.length ; i++) {
-      point[i] = cartesian_point[i].copy() ;
+      point[i] = coord[i].copy() ;
       new_radius = distribution_pattern(radius, pattern_distribution) ;
       point[i].mult(new_radius) ;
       point[i].add(pos) ;
@@ -619,7 +617,7 @@ class Pixcloud extends Pix implements Rope_Constants {
   /**
   distribution_surface
   */
-  void distribution(Vec3 pos, float radius) {
+  public void distribution(Vec3 pos, float radius) {
     this.pos.set(pos) ;
     this.radius = radius ;
     if(polar_build) {
@@ -632,22 +630,22 @@ class Pixcloud extends Pix implements Rope_Constants {
 
 
   // distribution surface cartesian
-  void distribution_surface_polar() {
+  private void distribution_surface_polar() {
     if(pattern != "RADIUS") {
       radius = abs(distribution_pattern(radius, pattern)) ;
     }
   }
 
  // distribution surface cartesian
- void distribution_surface_cartesian() {
+ private void distribution_surface_cartesian() {
     float radius_temp = radius;
 
-    for (int i = 0 ; i < cartesian_point.length ; i++) {
+    for (int i = 0 ; i < coord.length ; i++) {
       if(pattern != "RADIUS") {
         radius_temp = distribution_pattern(radius, pattern);
       }
-      cartesian_point[i].mult(radius_temp) ;
-      cartesian_point[i].add(pos) ;
+      coord[i].mult(radius_temp) ;
+      coord[i].add(pos) ;
     }
   }
   
@@ -655,7 +653,7 @@ class Pixcloud extends Pix implements Rope_Constants {
   distribution pattern
   */
   // internal method
-  float distribution_pattern(float range, String pattern_distribution) {
+  private float distribution_pattern(float range, String pattern_distribution) {
     float pos = 1 ;
     float normal_distribution = 1 ;
     
@@ -729,7 +727,7 @@ class Pixcloud extends Pix implements Rope_Constants {
   // COSTUME and display
   // child method
   */
-  void show() {
+  public void show() {
     if (renderer_P3D() && renderer_dimension == P3D) {
       give_points_to_costume_3D(); 
     } else {
@@ -738,26 +736,26 @@ class Pixcloud extends Pix implements Rope_Constants {
   }
   
   // local method
-  void give_points_to_costume_2D() {
-    for(int i  = 0 ; i < cartesian_point.length ;i++) {
+  private void give_points_to_costume_2D() {
+    for(int i  = 0 ; i < coord.length ;i++) {
       // method from mother class need pass info arg
-      costume_rope(cartesian_point[i], size, angle, costume_ID) ;
+      costume_rope(coord[i], size, angle, costume_ID) ;
     }
   }
-  void give_points_to_costume_3D() {
+  private void give_points_to_costume_3D() {
     if(!polar_build) {
-      for(int i  = 0 ; i < polar_point.length ;i++) {
+      for(int i  = 0 ; i < coord.length ;i++) {
         // method from mother class need pass info arg
-        costume_rope(polar_point[i], size, angle, costume_ID) ;
+        costume_rope(coord[i], size, angle, costume_ID) ;
       }
     } else {
       // method from here don't need to pass info about arg
-      costume_3D_local_polar() ;
+      costume_3D_polar() ;
     }
   }
   
   // internal
-  void costume_3D_local_polar() {
+  private void costume_3D_polar() {
    start_matrix() ;
    translate(pos) ;
     for(int i = 0 ; i < num ;i++) {
@@ -767,7 +765,7 @@ class Pixcloud extends Pix implements Rope_Constants {
       float rot = (map(mouseX,0,width,-PI,PI)) ;
       dir_pol[i].y += rot ;
       */
-      rotateYZ(Vec2(polar_point[i].x,polar_point[i].y)) ;
+      rotateYZ(Vec2(coord[i].x,coord[i].y)) ;
 
       Vec3 pos_primitive = Vec3(radius,0,0) ;
       translate(pos_primitive) ;
@@ -804,27 +802,33 @@ END CLASS PIXEL CLOUD
 
 
 
+
+
+
+
+
+
 /**
 Class pixel Basic
-
+v 0.0.2
 */
 class Pixel extends Pix  {
   // CONSTRUCTOR
   
   // PIXEL 2D
-  Pixel(Vec2 pos_2D) {
+  public Pixel(Vec2 pos_2D) {
     init_mother_arg() ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
   }
 
-  Pixel(Vec2 pos_2D, Vec2 size_2D) {
+  public Pixel(Vec2 pos_2D, Vec2 size_2D) {
     init_mother_arg() ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
     this.size = new Vec3(size_2D.x,size_2D.y,0) ; ;
   }
   
   // Constructor plus color components
-  Pixel(Vec2 pos_2D, Vec4 color_vec) {
+  public Pixel(Vec2 pos_2D, Vec4 color_vec) {
     init_mother_arg() ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
     colour = Vec4(color_vec) ;
@@ -832,7 +836,7 @@ class Pixel extends Pix  {
     
   }
 
-  Pixel(Vec2 pos_2D, Vec2 size_2D, Vec4 color_vec) {
+  public Pixel(Vec2 pos_2D, Vec2 size_2D, Vec4 color_vec) {
     init_mother_arg() ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
     this.size = new Vec3(size_2D.x,size_2D.y,0) ;
@@ -841,7 +845,7 @@ class Pixel extends Pix  {
   }
 
   // Constructor with costume indication
-  Pixel(Vec2 pos_2D, Vec2 size_2D, int costume_ID) {
+  public Pixel(Vec2 pos_2D, Vec2 size_2D, int costume_ID) {
     init_mother_arg() ;
     this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
@@ -849,7 +853,7 @@ class Pixel extends Pix  {
   }
   
   // Constructor plus color components
-  Pixel(Vec2 pos_2D, Vec4 color_vec, int costume_ID) {
+  public Pixel(Vec2 pos_2D, Vec4 color_vec, int costume_ID) {
     init_mother_arg() ;
     this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
@@ -858,7 +862,7 @@ class Pixel extends Pix  {
     
   }
 
-  Pixel(Vec2 pos_2D, Vec2 size_2D, Vec4 color_vec, int costume_ID) {
+  public Pixel(Vec2 pos_2D, Vec2 size_2D, Vec4 color_vec, int costume_ID) {
     init_mother_arg() ;
     this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
@@ -868,7 +872,7 @@ class Pixel extends Pix  {
   }
 
   // Constructor plus color components
-  Pixel(Vec2 pos_2D, int colour_int, int costume_ID) {
+  public Pixel(Vec2 pos_2D, int colour_int, int costume_ID) {
     init_mother_arg() ;
     this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
@@ -876,7 +880,7 @@ class Pixel extends Pix  {
     new_colour = Vec4(colour) ;
   }
 
-  Pixel(Vec2 pos_2D, Vec2 size_2D, int colour_int, int costume_ID) {
+  public Pixel(Vec2 pos_2D, Vec2 size_2D, int colour_int, int costume_ID) {
     init_mother_arg() ;
     this.costume_ID = costume_ID ;
     this.pos = new Vec3(pos_2D.x,pos_2D.y, 0)  ;
@@ -888,25 +892,25 @@ class Pixel extends Pix  {
 
 
   //PIXEL 3D
-  Pixel(Vec3 pos_3D) {
+  public Pixel(Vec3 pos_3D) {
     init_mother_arg() ;
     this.pos = pos_3D  ;
   }
 
-  Pixel(Vec3 pos_3D, Vec3 size_3D) {
+  public Pixel(Vec3 pos_3D, Vec3 size_3D) {
     init_mother_arg() ;
     this.pos = pos_3D ;
     this.size = size_3D ;
   }
   // constructor plus color component
-  Pixel(Vec3 pos_3D,  Vec4 color_vec) {
+  public Pixel(Vec3 pos_3D,  Vec4 color_vec) {
     init_mother_arg() ;
     this.pos = pos_3D ;
     colour = color_vec.copy() ;
     new_colour = colour.copy() ;
   }
   
-  Pixel(Vec3 pos_3D, Vec3 size_3D, Vec4 color_vec) {
+  public Pixel(Vec3 pos_3D, Vec3 size_3D, Vec4 color_vec) {
     init_mother_arg() ;
     this.pos = pos_3D ;
     this.size = size_3D ;
@@ -915,14 +919,14 @@ class Pixel extends Pix  {
   }
 
   // with costume indication
-  Pixel(Vec3 pos_3D, Vec3 size_3D, int costume_ID) {
+  public Pixel(Vec3 pos_3D, Vec3 size_3D, int costume_ID) {
     init_mother_arg() ;
     this.costume_ID = costume_ID ;
     this.pos = pos_3D ;
     this.size = size_3D ;
   }
   // constructor plus color component
-  Pixel(Vec3 pos_3D,  Vec4 color_vec, int costume_ID) {
+  public Pixel(Vec3 pos_3D,  Vec4 color_vec, int costume_ID) {
     init_mother_arg() ;
     this.costume_ID = costume_ID ;
     this.pos = pos_3D ;
@@ -930,7 +934,7 @@ class Pixel extends Pix  {
     new_colour = colour.copy() ;
   }
   
-  Pixel(Vec3 pos_3D, Vec3 size_3D, Vec4 color_vec, int costume_ID) {
+  public Pixel(Vec3 pos_3D, Vec3 size_3D, Vec4 color_vec, int costume_ID) {
     init_mother_arg() ;
     this.costume_ID = costume_ID ;
     this.pos = pos_3D ;
@@ -941,17 +945,17 @@ class Pixel extends Pix  {
 
   
   //RANK PIXEL CONSTRUCTOR
-  Pixel(int rank) {
+  public Pixel(int rank) {
     init_mother_arg() ;
     this.rank = rank ;
   }
   
-  Pixel(int rank, Vec2 grid_position_2D) {
+  public Pixel(int rank, Vec2 grid_position_2D) {
     init_mother_arg() ;
     this.rank = rank ;
     this.grid_position = new Vec3(grid_position_2D.x,grid_position_2D.y,0) ;
   }
-  Pixel(int rank, Vec3 grid_position) {
+  public Pixel(int rank, Vec3 grid_position) {
     init_mother_arg() ;
     this.rank = rank ;
     this.grid_position = grid_position ;
@@ -960,7 +964,7 @@ class Pixel extends Pix  {
   // METHOD
 
   // set summit
-  void set_summits(int summits) {
+  private void set_summits(int summits) {
     if(summits == 1) this.costume_ID = POINT_ROPE ;
     else if(summits == 2) this.costume_ID  = LINE_ROPE ;
     else if(summits == 3) this.costume_ID  = TRIANGLE_ROPE ;
@@ -979,7 +983,7 @@ class Pixel extends Pix  {
 
 
   // show
-  void show() {
+  public void show() {
     if (renderer_P3D()) {
       costume_rope(pos, size, angle, dir, costume_ID) ;
     } else {
@@ -991,6 +995,10 @@ class Pixel extends Pix  {
 END CLASS PIXEL
 
 */
+
+
+
+
 
 
 

@@ -7,7 +7,7 @@
   */
 void pixel_cloud_orientation_angle_pattern() {
   int num = 100 ;
-  Pixcloud p = new Pixcloud(num, P2D, r.ORDER, r.POLAR) ;
+  Cloud p = new Cloud(num, P3D, r.ORDER, r.POLAR) ;
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(15) ;
@@ -33,7 +33,7 @@ void pixel_cloud_orientation_angle_pattern() {
 void pixel_cloud_orientation_angle() {
 
   int num = 300 ;
-  Pixcloud p = new Pixcloud(num, P3D, r.ORDER, r.POLAR) ;
+  Cloud p = new Cloud(num, P3D, r.ORDER, r.POLAR) ;
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(Vec2(5, 400)) ;
@@ -60,7 +60,7 @@ void pixel_cloud_orientation_angle() {
   */
 void pixel_cloud_costume() {
   int num = 300 ;
-  Pixcloud p = new Pixcloud(num, P3D, r.ORDER, r.POLAR) ;
+  Cloud p = new Cloud(num, P3D, r.ORDER, r.POLAR) ;
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(Vec2(5, 300)) ;
@@ -91,7 +91,7 @@ void pixel_cloud_costume() {
 void pixel_cloud_list_point() {
   int num = 600 ;
 
-  Pixcloud p = new Pixcloud(num, P3D, r.CHAOS) ;
+  Cloud p = new Cloud(num, P3D, r.CHAOS) ;
 
   Vec4 col = new Vec4(200, 0,100,100) ;
   p.aspect(col,1) ;
@@ -118,7 +118,7 @@ void pixel_cloud_list_point() {
 
 void pixel_cloud_pattern_random() {
   int num = 600 ;
-  Pixcloud p = new Pixcloud(num, P3D, r.CHAOS) ;
+  Cloud p = new Cloud(num, P3D, r.CHAOS) ;
 
   p.aspect() ;
   float radius = 200 ;
@@ -143,7 +143,7 @@ void pixel_cloud_pattern_random() {
 
 void pixel_cloud_beat_pattern() {
   int num = 600 ;
-  Pixcloud p = new Pixcloud(num, P3D, r.ORDER) ;
+  Cloud p = new Cloud(num, P3D, r.ORDER) ;
 
   p.aspect() ;
   int radius = 200 ;
@@ -173,7 +173,7 @@ void pixel_cloud_beat_pattern() {
 
 void pixel_cloud_connector(String type, float distance) {
   int num = 50 ;
-  Pixcloud p = new Pixcloud(num, P2D, r.ORDER);
+  Cloud p = new Cloud(num, P2D, r.ORDER);
 
   int radius = 100 ;
   p.pattern("RANDOM") ;
