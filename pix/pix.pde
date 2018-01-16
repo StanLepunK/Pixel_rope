@@ -9,10 +9,10 @@ void setup() {
 
 
 void draw() {
-  background_rope(0) ;
+  background_rope(0,10) ;
   // pixel_classic() ;
-  pixel_cloud_2D() ;
-  // pixel_cloud_3D() ;
+  // pixel_cloud_2D() ;
+  pixel_cloud_3D() ;
 }
 
 

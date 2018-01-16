@@ -5,24 +5,28 @@
   To use all the costum of the Pixel, unfortunatly you must use the Polar mode :(
   With a special constructor 
   */
+  Cloud_3D cloud_3D ;
 void cloud_3D_orientation_angle_pattern() {
-  int num = 100 ;
-  Cloud_3D p = new Cloud_3D(num, P3D, r.ORDER, r.CARTESIAN) ;
+  int num = 200 ;
+  if(cloud_3D == null) cloud_3D = new Cloud_3D(num, P3D, r.CHAOS, r.POLAR) ;
   // if(mousePressed) p.polar(true) ; else p.polar(false);
-  p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
+  cloud_3D.aspect(Vec4(20,100,100,15), Vec4 (0,0,0,0), .1) ;
+  cloud_3D.rotation(.01);
+  cloud_3D.size(30);
+  // cloud_3D.orientation_y(map(mouseY,0,height,-PI,PI)) ;
+  cloud_3D.angle(frameCount *.01);
+  cloud_3D.beat(8);
+  //cloud_3D.pattern("SIN");
+  //cloud_3D.pattern("SIN_TAN_POW_SIN");
+  // cloud_3D.pattern("POW_SIN_PI");
+  cloud_3D.pattern("SIN_POW_SIN");
 
-  p.size(15) ;
-  p.orientation_y(map(mouseY,0,height,-PI,PI)) ;
-  p.angle(frameCount *.01);
-  p.beat(6);
-  p.pattern("SIN");
-
-  int radius = 175;
+  int radius = int(width *.66);
   Vec3 pos = Vec3(width/2, height/2,0) ;
-  p.distribution(pos, radius) ;
+  cloud_3D.distribution(pos, radius) ;
 
-  p.costume(PENTAGON_ROPE) ;
-  p.show() ;
+  cloud_3D.costume(PENTAGON_ROPE) ;
+  cloud_3D.show() ;
 }
 
 

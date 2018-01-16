@@ -8,18 +8,10 @@ v 0.2.1
 */
 
 
-
-
-// MOTHER CLASS
-// No contructor in this Class
-
 abstract class Pix {
-//abstract class Pix implements Pixel_Constants  {
-// class Pix implements Pixel_Constants{
   // P3D mode
   Vec3 pos, new_pos ;
   Vec3 size  ;
-  // Vec2 angle ;
   float angle = 0 ;
   
   // in cartesian mode
@@ -36,13 +28,41 @@ abstract class Pix {
 
   void init_mother_arg() {
     pos = Vec3(width/2, height/2,0) ;
-    new_pos = pos.copy() ;
-    size = Vec3(1) ;
-    // angle = Vec2(0);
-    grid_position = pos.copy() ;
+    if(new_pos == null) {
+      new_pos = pos.copy();
+    } else {
+      new_pos.set(pos);
+    }
+    if(size == null) {
+      size = Vec3(1) ;
+    } else {
+      size.set(1);
+    }
+    if(grid_position == null) {
+      grid_position = pos.copy();
+    } else {
+      grid_position.set(pos);
+    }
     // give a WHITE color to the pixel
-    if(g.colorMode == 3 ) colour = Vec4(0, 0, g.colorModeZ, g.colorModeA) ; else colour = Vec4(g.colorModeX, g.colorModeY, g.colorModeZ, g.colorModeA) ;
-    new_colour = colour.copy() ;
+    if(colour == null) {
+      if(g.colorMode == 3 ) {
+        colour = Vec4(0, 0, g.colorModeZ, g.colorModeA) ; 
+      } else {
+        colour = Vec4(g.colorModeX, g.colorModeY, g.colorModeZ, g.colorModeA) ;
+      }
+    } else {
+      if(g.colorMode == 3 ) {
+        colour.set(0, 0, g.colorModeZ, g.colorModeA) ; 
+      } else {
+        colour.set(g.colorModeX, g.colorModeY, g.colorModeZ, g.colorModeA) ;
+      }
+    }
+   
+    if(new_colour == null) {
+      new_colour = colour.copy() ;
+    } else {
+      new_colour.set(colour) ;
+    }
 
     int ID = 0 ;
     int rank = -1 ;
@@ -403,7 +423,7 @@ class Cloud extends Pix implements Rope_Constants {
   float radius = 1;
   Vec3 orientation;
 
-  boolean polar_build;
+  boolean polar_is;
 
 
   Cloud(int num, String renderer_dimension) {
@@ -417,7 +437,7 @@ class Cloud extends Pix implements Rope_Constants {
     if(renderer_dimension == P2D) {
       cartesian_pos_2D() ; 
     } else {
-      if(polar_build) {
+      if(polar_is) {
         polar_pos_3D(); 
       } else {
         cartesian_pos_3D(); 
@@ -433,8 +453,6 @@ class Cloud extends Pix implements Rope_Constants {
   protected void cartesian_pos_2D(float dist) {
     float angle = TAU / num ;
     float tetha = dist + angle ;
-    println("je suis là", tetha, dist,frameCount);
-    // tetha  += angle ;
     for(int i = 0 ; i < num ; i++ ) {
       if(distribution == ORDER) {
         coord[i] = Vec3(cos(tetha),sin(tetha), 0 ) ; 
@@ -484,8 +502,15 @@ class Cloud extends Pix implements Rope_Constants {
     }
   }
 
-
-
+  float dist ;
+  protected void rotation(float speed) {
+    if(!polar_is) {
+      dist += speed ;
+      cartesian_pos_2D(dist);
+    } else {
+      dist += speed ;
+    }
+  }
 
 
   protected void choice_renderer_dimension(String dimension) {
@@ -557,11 +582,13 @@ class Cloud extends Pix implements Rope_Constants {
     }
 
     float t = 0 ;
-    if(pattern_distribution.contains("SIN") || pattern_distribution.contains("COS")) t = frameCount *beat ;
-    float factor_1_2 = 1.2 ;
-    float factor_0_5 = .5 ;
-    float factor_12_0 = 12. ;
-    float factor_10_0 = 10. ;
+    if(pattern_distribution.contains("SIN") || pattern_distribution.contains("COS")) {
+      t = frameCount *beat;
+    }
+    float factor_1_2 = 1.2;
+    float factor_0_5 = .5;
+    float factor_12_0 = 12.;
+    float factor_10_0 = 10.;
     
     if(pattern_distribution == "RANDOM") normal_distribution = root_1 ;
     else if(pattern_distribution == "ROOT_RANDOM") normal_distribution = sqrt(root_1) ;
@@ -612,12 +639,6 @@ class Cloud_2D extends Cloud {
     this.distribution = distribution ;
     init();
   }
-  float dist ;
-  public void rotation(float speed) {
-    dist += speed ;
-    cartesian_pos_2D(dist);
-  }
-
 
 
   public void distribution(Vec3 pos, float radius) {
@@ -701,7 +722,7 @@ class Cloud_3D extends Cloud {
   }
 
   public void orientation(float x, float y, float z) {
-     if(!polar_build) {
+     if(!polar_is) {
       printErrTempo(180, "void orientation() class Cloud work only with type r.POLAR");
     }
     this.orientation = Vec3(x,y,z) ;
@@ -716,13 +737,13 @@ class Cloud_3D extends Cloud {
   */
 
   public void polar(boolean polar_is) {
-    this.polar_build = polar_is;
+    this.polar_is = polar_is;
   }
 
   public void distribution(Vec3 pos, float radius) {
     this.pos.set(pos) ;
     this.radius = radius ;
-    if(polar_build) {
+    if(polar_is) {
       distribution_surface_polar() ; 
     } else {
       distribution_surface_cartesian() ;
@@ -734,7 +755,7 @@ class Cloud_3D extends Cloud {
   * Show
   */
   public void show() {
-    if (renderer_P3D() && renderer_dimension == P3D) {
+    if (renderer_P3D() && renderer_dimension == P3D && polar_is) {
       give_points_to_costume_3D(); 
     } else {
       give_points_to_costume_2D();
@@ -742,19 +763,19 @@ class Cloud_3D extends Cloud {
   }
 
   protected void give_points_to_costume_3D() {
-    if(!polar_build) {
+    if(!polar_is) {
       for(int i  = 0 ; i < coord.length ;i++) {
         // method from mother class need pass info arg
         costume_rope(coord[i], size, angle, costume_ID) ;
       }
     } else {
       // method from here don't need to pass info about arg
-      costume_3D_polar() ;
+      costume_3D_polar(dist) ;
     }
   }
   
   // internal
-  protected void costume_3D_polar() {
+  protected void costume_3D_polar(float dist) {
    start_matrix() ;
    translate(pos) ;
     for(int i = 0 ; i < num ;i++) {
@@ -764,12 +785,13 @@ class Cloud_3D extends Cloud {
       float rot = (map(mouseX,0,width,-PI,PI)) ;
       dir_pol[i].y += rot ;
       */
-      rotateYZ(Vec2(coord[i].x,coord[i].y)) ;
+      Vec2 coord_temp = Vec2(coord[i].x,coord[i].y).add(dist);
+      rotateYZ(coord_temp) ;
 
       Vec3 pos_primitive = Vec3(radius,0,0) ;
       translate(pos_primitive) ;
 
-      start_matrix() ;
+      start_matrix();
       rotateXYZ(orientation) ;
       Vec3 pos_local_primitive = Vec3() ;
       Vec2 orientation_polar = Vec2() ;
