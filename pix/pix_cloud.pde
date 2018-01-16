@@ -1,22 +1,13 @@
 // CLOUD
 /////////
-void pixel_cloud() {
-   pixel_cloud_list_point() ;
 
- // pixel_cloud_pattern_random() ;
-  // pixel_cloud_beat_pattern() ;
-  // pixel_cloud_costume() ;
-  // pixel_cloud_orientation_angle() ;
-  // pixel_cloud_orientation_angle_pattern() ;
-}
-
-void pixel_cloud_orientation_angle_pattern() {
   /**
   To use all the costum of the Pixel, unfortunatly you must use the Polar mode :(
   With a special constructor 
   */
-  int num = 300 ;
-  Pixel_cloud p = new Pixel_cloud(num, "3D", "ORDER", "POLAR") ;
+void pixel_cloud_orientation_angle_pattern() {
+  int num = 100 ;
+  Pixcloud p = new Pixcloud(num, P2D, r.ORDER, r.POLAR) ;
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(15) ;
@@ -34,13 +25,15 @@ void pixel_cloud_orientation_angle_pattern() {
 }
 
 
-void pixel_cloud_orientation_angle() {
-  /**
+
+/**
   To use all the costum of the Pixel, unfortunatly you must use the Polar mode :(
   With a special constructor 
-  */
+*/
+void pixel_cloud_orientation_angle() {
+
   int num = 300 ;
-  Pixel_cloud p = new Pixel_cloud(num, "3D", "ORDER", "POLAR") ;
+  Pixcloud p = new Pixcloud(num, P3D, r.ORDER, r.POLAR) ;
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(Vec2(5, 400)) ;
@@ -61,14 +54,13 @@ void pixel_cloud_orientation_angle() {
 
 
 
-
-void pixel_cloud_costume() {
   /**
   To use all the costum of the Pixel, unfortunatly you must use the Polar mode :(
   With a special constructor 
   */
+void pixel_cloud_costume() {
   int num = 300 ;
-  Pixel_cloud p = new Pixel_cloud(num, "3D", "ORDER", "POLAR") ;
+  Pixcloud p = new Pixcloud(num, P3D, r.ORDER, r.POLAR) ;
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(Vec2(5, 300)) ;
@@ -92,14 +84,14 @@ void pixel_cloud_costume() {
 
 
 
-
-void pixel_cloud_list_point() {
-  int num = 600 ;
   /**
    here you can choice between "2D" or "3D" give an Circle or Sphere
    and "CHAOS" or "ORDER" that change the distribution around your shape, regular or randomize
    */
-  Pixel_cloud p = new Pixel_cloud(num, "3D", "CHAOS") ;
+void pixel_cloud_list_point() {
+  int num = 600 ;
+
+  Pixcloud p = new Pixcloud(num, P3D, r.CHAOS) ;
 
   Vec4 col = new Vec4(200, 0,100,100) ;
   p.aspect(col,1) ;
@@ -109,7 +101,7 @@ void pixel_cloud_list_point() {
   p.distribution(pos, radius) ;
 
   for(int i = 0 ; i < p.list().length ; i++ ) {
-    point(p.point[i].x,p.point[i].y,p.point[i].z) ;
+    point(p.list()[i].x,p.list()[i].y,p.list()[i].z) ;
   }
 }
 
@@ -126,7 +118,7 @@ void pixel_cloud_list_point() {
 
 void pixel_cloud_pattern_random() {
   int num = 600 ;
-  Pixel_cloud p = new Pixel_cloud(num, "3D", "CHAOS") ;
+  Pixcloud p = new Pixcloud(num, P3D, r.CHAOS) ;
 
   p.aspect() ;
   float radius = 200 ;
@@ -144,14 +136,14 @@ void pixel_cloud_pattern_random() {
   p.pattern("RANDOM");
   p.distribution(Vec3(mouseX,mouseY,0), radius) ;
   for(int i = 0 ; i < p.list().length ; i++ ) {
-    point(p.point[i].x,p.point[i].y,p.point[i].z) ;
+    point(p.list()[i].x,p.list()[i].y,p.list()[i].z) ;
   }
 }
 
 
 void pixel_cloud_beat_pattern() {
   int num = 600 ;
-  Pixel_cloud p = new Pixel_cloud(num, "3D", "ORDER") ;
+  Pixcloud p = new Pixcloud(num, P3D, r.ORDER) ;
 
   p.aspect() ;
   int radius = 200 ;
@@ -169,7 +161,7 @@ void pixel_cloud_beat_pattern() {
   p.pattern("SIN") ;
   p.distribution(Vec3(mouseX,mouseY,0), radius) ;
   for(int i = 0 ; i < p.list().length ; i++ ) {
-    point(p.point[i].x,p.point[i].y,p.point[i].z) ;
+    point(p.list()[i]) ;
   }
 }
 
@@ -181,13 +173,13 @@ void pixel_cloud_beat_pattern() {
 
 void pixel_cloud_connector(String type, float distance) {
   int num = 50 ;
-  Pixel_cloud p = new Pixel_cloud(num, "2D", "ORDER");
+  Pixcloud p = new Pixcloud(num, P2D, r.ORDER);
 
   int radius = 100 ;
   p.pattern("RANDOM") ;
   p.distribution(Vec3(mouseX,mouseY,0), radius) ;
   for(int i = 0 ; i < p.list().length ; i++ ) {
     if(i > 1) 
-      if(p.point[i].dist(p.point[i-1]) < distance) line(p.point[i].x,p.point[i].y,p.point[i].z, p.point[i-1].x,p.point[i-1].y,p.point[i-1].z) ;
+      if(p.list()[i].dist(p.list()[i-1]) < distance) line(p.list()[i].x,p.list()[i].y,p.list()[i].z, p.list()[i-1].x,p.list()[i-1].y,p.list()[i-1].z) ;
   }
 }

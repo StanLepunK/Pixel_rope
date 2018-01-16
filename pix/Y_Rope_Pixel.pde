@@ -1,22 +1,20 @@
 
 /**
 CLASS PIX 
-v 0.2.0
-2016-2017
+v 0.2.1
+2016-2018
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Pixel
 */
 
-public interface Pixel_Constants {
-  static public final String RANDOM = "RANDOM";
-}
 
 
 
 // MOTHER CLASS
 // No contructor in this Class
 
-abstract class Pix implements Pixel_Constants  {
+abstract class Pix {
+//abstract class Pix implements Pixel_Constants  {
 // class Pix implements Pixel_Constants{
   // P3D mode
   Vec3 pos, new_pos ;
@@ -55,8 +53,8 @@ abstract class Pix implements Pixel_Constants  {
   // test the color mode to return the good data for each component
   Vec4 int_color_to_vec4_color(int c) {
     Vec4 color_temp = Vec4() ;
-    if(g.colorMode == 3 ) color_temp = Vec4(hue(c), saturation(c), brightness(c),alpha(c)) ;
-    else color_temp = Vec4(red(c),green(c), blue(c),alpha(c)) ;
+    if(g.colorMode == 3 ) color_temp = Vec4(hue(c),saturation(c),brightness(c),alpha(c)) ;
+    else color_temp = Vec4(red(c),green(c),blue(c),alpha(c)) ;
     return Vec4(color_temp) ;
   }
 
@@ -248,82 +246,82 @@ abstract class Pix implements Pixel_Constants  {
   CHANGE COLOR
   */
   //direct change HSB
-  void change_hue(int new_hue, int target_color, boolean use_new_colour) {
-    change_hue(new_hue, target_color, target_color +1, use_new_colour) ;
+  void set_hue(int new_hue, int target_color, boolean use_new_colour) {
+    set_hue(new_hue, target_color, target_color +1, use_new_colour) ;
   }
-  void change_saturation(int new_sat, int target_color, boolean use_new_colour) {
-    change_saturation(new_sat, target_color, target_color +1, use_new_colour) ;
+  void set_saturation(int new_sat, int target_color, boolean use_new_colour) {
+    set_saturation(new_sat, target_color, target_color +1, use_new_colour) ;
   }
-  void change_brightness(int new_bright, int target_color, boolean use_new_colour) {
-    change_brightness(new_bright, target_color, target_color +1, use_new_colour) ;
+  void set_brightness(int new_bright, int target_color, boolean use_new_colour) {
+    set_brightness(new_bright, target_color, target_color +1, use_new_colour) ;
   }
   //direct change RGB
-  void change_red(int new_red, int target_color, boolean use_new_colour) {
-    change_red(new_red, target_color, target_color +1, use_new_colour) ;
+  void set_red(int new_red, int target_color, boolean use_new_colour) {
+    set_red(new_red, target_color, target_color +1, use_new_colour) ;
   }
-  void change_green(int new_green, int target_color, boolean use_new_colour) {
-    change_green(new_green, target_color, target_color +1, use_new_colour) ;
+  void set_green(int new_green, int target_color, boolean use_new_colour) {
+    set_green(new_green, target_color, target_color +1, use_new_colour) ;
   }
-  void change_blue(int new_blue, int target_color, boolean use_new_colour) {
-    change_blue(new_blue, target_color, target_color +1, use_new_colour) ;
+  void set_blue(int new_blue, int target_color, boolean use_new_colour) {
+    set_blue(new_blue, target_color, target_color +1, use_new_colour) ;
   }
   //direct change ALPHA
-  void change_alpha(int new_alpha, int target_color, boolean use_new_colour) {
-    change_alpha(new_alpha, target_color, target_color +1, use_new_colour) ;
+  void set_alpha(int new_alpha, int target_color, boolean use_new_colour) {
+    set_alpha(new_alpha, target_color, target_color +1, use_new_colour) ;
   }
   
   // change with range
   // HSB change
-  void change_hue(int new_hue, int start, int end, boolean use_new_colour) {
+  void set_hue(int new_hue, int start, int end, boolean use_new_colour) {
     float hue_temp ; ;
-    if(!use_new_colour) hue_temp = change_color_component_from_specific_component("hue", colour.r, new_hue, start, end) ; 
-    else hue_temp = change_color_component_from_specific_component("hue", new_colour.r, new_hue, start, end) ;
+    if(!use_new_colour) hue_temp = set_color_component_from_specific_component("hue", colour.r, new_hue, start, end) ; 
+    else hue_temp = set_color_component_from_specific_component("hue", new_colour.r, new_hue, start, end) ;
     new_colour = Vec4(hue_temp, new_colour.y, new_colour.z, new_colour.w)  ;
   }
-  void change_saturation(int new_saturation, int start, int end, boolean use_new_colour) {
+  void set_saturation(int new_saturation, int start, int end, boolean use_new_colour) {
     float saturation_temp ;
-    if(!use_new_colour) saturation_temp = change_color_component_from_specific_component("saturation", colour.g, new_saturation, start, end) ;
-    else saturation_temp = change_color_component_from_specific_component("saturation", new_colour.g, new_saturation, start, end) ;
+    if(!use_new_colour) saturation_temp = set_color_component_from_specific_component("saturation", colour.g, new_saturation, start, end) ;
+    else saturation_temp = set_color_component_from_specific_component("saturation", new_colour.g, new_saturation, start, end) ;
     new_colour = Vec4(new_colour.x, saturation_temp, new_colour.z, new_colour.w)  ;
   }
-  void change_brightness(int new_brightness, int start, int end, boolean use_new_colour) {
+  void set_brightness(int new_brightness, int start, int end, boolean use_new_colour) {
     float brightness_temp ;
-    if(!use_new_colour) brightness_temp = change_color_component_from_specific_component("brightness", colour.b, new_brightness, start, end) ;
-    else brightness_temp = change_color_component_from_specific_component("brightness", new_colour.b, new_brightness, start, end) ;
+    if(!use_new_colour) brightness_temp = set_color_component_from_specific_component("brightness", colour.b, new_brightness, start, end) ;
+    else brightness_temp = set_color_component_from_specific_component("brightness", new_colour.b, new_brightness, start, end) ;
     new_colour = Vec4(new_colour.x, new_colour.y, brightness_temp, new_colour.w)  ;
   }
   // RGB change
-  void change_red(int new_red, int start, int end, boolean use_new_colour) {
+  void set_red(int new_red, int start, int end, boolean use_new_colour) {
     float red_temp ;
-    if(!use_new_colour) red_temp = change_color_component_from_specific_component("red", colour.r, new_red, start, end) ;
-    else red_temp = change_color_component_from_specific_component("red", new_colour.r, new_red, start, end) ;
+    if(!use_new_colour) red_temp = set_color_component_from_specific_component("red", colour.r, new_red, start, end) ;
+    else red_temp = set_color_component_from_specific_component("red", new_colour.r, new_red, start, end) ;
     new_colour = Vec4(red_temp, new_colour.y, new_colour.z, new_colour.w)  ;
   }
-  void change_green(int new_green, int start, int end, boolean use_new_colour) {
+  void set_green(int new_green, int start, int end, boolean use_new_colour) {
     float green_temp ;
-    if(!use_new_colour) green_temp = change_color_component_from_specific_component("green", colour.g, new_green, start, end) ;
-    else green_temp = change_color_component_from_specific_component("green", new_colour.g, new_green, start, end) ;
+    if(!use_new_colour) green_temp = set_color_component_from_specific_component("green", colour.g, new_green, start, end) ;
+    else green_temp = set_color_component_from_specific_component("green", new_colour.g, new_green, start, end) ;
     new_colour = Vec4(new_colour.x, green_temp, new_colour.z, new_colour.w)  ;
   }
-  void change_blue(int new_blue, int start, int end, boolean use_new_colour) {
+  void set_blue(int new_blue, int start, int end, boolean use_new_colour) {
     float blue_temp ;
-    if(!use_new_colour) blue_temp = change_color_component_from_specific_component("blue", colour.b, new_blue, start, end) ;
-    else blue_temp = change_color_component_from_specific_component("blue", new_colour.b, new_blue, start, end) ;
+    if(!use_new_colour) blue_temp = set_color_component_from_specific_component("blue", colour.b, new_blue, start, end) ;
+    else blue_temp = set_color_component_from_specific_component("blue", new_colour.b, new_blue, start, end) ;
     new_colour = Vec4(new_colour.x, new_colour.y, blue_temp, new_colour.w)  ;
   }
 
   // ALPHA change
-  void change_alpha(int new_alpha, int start, int end, boolean use_new_colour) {
+  void set_alpha(int new_alpha, int start, int end, boolean use_new_colour) {
     float alpha_temp ;
-    if(!use_new_colour) alpha_temp = change_color_component_from_specific_component("alpha", colour.a, new_alpha, start, end) ;
-    else alpha_temp = change_color_component_from_specific_component("alpha", new_colour.a, new_alpha, start, end) ;
+    if(!use_new_colour) alpha_temp = set_color_component_from_specific_component("alpha", colour.a, new_alpha, start, end) ;
+    else alpha_temp = set_color_component_from_specific_component("alpha", new_colour.a, new_alpha, start, end) ;
     new_colour = Vec4(new_colour.x, new_colour.y, new_colour.z, alpha_temp)  ;
   }
 
 
 
   // INTERNAL method to change color
-  float change_color_component_from_specific_component (String which_component, float original_component, int new_component, int start_range, int end_range) {
+  float set_color_component_from_specific_component (String which_component, float original_component, int new_component, int start_range, int end_range) {
     if (start_range < end_range ) {
       if(original_component >= start_range && original_component <= end_range) original_component = new_component ; 
     } else if (start_range > end_range) {
@@ -392,46 +390,72 @@ CHILD CLASS
 PIXEL CLOUD
 
 */
-class Pixel_cloud extends Pix {
-// class Pixel_cloud extends Pix implements Pixel_Constants {
+class Pixcloud extends Pix implements Rope_Constants {
+// class Pixcloud extends Pix implements Pixel_Constants {
   int num ;
   float beat_ref = .001 ;
   float beat = .001 ;
   String pattern = "RADIUS" ;
-  Vec3 [] point, point_normal ;
-  String cloud_2D_or_3D, order_or_Chaos ;
+  Vec3 [] polar_point, cartesian_point ;
+  String renderer_dimension;
+  int distribution ;
   boolean polar_build = false ;
 
   Vec3 orientation = Vec3(0,PI/2,0) ; 
   float radius = 1 ;
   
-
-
-
-
-  Pixel_cloud(int num, String cloud_2D_or_3D, String order_or_Chaos) {
+  public Pixcloud(int num) {
     init_mother_arg() ;
     this.num = num ;
-    this.cloud_2D_or_3D = cloud_2D_or_3D ;
-    this.order_or_Chaos = order_or_Chaos ;
-    point = new Vec3[num] ;
-    point_normal = new Vec3[num] ;
-    init(cloud_2D_or_3D, order_or_Chaos) ;
+    choice_renderer_dimension(renderer_dimension);
+
+    this.distribution = ORDER;
+    polar_point = new Vec3[num] ;
+    cartesian_point = new Vec3[num] ;
+    init() ;
+  }
+
+
+
+  public Pixcloud(int num, String renderer_dimension, int distribution) {
+    init_mother_arg() ;
+    this.num = num ;
+    choice_renderer_dimension(renderer_dimension);
+    this.distribution = distribution ;
+    polar_point = new Vec3[num] ;
+    cartesian_point = new Vec3[num] ;
+    init() ;
   }
   
   /*
   Use this constructor if you want build a cartesian sphere with a real coord in the 3D space, you must ask a "POINT" costume
   */
-  Pixel_cloud(int num, String cloud_2D_or_3D, String order_or_Chaos, String build) {
+  public Pixcloud(int num, String renderer_dimension, int distribution, int build) {
     init_mother_arg() ;
-    if(build == "POLAR") polar_build = true ; else polar_build = false ;
+    if(build == POLAR) {
+      polar_build = true ; 
+    } else {
+      polar_build = false ;
+    }
     this.num = num ;
-    this.cloud_2D_or_3D = cloud_2D_or_3D ;
-    this.order_or_Chaos = order_or_Chaos ;
-    point = new Vec3[num] ;
-    point_normal = new Vec3[num] ;
-    init(cloud_2D_or_3D, order_or_Chaos) ;
+    choice_renderer_dimension(renderer_dimension);
+
+    this.distribution = distribution ;
+    polar_point = new Vec3[num] ;
+    cartesian_point = new Vec3[num] ;
+    init() ;
     costume_ID = ELLIPSE_ROPE ;
+  }
+
+
+
+  private void choice_renderer_dimension(String dimension) {
+    if(dimension == P3D) {
+      this.renderer_dimension = P3D ;
+    } else {
+      this.renderer_dimension = P2D ;
+      polar_build = false ;
+    }
   }
 
 /**
@@ -439,35 +463,43 @@ class Pixel_cloud extends Pix {
   //////////
 */
     // internal method
-  void init(String cloud_2D_or_3D, String order_or_Chaos) {
-    if(cloud_2D_or_3D == "2D") cartesian_pos_2D(order_or_Chaos) ; else {
-      if(polar_build) polar_pos_3D(order_or_Chaos) ;  else cartesian_pos_3D(order_or_Chaos) ; 
+  void init() {
+    if(renderer_dimension == P2D) {
+      cartesian_pos_2D() ; 
+    } else {
+      if(polar_build) {
+        polar_pos_3D(); 
+      } else {
+        cartesian_pos_3D(); 
+      }
     }
   }
 
-  void cartesian_pos_2D(String order_or_chaos) {
+  void cartesian_pos_2D() {
     float angle = TAU / num ;
     float tetha  = angle ;
     for(int i = 0 ; i < num ; i++ ) {
-      if(order_or_chaos == "ORDER") point_normal[i] = Vec3(cos(tetha),sin(tetha), 0 ) ; else {
-        tetha  = random(-PI, PI) ;
-        point_normal[i] = Vec3(cos(tetha),sin(tetha), 0 ) ;
+      if(distribution == ORDER) {
+        cartesian_point[i] = Vec3(cos(tetha),sin(tetha), 0 ) ; 
+      } else {
+        tetha = random(-PI, PI) ;
+        cartesian_point[i] = Vec3(cos(tetha),sin(tetha), 0 ) ;
       }
       tetha += angle ;
     }
   }
 
-  void cartesian_pos_3D(String order_or_chaos) {
-    if(order_or_chaos == "ORDER") {
+  void cartesian_pos_3D() {
+    if(distribution == ORDER) {
       // sted and root maybe must be define somewhere ????
       float step = PI * (3 - sqrt(5.)) ; 
       float root = PI ;
-      point_normal = list_cartesian_fibonacci_sphere (num, step, root) ;
+      cartesian_point = list_cartesian_fibonacci_sphere (num, step, root) ;
     } else {
-      for(int i = 0 ; i < point.length ; i++ ) {
+      for(int i = 0 ; i < polar_point.length ; i++ ) {
         float tetha  = random(-PI, PI) ;
         float phi  = random(-TAU, TAU) ;
-        point_normal[i] = Vec3(cos(tetha) *cos(phi),
+        cartesian_point[i] = Vec3(cos(tetha) *cos(phi),
                         cos(tetha) *sin(phi), 
                         sin(tetha) ) ; 
       }
@@ -475,23 +507,22 @@ class Pixel_cloud extends Pix {
   }
 
 
-  void polar_pos_3D(String order_or_chaos) {
+  void polar_pos_3D() {
     float step = TAU ;
-    if(order_or_chaos == "ORDER") {
-      for (int i = 0; i < point_normal.length ; i++) {
-        
-        point[i] = Vec3() ;
-        point[i].x = distribution_polar_fibonacci_sphere(i, num, step).x ;
-        point[i].y = distribution_polar_fibonacci_sphere(i, num, step).y ;
-        point[i].z = 0  ;
+    if(distribution == ORDER) {
+      for (int i = 0; i < polar_point.length ; i++) {      
+        polar_point[i] = Vec3() ;
+        polar_point[i].x = distribution_polar_fibonacci_sphere(i, num, step).x ;
+        polar_point[i].y = distribution_polar_fibonacci_sphere(i, num, step).y ;
+        polar_point[i].z = 0  ;
       }
     } else {
-      for (int i = 0; i < point_normal.length ; i++) {
+      for (int i = 0; i < polar_point.length ; i++) {
         int which = floor(random(num)) ;
-        point[i] = Vec3() ;
-        point[i].x = distribution_polar_fibonacci_sphere(which, num, step).x ;
-        point[i].y = distribution_polar_fibonacci_sphere(which, num, step).y ;
-        point[i].z = 0  ;
+        polar_point[i] = Vec3() ;
+        polar_point[i].x = distribution_polar_fibonacci_sphere(which, num, step).x ;
+        polar_point[i].y = distribution_polar_fibonacci_sphere(which, num, step).y ;
+        polar_point[i].z = 0  ;
       }
     }
   }
@@ -515,7 +546,12 @@ class Pixel_cloud extends Pix {
 
    // return list of point
   Vec3 [] list() {
-    return point ;
+    if(polar_build) {
+      return polar_point;
+    } else {
+      return cartesian_point;
+    }
+    
   }
   // change orientation
   void orientation(Vec3 orientation) {
@@ -553,7 +589,7 @@ class Pixel_cloud extends Pix {
     this.pos = pos ;
     float new_radius = radius  ;
     for (int i = 0 ; i < point.length ; i++) {
-      point[i] = point_normal[i].copy() ;
+      point[i] = cartesian_point[i].copy() ;
       new_radius = distribution_pattern(radius, pattern) ;
       point[i].mult(new_radius) ;
       point[i].add(pos) ;
@@ -565,7 +601,7 @@ class Pixel_cloud extends Pix {
   void distribution_inside(Vec3 pos, int radius, String pattern_distribution) {
     float new_radius = radius  ;
     for (int i = 0 ; i < point.length ; i++) {
-      point[i] = point_normal[i].copy() ;
+      point[i] = cartesian_point[i].copy() ;
       new_radius = distribution_pattern(radius, pattern_distribution) ;
       point[i].mult(new_radius) ;
       point[i].add(pos) ;
@@ -576,25 +612,34 @@ class Pixel_cloud extends Pix {
   distribution_surface
   */
   void distribution(Vec3 pos, float radius) {
-    this.pos = pos ;
+    this.pos.set(pos) ;
     this.radius = radius ;
-    if(polar_build)  distribution_surface_polar() ; else distribution_surface_cartesian() ;
+    if(polar_build) {
+      distribution_surface_polar() ; 
+    } else {
+      distribution_surface_cartesian() ;
+    }
   }
-  // distribution surface cartesian
 
+
+
+  // distribution surface cartesian
   void distribution_surface_polar() {
-    if(pattern != "RADIUS") radius = abs(distribution_pattern(radius, pattern)) ;
+    if(pattern != "RADIUS") {
+      radius = abs(distribution_pattern(radius, pattern)) ;
+    }
   }
 
  // distribution surface cartesian
  void distribution_surface_cartesian() {
+    float radius_temp = radius;
 
-    float radius_temp = radius  ;
-    for (int i = 0 ; i < point.length ; i++) {
-      point[i] = point_normal[i].copy() ;
-      if(pattern != "RADIUS") radius_temp = distribution_pattern(radius, pattern) ;
-      point[i].mult(radius_temp) ;
-      point[i].add(pos) ;
+    for (int i = 0 ; i < cartesian_point.length ; i++) {
+      if(pattern != "RADIUS") {
+        radius_temp = distribution_pattern(radius, pattern);
+      }
+      cartesian_point[i].mult(radius_temp) ;
+      cartesian_point[i].add(pos) ;
     }
   }
   
@@ -677,21 +722,25 @@ class Pixel_cloud extends Pix {
   // child method
   */
   void show() {
-    if (renderer_P3D()) give_points_to_costume_3D() ; else  give_points_to_costume_2D() ;
+    if (renderer_P3D() && renderer_dimension == P3D) {
+      give_points_to_costume_3D(); 
+    } else {
+      give_points_to_costume_2D();
+    }
   }
   
   // local method
   void give_points_to_costume_2D() {
-    for(int i  = 0 ; i < point.length ;i++) {
+    for(int i  = 0 ; i < cartesian_point.length ;i++) {
       // method from mother class need pass info arg
-      costume_rope(point[i], size, angle, costume_ID) ;
+      costume_rope(cartesian_point[i], size, angle, costume_ID) ;
     }
   }
   void give_points_to_costume_3D() {
     if(!polar_build) {
-      for(int i  = 0 ; i < point.length ;i++) {
+      for(int i  = 0 ; i < polar_point.length ;i++) {
         // method from mother class need pass info arg
-        costume_rope(point[i], size, angle, costume_ID) ;
+        costume_rope(polar_point[i], size, angle, costume_ID) ;
       }
     } else {
       // method from here don't need to pass info about arg
@@ -710,7 +759,7 @@ class Pixel_cloud extends Pix {
       float rot = (map(mouseX,0,width,-PI,PI)) ;
       dir_pol[i].y += rot ;
       */
-      rotateYZ(Vec2(point[i].x,point[i].y)) ;
+      rotateYZ(Vec2(polar_point[i].x,polar_point[i].y)) ;
 
       Vec3 pos_primitive = Vec3(radius,0,0) ;
       translate(pos_primitive) ;

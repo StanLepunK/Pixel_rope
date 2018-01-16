@@ -1,15 +1,4 @@
-void pixel_classic() {
-	pixel_basic() ;
-  // pixel_shape() ;
-	// pixel_color() ;
-  //  pixel_costume_fill_stroke_strokeWeight() ;
-   
-  // pixel_choice_primitive_2D_shape() ;
-   // pixel_primitive_2D_shape_angle() ; 
- // pixel_primitive_2D_shape_direction() ;
-  // pixel_change_color() ;
-   //pixel_change_color_range() ;
-}
+
 
 
 // method
@@ -90,9 +79,9 @@ void change_all_components_of_color(Pixel p) {
   p.aspect(color(350,100,100,100)) ;
 }
 void change_specific_component_of_color(Pixel p) {
-  p.change_hue(abs(int(sin(frameCount *.001)*360)), 100, true) ;
-    p.change_alpha(abs(int(sin(frameCount *.01)*100)), 100, true) ;
-    p.aspect(true) ; // here we ask to apply the new color
+  p.set_hue(abs(int(sin(frameCount *.001)*360)), 100, true) ;
+  p.set_alpha(abs(int(sin(frameCount *.01)*100)), 100, true) ;
+  p.aspect(true) ; // here we ask to apply the new color
 }
 
 
@@ -112,10 +101,10 @@ void pixel_change_color_range() {
     So if you want use the new color, you must ask that by a boolean
     */
     boolean ask_to_use_new_color = true ;
-    p.change_hue(350, 180,360, ask_to_use_new_color) ; // method(int new_color, int start, int end, boolean question) ;
-    p.change_hue(120,  0,180, ask_to_use_new_color) ;
-    p.change_saturation(100, 0,100, ask_to_use_new_color) ;
-    p.change_brightness(100, 0,100, ask_to_use_new_color) ;
+    p.set_hue(350, 180,360, ask_to_use_new_color) ; // method(int new_color, int start, int end, boolean question) ;
+    p.set_hue(120,  0,180, ask_to_use_new_color) ;
+    p.set_saturation(100, 0,100, ask_to_use_new_color) ;
+    p.set_brightness(100, 0,100, ask_to_use_new_color) ;
     
     p.aspect(true) ;
     p.costume(TRIANGLE_ROPE) ;
