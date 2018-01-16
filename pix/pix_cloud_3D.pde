@@ -5,9 +5,10 @@
   To use all the costum of the Pixel, unfortunatly you must use the Polar mode :(
   With a special constructor 
   */
-void pixel_cloud_orientation_angle_pattern() {
+void cloud_3D_orientation_angle_pattern() {
   int num = 100 ;
-  Cloud p = new Cloud(num, P3D, r.ORDER, r.POLAR) ;
+  Cloud_3D p = new Cloud_3D(num, P3D, r.ORDER, r.CARTESIAN) ;
+  // if(mousePressed) p.polar(true) ; else p.polar(false);
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(15) ;
@@ -30,10 +31,10 @@ void pixel_cloud_orientation_angle_pattern() {
   To use all the costum of the Pixel, unfortunatly you must use the Polar mode :(
   With a special constructor 
 */
-void pixel_cloud_orientation_angle() {
+void cloud_3D_orientation_angle() {
 
   int num = 300 ;
-  Cloud p = new Cloud(num, P3D, r.ORDER, r.POLAR) ;
+  Cloud_3D p = new Cloud_3D(num, P3D, r.ORDER, r.POLAR) ;
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(Vec2(5, 400)) ;
@@ -58,9 +59,9 @@ void pixel_cloud_orientation_angle() {
   To use all the costum of the Pixel, unfortunatly you must use the Polar mode :(
   With a special constructor 
   */
-void pixel_cloud_costume() {
+void cloud_3D_costume() {
   int num = 300 ;
-  Cloud p = new Cloud(num, P3D, r.ORDER, r.POLAR) ;
+  Cloud_3D p = new Cloud_3D(num, P3D, r.ORDER, r.POLAR) ;
   p.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
 
   p.size(Vec2(5, 300)) ;
@@ -88,10 +89,10 @@ void pixel_cloud_costume() {
    here you can choice between "2D" or "3D" give an Circle or Sphere
    and "CHAOS" or "ORDER" that change the distribution around your shape, regular or randomize
    */
-void pixel_cloud_list_point() {
+void cloud_3D_list_point() {
   int num = 600 ;
 
-  Cloud p = new Cloud(num, P3D, r.CHAOS) ;
+  Cloud_3D p = new Cloud_3D(num, P3D, r.CHAOS) ;
 
   Vec4 col = new Vec4(200, 0,100,100) ;
   p.aspect(col,1) ;
@@ -116,9 +117,9 @@ void pixel_cloud_list_point() {
 
 
 
-void pixel_cloud_pattern_random() {
+void cloud_3D_pattern_random() {
   int num = 600 ;
-  Cloud p = new Cloud(num, P3D, r.CHAOS) ;
+  Cloud_3D p = new Cloud_3D(num, P3D, r.CHAOS) ;
 
   p.aspect() ;
   float radius = 200 ;
@@ -141,9 +142,9 @@ void pixel_cloud_pattern_random() {
 }
 
 
-void pixel_cloud_beat_pattern() {
+void cloud_3D_beat_pattern() {
   int num = 600 ;
-  Cloud p = new Cloud(num, P3D, r.ORDER) ;
+  Cloud_3D p = new Cloud_3D(num, P3D, r.ORDER) ;
 
   p.aspect() ;
   int radius = 200 ;
@@ -171,9 +172,9 @@ void pixel_cloud_beat_pattern() {
 
 
 
-void pixel_cloud_connector(String type, float distance) {
+void cloud_3D_connector(String type, float distance) {
   int num = 50 ;
-  Cloud p = new Cloud(num, P2D, r.ORDER);
+  Cloud_3D p = new Cloud_3D(num, P2D, r.ORDER);
 
   int radius = 100 ;
   p.pattern("RANDOM") ;

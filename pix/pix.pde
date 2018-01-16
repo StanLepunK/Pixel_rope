@@ -11,7 +11,8 @@ void setup() {
 void draw() {
   background_rope(0) ;
   // pixel_classic() ;
-  pixel_cloud() ;
+  pixel_cloud_2D() ;
+  // pixel_cloud_3D() ;
 }
 
 
@@ -19,14 +20,14 @@ void draw() {
 /**
  exemple
  */
-void pixel_cloud() {
-//   pixel_cloud_list_point() ;
+void pixel_cloud_3D() {
+//   cloud_3D_list_point() ;
 
- // pixel_cloud_pattern_random() ;
-  // pixel_cloud_beat_pattern() ;
-  // pixel_cloud_costume() ;
-  //pixel_cloud_orientation_angle() ;
- pixel_cloud_orientation_angle_pattern();
+ // cloud_3D_pattern_random() ;
+  // cloud_3D_beat_pattern() ;
+  // cloud_3D_costume() ;
+  //pcloud_3D_orientation_angle() ;
+ cloud_3D_orientation_angle_pattern();
 }
 
 
@@ -45,6 +46,29 @@ void pixel_classic() {
    //pixel_change_color_range() ;
 }
 
+
+
+
+Cloud_2D cloud_2D ;
+void pixel_cloud_2D() {
+  int num = 10 ;
+  if(cloud_2D == null ) cloud_2D = new Cloud_2D(num, r.ORDER) ;
+
+  cloud_2D.aspect(Vec4(20,100,100,100), Vec4 (0,0,100,100), 1) ;
+
+  cloud_2D.size(15) ;
+  cloud_2D.angle(frameCount *.01);
+  cloud_2D.beat(50);
+  cloud_2D.pattern("SIN");
+  cloud_2D.rotation(0.01);
+
+  int radius = 175;
+  Vec3 pos = Vec3(width/2, height/2,0) ;
+  cloud_2D.distribution(pos, radius) ;
+
+  cloud_2D.costume(PENTAGON_ROPE) ;
+  cloud_2D.show() ;
+}
 
 
 

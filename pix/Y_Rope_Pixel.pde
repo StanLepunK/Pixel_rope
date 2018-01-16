@@ -389,89 +389,31 @@ abstract class Pix {
 
 
 
-
 /**
-CHILD CLASS
-
-*/
-/**
-PIXEL CLOUD
-
+CLOUD
 */
 class Cloud extends Pix implements Rope_Constants {
-// class Cloud extends Pix implements Pixel_Constants {
   int num ;
   float beat_ref = .001 ;
   float beat = .001 ;
-  String pattern = "RADIUS" ;
-  Vec3 [] coord ;
+  String pattern = "RADIUS";
+  Vec3 [] coord;
+  int distribution;
   String renderer_dimension;
-  int distribution ;
-  boolean polar_build = false ;
+  float radius = 1;
+  Vec3 orientation;
 
-  Vec3 orientation = Vec3(0,PI/2,0) ; 
-  float radius = 1 ;
-  
-  public Cloud(int num) {
-    init_mother_arg() ;
+  boolean polar_build;
+
+
+  Cloud(int num, String renderer_dimension) {
+    init_mother_arg();
     this.num = num ;
+    coord = new Vec3[num];
     choice_renderer_dimension(renderer_dimension);
-
-    this.distribution = ORDER;
-    coord = new Vec3[num] ;
-    coord = new Vec3[num] ;
-    init() ;
   }
 
-
-
-  public Cloud(int num, String renderer_dimension, int distribution) {
-    init_mother_arg() ;
-    this.num = num ;
-    choice_renderer_dimension(renderer_dimension);
-    this.distribution = distribution ;
-    coord = new Vec3[num] ;
-    coord = new Vec3[num] ;
-    init() ;
-  }
-  
-  /*
-  Use this constructor if you want build a cartesian sphere with a real coord in the 3D space, you must ask a "POINT" costume
-  */
-  public Cloud(int num, String renderer_dimension, int distribution, int build) {
-    init_mother_arg() ;
-    if(build == POLAR) {
-      polar_build = true ; 
-    } else {
-      polar_build = false ;
-    }
-    this.num = num ;
-    choice_renderer_dimension(renderer_dimension);
-
-    this.distribution = distribution ;
-    coord = new Vec3[num] ;
-    coord = new Vec3[num] ;
-    init() ;
-    costume_ID = ELLIPSE_ROPE ;
-  }
-
-
-
-  private void choice_renderer_dimension(String dimension) {
-    if(dimension == P3D) {
-      this.renderer_dimension = P3D ;
-    } else {
-      this.renderer_dimension = P2D ;
-      polar_build = false ;
-    }
-  }
-
-/**
-  // BUILD
-  //////////
-*/
-    // internal method
-  private void init() {
+  protected void init() {
     if(renderer_dimension == P2D) {
       cartesian_pos_2D() ; 
     } else {
@@ -482,10 +424,17 @@ class Cloud extends Pix implements Rope_Constants {
       }
     }
   }
+  
+  protected void cartesian_pos_2D() {
+    cartesian_pos_2D(0);
+  }
 
-  private void cartesian_pos_2D() {
+  
+  protected void cartesian_pos_2D(float dist) {
     float angle = TAU / num ;
-    float tetha  = angle ;
+    float tetha = dist + angle ;
+    println("je suis là", tetha, dist,frameCount);
+    // tetha  += angle ;
     for(int i = 0 ; i < num ; i++ ) {
       if(distribution == ORDER) {
         coord[i] = Vec3(cos(tetha),sin(tetha), 0 ) ; 
@@ -497,9 +446,9 @@ class Cloud extends Pix implements Rope_Constants {
     }
   }
 
-  private void cartesian_pos_3D() {
+  protected void cartesian_pos_3D() {
     if(distribution == ORDER) {
-      // sted and root maybe must be define somewhere ????
+      // step and root maybe must be define somewhere ????
       float step = PI * (3 - sqrt(5.)) ; 
       float root = PI ;
       coord = list_cartesian_fibonacci_sphere (num, step, root) ;
@@ -515,7 +464,7 @@ class Cloud extends Pix implements Rope_Constants {
   }
 
 
-  private void polar_pos_3D() {
+  protected void polar_pos_3D() {
     float step = TAU ;
     if(distribution == ORDER) {
       for (int i = 0; i < coord.length ; i++) {      
@@ -534,110 +483,47 @@ class Cloud extends Pix implements Rope_Constants {
       }
     }
   }
-  /**
-  END BUILD
-  */
 
 
 
 
 
+  protected void choice_renderer_dimension(String dimension) {
+    if(dimension == P3D) {
+      this.renderer_dimension = P3D ;
+    } else {
+      this.renderer_dimension = P2D ;
+    }
+  }
 
-  // DISPLAY
-  //////////////
-  
-  // external method
+
+  protected void give_points_to_costume_2D() {
+    for(int i  = 0 ; i < coord.length ;i++) {
+      costume_rope(coord[i], size, angle, costume_ID) ;
+    }
+  }
+
   public void beat(int n) {
     this.beat = beat_ref *n ;
   }
 
-
-   // return list of coord point
   public Vec3 [] list() {
-    return coord;
-    
-  }
-  // change orientation
-  public void orientation(Vec3 orientation) {
-    this.orientation = orientation ;
+    return coord;   
   }
 
-  public void orientation(float x, float y, float z) {
-    this.orientation = Vec3(x,y,z) ;
-  }
-
-  public void orientation_x(float orientation_x) {
-    this.orientation = Vec3(orientation_x,0,0) ;
-  }
-
-  public void orientation_y(float orientation_y) {
-    this.orientation = Vec3(0,orientation_y,0) ;
-  }
-
-  public void orientation_z(float orientation_z) {
-    this.orientation = Vec3(0,0,orientation_z) ;
-  }
-
-
-
-
-  // pattern
-  void pattern(String pattern) {
+  public void pattern(String pattern) {
     this.pattern = pattern ;
   }
 
-
-/**
-  // distribution inside
-  */
-  /*
-  void distribution_inside(Vec3 pos, int radius) {
-    this.pos = pos ;
-    float new_radius = radius  ;
-    for (int i = 0 ; i < point.length ; i++) {
-      point[i] = coord[i].copy() ;
-      new_radius = distribution_pattern(radius, pattern) ;
-      point[i].mult(new_radius) ;
-      point[i].add(pos) ;
-    }
-  }
-  */
-  
-/*
-  void distribution_inside(Vec3 pos, int radius, String pattern_distribution) {
-    float new_radius = radius  ;
-    for (int i = 0 ; i < point.length ; i++) {
-      point[i] = coord[i].copy() ;
-      new_radius = distribution_pattern(radius, pattern_distribution) ;
-      point[i].mult(new_radius) ;
-      point[i].add(pos) ;
-    }
-  }
-  */
-  /**
-  distribution_surface
-  */
-  public void distribution(Vec3 pos, float radius) {
-    this.pos.set(pos) ;
-    this.radius = radius ;
-    if(polar_build) {
-      distribution_surface_polar() ; 
-    } else {
-      distribution_surface_cartesian() ;
-    }
-  }
-
-
-
   // distribution surface cartesian
-  private void distribution_surface_polar() {
+  protected void distribution_surface_polar() {
     if(pattern != "RADIUS") {
       radius = abs(distribution_pattern(radius, pattern)) ;
     }
   }
 
  // distribution surface cartesian
- private void distribution_surface_cartesian() {
+ protected void distribution_surface_cartesian() {
     float radius_temp = radius;
 
     for (int i = 0 ; i < coord.length ; i++) {
@@ -653,7 +539,7 @@ class Cloud extends Pix implements Rope_Constants {
   distribution pattern
   */
   // internal method
-  private float distribution_pattern(float range, String pattern_distribution) {
+  protected float distribution_pattern(float range, String pattern_distribution) {
     float pos = 1 ;
     float normal_distribution = 1 ;
     
@@ -701,31 +587,151 @@ class Cloud extends Pix implements Rope_Constants {
     else if(pattern_distribution == "POW_SIN_PI") normal_distribution = pow(sin((t) *PI), factor_12_0) ;
     else if(pattern_distribution == "SIN_TAN_POW_SIN") normal_distribution = sin(tan(t) *pow(sin(t),factor_10_0)) ;
 
-
-
     pos = range *normal_distribution ;
     return pos ;
+  }  
+}
+
+
+
+/**
+CLOUD 3D
+*/
+class Cloud_2D extends Cloud {
+ 
+  public Cloud_2D(int num) {
+    super(num,P3D);
+    // choice_renderer_dimension(renderer_dimension);
+    this.distribution = ORDER;
+    orientation = Vec3(0,PI/2,0); 
+    init() ;
   }
-  
-  
-  
-  
-  
-  
-  
+
+  public Cloud_2D(int num, int distribution) {
+    super(num,P2D);
+    this.distribution = distribution ;
+    init();
+  }
+  float dist ;
+  public void rotation(float speed) {
+    dist += speed ;
+    cartesian_pos_2D(dist);
+  }
 
 
+
+  public void distribution(Vec3 pos, float radius) {
+    this.pos.set(pos) ;
+    this.radius = radius ;
+    distribution_surface_cartesian() ;
+  }
+
+  public void show() {
+    give_points_to_costume_2D();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+/**
+CLOUD 3D
+*/
+class Cloud_3D extends Cloud {
  
+  public Cloud_3D(int num) {
+    super(num,P3D);
+    // choice_renderer_dimension(renderer_dimension);
+    this.distribution = ORDER;
+    orientation = Vec3(0,PI/2,0); 
+    init() ;
+  }
+
+  /*
+  Use this constructor if you want build a cartesian sphere with a real coord in the 3D space, you must ask a "POINT" costume
+  */
+  public Cloud_3D(int num, String renderer_dimension, int distribution) {
+    super(num, renderer_dimension);
+    this.distribution = distribution ;
+    orientation = Vec3(0,PI/2,0); 
+    init();
+  }
+
+  public Cloud_3D(int num, String renderer_dimension, int distribution, int type) {
+    super(num, renderer_dimension);
+    
+    if(renderer_dimension == P2D && type == r.POLAR) {
+      printErr("class Cloud_3D cannot work good with 2D String renderer_dimension and type int r.POLAR");
+    }
+
+    this.distribution = distribution ;
+    orientation = Vec3(0,PI/2,0);
+    if(type == r.POLAR) {
+      polar(true);
+    } else {
+      polar(false);
+    }
+    init() ;
+  }
 
 
 
- 
-  
-  
-  
+  // change orientation
+  public void orientation(Vec3 orientation) {
+    orientation(orientation.x, orientation.y, orientation.z);
+  }
+
+  public void orientation_x(float orientation_x) {
+    orientation(orientation.x, 0,0);
+  }
+
+  public void orientation_y(float orientation_y) {
+    orientation(0, orientation.y,0);
+  }
+
+  public void orientation_z(float orientation_z) {
+    orientation(0,0,orientation.z);
+  }
+
+  public void orientation(float x, float y, float z) {
+     if(!polar_build) {
+      printErrTempo(180, "void orientation() class Cloud work only with type r.POLAR");
+    }
+    this.orientation = Vec3(x,y,z) ;
+  }
+
+
+
+
+
   /**
-  // COSTUME and display
-  // child method
+  * distribution_surface
+  */
+
+  public void polar(boolean polar_is) {
+    this.polar_build = polar_is;
+  }
+
+  public void distribution(Vec3 pos, float radius) {
+    this.pos.set(pos) ;
+    this.radius = radius ;
+    if(polar_build) {
+      distribution_surface_polar() ; 
+    } else {
+      distribution_surface_cartesian() ;
+    }
+  }
+
+
+  /**
+  * Show
   */
   public void show() {
     if (renderer_P3D() && renderer_dimension == P3D) {
@@ -734,15 +740,8 @@ class Cloud extends Pix implements Rope_Constants {
       give_points_to_costume_2D();
     }
   }
-  
-  // local method
-  private void give_points_to_costume_2D() {
-    for(int i  = 0 ; i < coord.length ;i++) {
-      // method from mother class need pass info arg
-      costume_rope(coord[i], size, angle, costume_ID) ;
-    }
-  }
-  private void give_points_to_costume_3D() {
+
+  protected void give_points_to_costume_3D() {
     if(!polar_build) {
       for(int i  = 0 ; i < coord.length ;i++) {
         // method from mother class need pass info arg
@@ -755,7 +754,7 @@ class Cloud extends Pix implements Rope_Constants {
   }
   
   // internal
-  private void costume_3D_polar() {
+  protected void costume_3D_polar() {
    start_matrix() ;
    translate(pos) ;
     for(int i = 0 ; i < num ;i++) {
@@ -778,17 +777,9 @@ class Cloud extends Pix implements Rope_Constants {
       stop_matrix() ;
       stop_matrix() ;
     }
-   stop_matrix() ;
-
+    stop_matrix() ;
   }
-  /**
-  // END COSTUME
-  */
 }
-/**
-END CLASS PIXEL CLOUD
-*/
-
 
 
 
