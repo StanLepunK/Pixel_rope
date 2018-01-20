@@ -362,7 +362,6 @@ void aspect_rope(Vec fill, Vec stroke, float strokeWeight) {
 }
 
 void aspect_rope(Vec fill, Vec stroke, float strokeWeight, int costume) {
-	//println("aspect_rope()", fill_rope_is, stroke_rope_is) ;
   if(costume != POINT_ROPE) {
     if(fill.w <= 0 || !fill_rope_is) {
     	noFill() ; 

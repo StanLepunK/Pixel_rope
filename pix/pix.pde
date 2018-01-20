@@ -22,12 +22,8 @@ void draw() {
  */
 void pixel_cloud_3D() {
 //   cloud_3D_list_point() ;
-
- // cloud_3D_pattern_random() ;
-  // cloud_3D_beat_pattern() ;
-  // cloud_3D_costume() ;
-  //pcloud_3D_orientation_angle() ;
- cloud_3D_orientation_angle_pattern();
+  // cloud_3D_connector()
+ cloud_3D_orientation_angle_pattern_costume();
 }
 
 
@@ -60,7 +56,7 @@ void pixel_cloud_2D() {
   cloud_2D.angle(frameCount *.01);
   cloud_2D.beat(50);
   cloud_2D.pattern("SIN");
-  cloud_2D.rotation(0.01);
+  if(mousePressed) cloud_2D.rotation(map(mouseX, 0,width,-PI,PI), true); else cloud_2D.rotation(0.01, false);
 
   int radius = 175;
   Vec3 pos = Vec3(width/2, height/2,0) ;

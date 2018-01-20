@@ -46,6 +46,27 @@ float distribution_pattern(float range, String pattern_distribution);
 
 
 
+CLOUD_2D
+--
+this class use a pixel position to make a cloud pixel in 3D.
+
+Constructor
+--
+Cloud_2D(int num);
+
+
+Cloud_2D(int num, int distribution);
+
+
+METHOD
+--
+ROTATION
+--
+rotation(float var, boolean static_rotation);
+>parameter: 
+float var define the speed or the distance of rotation
+boolean static_rotation definie if var is the speed or the distance of rotation, if it's true var is use like distance
+
 
 
 
@@ -94,24 +115,31 @@ void orientation(float x, float y, float z);
 
 
 
-
-
-
-
-
-
-
-
-CLOUD_2D
+ROTATION
 --
-this class use a pixel position to make a cloud pixel in 3D.
+rotation_x(float var, boolean static_rotation);
+>parameter: 
+float var define the speed or the distance of rotation
+boolean static_rotation definie if var is the speed or the distance of rotation, if it's true var is use like distance
 
-Constructor
---
-Cloud_2D(int num);
+rotation_y(float var, boolean static_rotation);
+
+rotation_z(float var, boolean static_rotation);
 
 
-Cloud_2D(int num, int distribution);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

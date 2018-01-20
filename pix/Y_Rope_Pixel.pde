@@ -1,7 +1,7 @@
 
 /**
 CLASS PIX 
-v 0.2.1
+v 0.2.2
 2016-2018
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Pixel
@@ -149,106 +149,60 @@ abstract class Pix {
 
   /**
   ASPECT
+  v 0.2.0
   */
-  //without effect
-  // basic
-
   /**
   improve methode to check if the stroke must be Stroke or noStroke()
   */
   public void aspect() {
     float thickness = 1 ;
-    aspect(colour, colour, thickness) ;
+    aspect_rope(colour,colour,thickness);
   }
 
   public void aspect(boolean new_colour_choice) {
     float thickness = 1 ;
-    Vec4 color_choice = Vec4() ;
-    if(new_colour_choice) color_choice = new_colour.copy() ; else color_choice = colour.copy() ;
-    aspect(color_choice, color_choice, thickness) ;
+    Vec4 color_choice = Vec4();
+    if(new_colour_choice) {
+      color_choice.set(new_colour); 
+    } else {
+      color_choice.set(colour);
+    }
+    aspect_rope(color_choice,color_choice,thickness) ;
   }
 
   public void aspect(boolean new_colour_choice, float thickness) {
     Vec4 color_choice = Vec4() ;
-    if(new_colour_choice) color_choice = new_colour.copy() ; else color_choice = colour.copy() ;
-
-    if(thickness <= 0) { 
-      noStroke() ;
-      fill(color_choice) ;
-
-    } else { 
-      strokeWeight(thickness) ;
-      stroke(color_choice) ;
-      fill(color_choice) ;
+    if(new_colour_choice) {
+      color_choice.set(new_colour) ; 
+    } else {
+      color_choice.set(colour);
     }
+    aspect_rope(color_choice,color_choice,thickness);
   }
 
   public void aspect(float thickness) {
-    if(thickness <= 0) { 
-      noStroke() ;
-      fill(colour) ;
-
-    } else { 
-      strokeWeight(thickness) ;
-      stroke(colour) ;
-      fill(colour) ;
-    }
+    aspect_rope(colour,colour,thickness);
   }
 
   public void aspect(int c) {
     float thickness = 1 ;
     Vec4 color_pix = int_color_to_vec4_color(c).copy() ;
-    aspect(color_pix, color_pix, thickness) ;
+    aspect_rope(color_pix, color_pix, thickness);
   }
 
   public void aspect(Vec4 color_pix) {
     float thickness = 1 ;
-    aspect(color_pix, color_pix, thickness) ;
+    aspect_rope(color_pix, color_pix, thickness) ;
   }
 
   public void aspect(Vec4 color_pix, float thickness) {
-    aspect(color_pix, color_pix, thickness) ;
+    aspect_rope(color_pix, color_pix, thickness) ;
   }
   
-  
-  // main method aspect
   public void aspect(Vec4 color_fill, Vec4 color_stroke, float thickness) {
-    if(color_fill.a <= 0 && color_stroke.a <= 0) {
-      noStroke() ; 
-      noFill() ;
-    } else {
-      if (renderer_P3D()) {
-        // stroke part
-        if(thickness <= 0 || color_stroke.a <= 0 ) noStroke() ; else {
-          if(costume_ID == POINT_ROPE) {
-            strokeWeight((size.x + size.y + size.z)/3) ; 
-          } else strokeWeight(thickness) ;
-          stroke(color_stroke) ;
-        }
-        // fill part
-        if (color_fill.a <= 0 ) {
-          noFill() ; 
-        } else {
-          fill(color_fill) ;
-        }
-      } else {
-        // stroke part
-        if(thickness <= 0 || color_stroke.a <= 0 ) noStroke() ; 
-        else {
-          if(costume_ID == POINT_ROPE) { 
-            strokeWeight((size.x + size.y + size.z)/3) ;
-          } else strokeWeight(thickness) ;
-          stroke(color_stroke) ;
-        }
-        // fill part
-        if (color_fill.a <= 0 ) {
-          noFill() ; 
-        } else {
-          fill(color_fill) ;
-        }
-      }
-    }
+    aspect_rope(color_fill,color_stroke,thickness);
   }
+  
 
 
 
@@ -424,6 +378,7 @@ class Cloud extends Pix implements Rope_Constants {
   Vec3 orientation;
 
   boolean polar_is;
+  float dist;
 
 
   Cloud(int num, String renderer_dimension) {
@@ -502,16 +457,15 @@ class Cloud extends Pix implements Rope_Constants {
     }
   }
 
-  float dist ;
-  protected void rotation(float speed) {
-    if(!polar_is) {
-      dist += speed ;
+  
+  protected void rotation(float rotation, boolean static_rot) {
+    if(!polar_is && this.renderer_dimension == P2D) {
+      if(static_rot) dist = rotation ; else dist += rotation;
       cartesian_pos_2D(dist);
     } else {
-      dist += speed ;
+      printErrTempo(180, "Class Pix method rotation() is available only in P2D rendering and for sub Class Cloud_2D, for Cloud_3D use rotation_x(), rotation_y() or rotation_z()");
     }
   }
-
 
   protected void choice_renderer_dimension(String dimension) {
     if(dimension == P3D) {
@@ -666,6 +620,12 @@ class Cloud_2D extends Cloud {
 CLOUD 3D
 */
 class Cloud_3D extends Cloud {
+
+  boolean rotation_x, rotation_y, rotation_z;
+  float dist_x, dist_y, dist_z;
+
+  boolean rotation_fx_x, rotation_fx_y, rotation_fx_z;
+  float dist_fx_x, dist_fx_y, dist_fx_z;
  
   public Cloud_3D(int num) {
     super(num,P3D);
@@ -729,6 +689,74 @@ class Cloud_3D extends Cloud {
   }
 
 
+  // rotation
+  public void rotation_x(float rot, boolean static_rot) {
+    if(!polar_is) {
+      printErrTempo(180, "class Cloud_3D method rotation_x() is not available for cartesian_2D distribution, only in polar distribution");
+    } else {
+      rotation_x = true ;
+      if(static_rot) dist_x = rot ; else dist_x += rot ;
+    }
+  }
+
+  public void rotation_y(float rot, boolean static_rot) {
+    if(!polar_is) {
+      printErrTempo(180, "class Cloud_3D method rotation_y() is not available for cartesian_2D distribution, only in polar distribution");
+    } else {
+      rotation_y = true ;
+      if(static_rot) dist_y = rot ; else dist_y += rot ;
+    }
+  }
+
+  public void rotation_z(float rot, boolean static_rot) {
+    if(!polar_is) {
+      printErrTempo(180, "class Cloud_3D method rotation_y() is not available for cartesian_2D distribution, only in polar distribution");
+    } else {
+      rotation_z = true ;
+      if(static_rot) dist_z = rot ; else dist_z += rot ;
+    }
+  }
+
+  // rotation FX
+  public void rotation_fx_x(float rot, boolean static_rot) {
+    if(!polar_is) {
+      printErrTempo(180, "class Cloud_3D method rotation_x() is not available for cartesian_2D distribution, only in polar distribution");
+    } else {
+      rotation_fx_x = true ;
+      if(static_rot) dist_fx_x = rot ; else dist_fx_x += rot ;
+    }
+  }
+  
+
+
+  public void rotation_fx_y(float rot, boolean static_rot) {
+    if(!polar_is) {
+      printErrTempo(180, "class Cloud_3D method rotation_y() is not available for cartesian_2D distribution, only in polar distribution");
+    } else {
+      rotation_fx_y = true ;
+      if(static_rot) dist_fx_y = rot ; else dist_fx_y += rot ;
+    }
+  }
+
+  public void rotation_fx_z(float rot, boolean static_rot) {
+    if(!polar_is) {
+      printErrTempo(180, "class Cloud_3D method rotation_y() is not available for cartesian_2D distribution, only in polar distribution");
+    } else {
+      rotation_fx_z = true ;
+      if(static_rot) dist_fx_z = rot ; else dist_fx_z += rot ;
+    }
+  }
+
+
+  public void ring(float rot, boolean static_rot) {
+    rotation_fx_y(rot, static_rot);
+  }
+
+  public void helmet(float rot, boolean static_rot) {
+    rotation_fx_z(rot, static_rot);
+  }
+
+
 
 
 
@@ -785,8 +813,16 @@ class Cloud_3D extends Cloud {
       float rot = (map(mouseX,0,width,-PI,PI)) ;
       dir_pol[i].y += rot ;
       */
-      Vec2 coord_temp = Vec2(coord[i].x,coord[i].y).add(dist);
+      if(rotation_x) rotateX(dist_x); 
+      if(rotation_y) rotateY(dist_y); 
+      if(rotation_z) rotateZ(dist_z); 
+      // Vec2 coord_temp = Vec2(coord[i].x,coord[i].y).add(dist);
+      Vec2 coord_temp = Vec2(coord[i].x,coord[i].y);
       rotateYZ(coord_temp) ;
+      
+      if(rotation_fx_x) rotateX(dist_fx_x); // interesting
+      if(rotation_fx_y) rotateY(dist_fx_y); // interesting
+      if(rotation_fx_z) rotateZ(dist_fx_z); // interesting
 
       Vec3 pos_primitive = Vec3(radius,0,0) ;
       translate(pos_primitive) ;
