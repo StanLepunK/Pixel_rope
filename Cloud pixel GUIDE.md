@@ -52,10 +52,18 @@ this class use a pixel position to make a cloud pixel in 3D.
 
 Constructor
 --
-Cloud_2D(int num);
+class Cloud_2D(int num);
 
+class Cloud_2D(int num, int distribution);
 
-Cloud_2D(int num, int distribution);
+class public Cloud_2D(int num, int distribution, float angle_step);
+
+parameters:
+int num : quantity of points in the cloud
+int distribution: at this moment two type of distribution 
+r.ORDER > regular distribution
+r.CHAOS > random distribution
+float angle_step define the angle between the point, by default it's > TWO_PI div by num
 
 
 METHOD
@@ -80,11 +88,22 @@ this class use a pixel position to make a cloud pixel in 3D.
 Constructor
 --
 Cloud_3D(int num);
-> the render default is P2D, and an r.ORDER distribution whith a r.CARTESIAN build
+> the render default is P2D, and an int distribution r.ORDER, int type r.CARTESIAN
 
-Cloud_3D(int num, String renderer_dimension, int distribution);
+class Cloud_3D(int num, String renderer_dimension, int distribution);
 
-Cloud_3D(int num, String renderer_dimension, int distribution, int build);
+class Cloud_3D(int num, String renderer_dimension, int distribution, int type);
+
+class Cloud_3D(int num, String renderer_dimension, float step_angle);
+>this constructor work with int distribution = r.ORDER and with int type = r.CARTESIAN
+
+parameters:
+int num : quantity of points in the cloud
+int distribution: at this moment two type of distribution 
+String renderer_dimension define if it's 2D or 3D rendering, use var P2D or P3D
+r.ORDER > regular distribution
+r.CHAOS > random distribution
+float angle_step define the angle between the point, by default it's > TWO_PI div by num
 
 
 Parameters:

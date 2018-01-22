@@ -2,6 +2,49 @@
 * CLOUD 3D exemple
 * v 0.0.2
 */
+Cloud_3D cloud_3D_angle ;
+float angle_ref;
+void cloud_3D_angle_step() {
+  int num = 100 ;
+  float angle_distribution = map(mouseX, 0,width,0,TAU);
+
+  if(cloud_3D_angle == null || angle_ref != angle_distribution) {
+    angle_ref = angle_distribution;
+    cloud_3D_angle = new Cloud_3D(num, P3D, angle_distribution);
+    //cloud_3D_angle = new Cloud_3D(num, P3D, r.ORDER, r.CARTESIAN);
+  }
+
+  float red_val = abs ( sin(frameCount *.01) *50) ;
+  cloud_3D_angle.aspect(Vec4(red_val,100,100,100), Vec4(red_val,100,100,100), 100) ;
+
+
+  cloud_3D_angle.size(2);
+  // printArray(cloud_3D_angle.list());
+  // cloud_3D.orientation_y(map(mouseY,0,height,-PI,PI)) ;
+  // cloud_3D_angle.angle(frameCount *.01);
+  // cloud_3D_angle.beat(8);
+  //cloud_3D.pattern("SIN");
+  //cloud_3D.pattern("SIN_TAN_POW_SIN");
+  // cloud_3D.pattern("POW_SIN_PI");
+  // cloud_3D_angle.pattern("SIN_POW_SIN");
+
+  int radius = int(width *.3);
+  Vec3 pos = Vec3(width/2, height/2,0) ;
+  cloud_3D_angle.distribution(pos, radius) ;
+
+  //cloud_3D_angle.costume(PENTAGON_ROPE) ;
+  cloud_3D_angle.costume(POINT_ROPE) ;
+  cloud_3D_angle.show() ;
+}
+
+
+
+
+
+
+
+
+
 
   /**
   To use all the costum of the Pixel, unfortunatly you must use the Polar mode :(
@@ -10,7 +53,7 @@
 Cloud_3D cloud_3D ;
 void cloud_3D_orientation_angle_pattern_costume() {
   int num = 200 ;
-  if(cloud_3D == null) cloud_3D = new Cloud_3D(num, P3D, r.ORDER, r.POLAR) ;
+  if(cloud_3D == null) cloud_3D = new Cloud_3D(num, P3D, r.ORDER, r.POLAR);
   // if(mousePressed) p.polar(true) ; else p.polar(false);
   float red_val = abs ( sin(frameCount *.01) *50) ;
   cloud_3D.aspect(Vec4(red_val,100,100,15), Vec4(0), .1) ;
@@ -43,6 +86,17 @@ void cloud_3D_orientation_angle_pattern_costume() {
   cloud_3D.costume(PENTAGON_ROPE) ;
   cloud_3D.show() ;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

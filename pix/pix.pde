@@ -9,7 +9,7 @@ void setup() {
 
 
 void draw() {
-  background_rope(0,10) ;
+  background_rope(0,g.colorModeA *.6) ;
   // pixel_classic() ;
   // pixel_cloud_2D() ;
   pixel_cloud_3D() ;
@@ -22,8 +22,9 @@ void draw() {
  */
 void pixel_cloud_3D() {
 //   cloud_3D_list_point() ;
-  // cloud_3D_connector()
- cloud_3D_orientation_angle_pattern_costume();
+  // cloud_3D_connector();
+  cloud_3D_angle_step();
+ //cloud_3D_orientation_angle_pattern_costume();
 }
 
 

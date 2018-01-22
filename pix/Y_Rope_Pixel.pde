@@ -1,7 +1,7 @@
 
 /**
 CLASS PIX 
-v 0.2.2
+v 0.3.1
 2016-2018
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Pixel
@@ -400,13 +400,25 @@ class Cloud extends Pix implements Rope_Constants {
     }
   }
   
+
+  
+  float angle_step ;
+  protected void angle_step(float angle_step) {
+    if(distribution == ORDER && !polar_is) {
+      this.angle_step = angle_step;
+    } else {
+      printErrTempo(180, "class Cloud, method angle_step() must be used in Cartesian rendering and with ORDER distribution");
+    }
+  }
+
   protected void cartesian_pos_2D() {
     cartesian_pos_2D(0);
   }
 
-  
   protected void cartesian_pos_2D(float dist) {
     float angle = TAU / num ;
+    if(angle_step != 0) angle = angle_step / num ;
+
     float tetha = dist + angle ;
     for(int i = 0 ; i < num ; i++ ) {
       if(distribution == ORDER) {
@@ -424,7 +436,11 @@ class Cloud extends Pix implements Rope_Constants {
       // step and root maybe must be define somewhere ????
       float step = PI * (3 - sqrt(5.)) ; 
       float root = PI ;
-      coord = list_cartesian_fibonacci_sphere (num, step, root) ;
+      if(angle_step != 0) {
+        step = angle_step * (3 - sqrt(5.)) ;
+        root = angle_step;
+      }
+      coord = list_cartesian_fibonacci_sphere(num, step, root);
     } else {
       for(int i = 0 ; i < coord.length ; i++ ) {
         float tetha  = random(-PI, PI) ;
@@ -494,7 +510,7 @@ class Cloud extends Pix implements Rope_Constants {
     this.pattern = pattern ;
   }
 
-  // distribution surface cartesian
+  // distribution surface polar
   protected void distribution_surface_polar() {
     if(pattern != "RADIUS") {
       radius = abs(distribution_pattern(radius, pattern)) ;
@@ -594,8 +610,15 @@ class Cloud_2D extends Cloud {
     init();
   }
 
+  public Cloud_2D(int num, int distribution, float angle_step) {
+    super(num,P2D);
+    this.distribution = distribution ;
+    angle_step(angle_step);
+    init();
+  }
 
-  public void distribution(Vec3 pos, float radius) {
+
+  public void distribution(Vec pos, float radius) {
     this.pos.set(pos) ;
     this.radius = radius ;
     distribution_surface_cartesian() ;
@@ -631,7 +654,7 @@ class Cloud_3D extends Cloud {
     super(num,P3D);
     // choice_renderer_dimension(renderer_dimension);
     this.distribution = ORDER;
-    orientation = Vec3(0,PI/2,0); 
+    this.orientation = Vec3(0,PI/2,0); 
     init() ;
   }
 
@@ -641,7 +664,7 @@ class Cloud_3D extends Cloud {
   public Cloud_3D(int num, String renderer_dimension, int distribution) {
     super(num, renderer_dimension);
     this.distribution = distribution ;
-    orientation = Vec3(0,PI/2,0); 
+    this.orientation = Vec3(0,PI/2,0); 
     init();
   }
 
@@ -653,12 +676,28 @@ class Cloud_3D extends Cloud {
     }
 
     this.distribution = distribution ;
-    orientation = Vec3(0,PI/2,0);
+    this.orientation = Vec3(0,PI/2,0);
     if(type == r.POLAR) {
       polar(true);
     } else {
       polar(false);
     }
+    init() ;
+  }
+
+  public Cloud_3D(int num, String renderer_dimension, float step_angle) {
+    super(num, renderer_dimension);
+    polar(false);
+    this.distribution = r.ORDER ;
+    this.orientation = Vec3(0,PI/2,0);
+    angle_step(step_angle);
+    /*
+    if(type == r.POLAR) {
+      polar(true);
+    } else {
+      polar(false);
+    }
+    */
     init() ;
   }
 
@@ -710,7 +749,7 @@ class Cloud_3D extends Cloud {
 
   public void rotation_z(float rot, boolean static_rot) {
     if(!polar_is) {
-      printErrTempo(180, "class Cloud_3D method rotation_y() is not available for cartesian_2D distribution, only in polar distribution");
+      printErrTempo(180, "class Cloud_3D method rotation_z() is not available for cartesian_2D distribution, only in polar distribution");
     } else {
       rotation_z = true ;
       if(static_rot) dist_z = rot ; else dist_z += rot ;
@@ -720,7 +759,7 @@ class Cloud_3D extends Cloud {
   // rotation FX
   public void rotation_fx_x(float rot, boolean static_rot) {
     if(!polar_is) {
-      printErrTempo(180, "class Cloud_3D method rotation_x() is not available for cartesian_2D distribution, only in polar distribution");
+      printErrTempo(180, "class Cloud_3D method rotation_fx_x() is not available for cartesian_2D distribution, only in polar distribution");
     } else {
       rotation_fx_x = true ;
       if(static_rot) dist_fx_x = rot ; else dist_fx_x += rot ;
@@ -731,7 +770,7 @@ class Cloud_3D extends Cloud {
 
   public void rotation_fx_y(float rot, boolean static_rot) {
     if(!polar_is) {
-      printErrTempo(180, "class Cloud_3D method rotation_y() is not available for cartesian_2D distribution, only in polar distribution");
+      printErrTempo(180, "class Cloud_3D method rotation_fx_y() is not available for cartesian_2D distribution, only in polar distribution");
     } else {
       rotation_fx_y = true ;
       if(static_rot) dist_fx_y = rot ; else dist_fx_y += rot ;
@@ -740,7 +779,7 @@ class Cloud_3D extends Cloud {
 
   public void rotation_fx_z(float rot, boolean static_rot) {
     if(!polar_is) {
-      printErrTempo(180, "class Cloud_3D method rotation_y() is not available for cartesian_2D distribution, only in polar distribution");
+      printErrTempo(180, "class Cloud_3D method rotation_fx_z() is not available for cartesian_2D distribution, only in polar distribution");
     } else {
       rotation_fx_z = true ;
       if(static_rot) dist_fx_z = rot ; else dist_fx_z += rot ;
@@ -774,6 +813,7 @@ class Cloud_3D extends Cloud {
     if(polar_is) {
       distribution_surface_polar() ; 
     } else {
+      cartesian_pos_3D();
       distribution_surface_cartesian() ;
     }
   }
