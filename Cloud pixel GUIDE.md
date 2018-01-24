@@ -13,35 +13,38 @@ void angle(float angle)
 void list()
 > return the arraylist of Vec3 coord of point of this Pixel cloud
 
-
-Pattern
+BEHAVIOR
 --
-void pattern(String pattern);
+void behavior(String behavior);
+>you can choice between few bahavior often it's mathematical ones.
 
 
-Beat
+SPIRAL
+void spiral(int num);
+>parameters: int num must be upper to '0'
+
+RANGE
+--
+void range(float min, float max);
+>it's a multiplicator apply to radius, it's use in relation with the behavior to define the minimum radius and the meximum
+
+BEAT
 --
 void beat(int n);
 
 parameters: int n give the size of the beat
 
 
-
-MISC
-must be documented
+UPDATE
 --
+void update(Vec3 pos, float radius);
+>this method is an obligation, if you don't rebuilt your object to each frame
 
 
-Distribution ???
---
 
-void distribution(Vec3 pos, float radius);
 
-void distribution_surface_polar();
 
-void distribution_surface_cartesian();
 
-float distribution_pattern(float range, String pattern_distribution);
 
 
 
@@ -75,6 +78,10 @@ rotation(float var, boolean static_rotation);
 float var define the speed or the distance of rotation
 boolean static_rotation definie if var is the speed or the distance of rotation, if it's true var is use like distance
 
+MISC
+--
+void growth(float angle_growth)
+>parameters float angle_growth add dist each frame between the point
 
 
 

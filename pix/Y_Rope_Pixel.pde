@@ -1,7 +1,7 @@
 
 /**
 CLASS PIX 
-v 0.3.1
+v 0.3.2
 2016-2018
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Pixel
@@ -370,15 +370,22 @@ class Cloud extends Pix implements Rope_Constants {
   int num ;
   float beat_ref = .001 ;
   float beat = .001 ;
-  String pattern = "RADIUS";
+  String behavior = "RADIUS";
   Vec3 [] coord;
+  int type = r.CARTESIAN ;
   int distribution;
   String renderer_dimension;
   float radius = 1;
   Vec3 orientation;
 
+  float angle_growth;
+  float dist_growth ;
+
   boolean polar_is;
   float dist;
+  int spiral_rounds;
+
+  Vec2 range;
 
 
   Cloud(int num, String renderer_dimension) {
@@ -390,7 +397,7 @@ class Cloud extends Pix implements Rope_Constants {
 
   protected void init() {
     if(renderer_dimension == P2D) {
-      cartesian_pos_2D() ; 
+      cartesian_pos_2D(dist) ; 
     } else {
       if(polar_is) {
         polar_pos_3D(); 
@@ -411,23 +418,42 @@ class Cloud extends Pix implements Rope_Constants {
     }
   }
 
-  protected void cartesian_pos_2D() {
-    cartesian_pos_2D(0);
+  protected void growth(float angle_growth) {
+    if(this.type == r.CARTESIAN && this.distribution == r.ORDER && this.renderer_dimension.equals(P2D)) {
+      this.angle_growth = angle_growth ;
+    } else {
+      printErrTempo(180, "class CLOUD method growth() work only int type == r.CARTESIAN & int distribution = r.ORDER & String renderer_dimension P2D");
+    }
   }
+
 
   protected void cartesian_pos_2D(float dist) {
     float angle = TAU / num ;
-    if(angle_step != 0) angle = angle_step / num ;
+    if(angle_step != 0) {
+      angle = angle_step / num ;
+    }
 
-    float tetha = dist + angle ;
+    if(angle_growth != 0) {
+      dist_growth += angle_growth;
+      angle += dist_growth;
+    }
+
+    float tetha ;
     for(int i = 0 ; i < num ; i++ ) {
-      if(distribution == ORDER) {
+      if(distribution == r.ORDER) {
+        tetha = dist +(angle *i);
+        // println(tetha);
+        /*
+        if(growth) {
+          tetha +=angle ;
+          println(i, tetha,"je deviens grand");
+        }
+        */
         coord[i] = Vec3(cos(tetha),sin(tetha), 0 ) ; 
       } else {
-        tetha = random(-PI, PI) ;
+        tetha = dist + random(-PI, PI) ;
         coord[i] = Vec3(cos(tetha),sin(tetha), 0 ) ;
       }
-      tetha += angle ;
     }
   }
 
@@ -476,8 +502,11 @@ class Cloud extends Pix implements Rope_Constants {
   
   protected void rotation(float rotation, boolean static_rot) {
     if(!polar_is && this.renderer_dimension == P2D) {
-      if(static_rot) dist = rotation ; else dist += rotation;
-      cartesian_pos_2D(dist);
+      if(static_rot) {
+        dist = rotation ; 
+      } else {
+        dist += rotation;
+      }
     } else {
       printErrTempo(180, "Class Pix method rotation() is available only in P2D rendering and for sub Class Cloud_2D, for Cloud_3D use rotation_x(), rotation_y() or rotation_z()");
     }
@@ -506,45 +535,85 @@ class Cloud extends Pix implements Rope_Constants {
     return coord;   
   }
 
-  public void pattern(String pattern) {
-    this.pattern = pattern ;
+  public void behavior(String behavior) {
+    this.behavior = behavior ;
+  }
+  
+  public void spiral(int spiral_rounds) {
+    this.spiral_rounds = spiral_rounds;
+    if(type != r.CARTESIAN) {
+      printErrTempo(180, "class Cloud method spiral() is available only for type r.CARTESIAN, not for type r.POLAR");
+    }
+  }
+  public void range(float min, float max) {
+    if(range == null) {
+      range = Vec2(min, max);
+    } else {
+      range.set(min,max);
+    }
   }
 
   // distribution surface polar
   protected void distribution_surface_polar() {
-    if(pattern != "RADIUS") {
-      radius = abs(distribution_pattern(radius, pattern)) ;
+    if(behavior != "RADIUS") {
+      radius = abs(distribution_behavior(range,radius,behavior)) ;
     }
   }
 
  // distribution surface cartesian
  protected void distribution_surface_cartesian() {
     float radius_temp = radius;
-
-    for (int i = 0 ; i < coord.length ; i++) {
-      if(pattern != "RADIUS") {
-        radius_temp = distribution_pattern(radius, pattern);
+    // println(radius_temp, radius);
+    
+    if(spiral_rounds > 0) {
+      int round = 0 ;
+      if(range == null) {
+        range = Vec2(0,1);
       }
-      coord[i].mult(radius_temp) ;
-      coord[i].add(pos) ;
+      float height_step = ((range.y -range.x) /coord.length) /spiral_rounds;
+      float floor = (range.y -range.x) / spiral_rounds;
+      for (int i = 0 ; i < coord.length ; i++) {       
+        float range_in = range.x + (height_step *i) + (floor *round) ;
+        
+        if(behavior != "RADIUS") {
+          Vec2 temp_range = range.copy();
+          temp_range.set(range_in,range.y);
+          radius_temp = distribution_behavior(temp_range,radius,behavior);
+        } else {
+          radius_temp = radius;
+          radius_temp *= range_in ;
+        }
+        coord[i].mult(radius_temp) ;
+        coord[i].add(pos) ;
+        round ++ ;
+        if(round >= spiral_rounds) round = 0 ;
+      }   
+    } else {
+      for (int i = 0 ; i < coord.length ; i++) {
+        if(behavior != "RADIUS") {
+          radius_temp = distribution_behavior(range,radius,behavior);
+        }
+        coord[i].mult(radius_temp) ;
+        coord[i].add(pos) ;
+      }
     }
   }
   
   /**
-  distribution pattern
+  distribution behavior
   */
   // internal method
-  protected float distribution_pattern(float range, String pattern_distribution) {
-    float pos = 1 ;
+  protected float distribution_behavior(Vec2 range, float radius, String behavior_distribution) {
+    // float pos = 1 ;
     float normal_distribution = 1 ;
     
     float root_1 = 0 ;
     float root_2 = 0 ;
     float root_3 = 0 ;
     float root_4 = 0 ;
-     if(pattern_distribution.contains("RANDOM")) {
+     if(behavior_distribution.contains("RANDOM")) {
       root_1 = random(1) ;
-      if(pattern_distribution.contains("2") || pattern_distribution.contains("3") || pattern_distribution.contains("4")|| pattern_distribution.contains("SPECIAL")) {
+      if(behavior_distribution.contains("2") || behavior_distribution.contains("3") || behavior_distribution.contains("4")|| behavior_distribution.contains("SPECIAL")) {
         root_2 = random(1) ;
         root_3 = random(1) ;
         root_4 = random(1) ;
@@ -552,7 +621,7 @@ class Cloud extends Pix implements Rope_Constants {
     }
 
     float t = 0 ;
-    if(pattern_distribution.contains("SIN") || pattern_distribution.contains("COS")) {
+    if(behavior_distribution.contains("SIN") || behavior_distribution.contains("COS")) {
       t = frameCount *beat;
     }
     float factor_1_2 = 1.2;
@@ -560,32 +629,41 @@ class Cloud extends Pix implements Rope_Constants {
     float factor_12_0 = 12.;
     float factor_10_0 = 10.;
     
-    if(pattern_distribution == "RANDOM") normal_distribution = root_1 ;
-    else if(pattern_distribution == "ROOT_RANDOM") normal_distribution = sqrt(root_1) ;
-    else if(pattern_distribution == "QUARTER_RANDOM") normal_distribution = 1 -(.25 *root_1) ;
+    if(behavior_distribution == "RANDOM") normal_distribution = root_1;
+    else if(behavior_distribution == "ROOT_RANDOM") normal_distribution = sqrt(root_1);
+    else if(behavior_distribution == "QUARTER_RANDOM") normal_distribution = 1 -(.25 *root_1);
     
-    else if(pattern_distribution == "2_RANDOM") normal_distribution = root_1 *root_2 ;
+    else if(behavior_distribution == "2_RANDOM") normal_distribution = root_1 *root_2;
 
-    else if(pattern_distribution == "3_RANDOM") normal_distribution = root_1 *root_2 *root_3 ;
+    else if(behavior_distribution == "3_RANDOM") normal_distribution = root_1 *root_2 *root_3;
 
-    else if(pattern_distribution == "4_RANDOM") normal_distribution = root_1 *root_2 *root_3 *root_4 ;
-    else if(pattern_distribution == "SPECIAL_A_RANDOM") normal_distribution = .25 *( root_1 +root_2 +root_3 +root_4) ;
-    else if(pattern_distribution == "SPECIAL_B_RANDOM") {
-      float temp = root_1 -root_2 +root_3 -root_4 ;
+    else if(behavior_distribution == "4_RANDOM") normal_distribution = root_1 *root_2 *root_3 *root_4;
+    else if(behavior_distribution == "SPECIAL_A_RANDOM") normal_distribution = .25 *(root_1 +root_2 +root_3 +root_4);
+    else if(behavior_distribution == "SPECIAL_B_RANDOM") {
+      float temp = root_1 -root_2 +root_3 -root_4;
       if(temp < 0) temp += 4 ;
-      normal_distribution = .25 *temp ;
+      normal_distribution = .25 *temp;
     }
 
-    else if(pattern_distribution == "SIN") normal_distribution = sin(t) ;
-    else if(pattern_distribution == "COS") normal_distribution = cos(t) ;
-    else if(pattern_distribution == "SIN_TAN_COS") normal_distribution = sin(tan(cos(t) *factor_1_2)) ;
-    else if(pattern_distribution == "SIN_TAN") normal_distribution = sin(tan(t)*factor_0_5) ;
-    else if(pattern_distribution == "SIN_POW_SIN") normal_distribution = sin(pow(8.,sin(t))) ;
-    else if(pattern_distribution == "POW_SIN_PI") normal_distribution = pow(sin((t) *PI), factor_12_0) ;
-    else if(pattern_distribution == "SIN_TAN_POW_SIN") normal_distribution = sin(tan(t) *pow(sin(t),factor_10_0)) ;
+    else if(behavior_distribution == "SIN") normal_distribution = sin(t);
+    else if(behavior_distribution == "COS") normal_distribution = cos(t);
+    else if(behavior_distribution == "SIN_TAN_COS") normal_distribution = sin(tan(cos(t) *factor_1_2));
+    else if(behavior_distribution == "SIN_TAN") normal_distribution = sin(tan(t)*factor_0_5);
+    else if(behavior_distribution == "SIN_POW_SIN") normal_distribution = sin(pow(8.,sin(t)));
+    else if(behavior_distribution == "POW_SIN_PI") normal_distribution = pow(sin((t) *PI), factor_12_0);
+    else if(behavior_distribution == "SIN_TAN_POW_SIN") normal_distribution = sin(tan(t) *pow(sin(t),factor_10_0));
 
-    pos = range *normal_distribution ;
-    return pos ;
+    // result
+    if(range != null) {
+      //return radius *(map(normal_distribution,-1,1,range.x,range.y)); // classic
+
+      float max = map(normal_distribution, -1, 1,-range.y,range.y);
+      return radius *(map(max,-1,1,range.x,1));
+
+      // return radius *(map(normal_distribution,-range.x,range.x,range.x,range.y)); // interesting
+    } else  {
+      return radius *normal_distribution;
+    }
   }  
 }
 
@@ -618,9 +696,10 @@ class Cloud_2D extends Cloud {
   }
 
 
-  public void distribution(Vec pos, float radius) {
+  public void update(Vec pos, float radius) {
     this.pos.set(pos) ;
     this.radius = radius ;
+    cartesian_pos_2D(dist);
     distribution_surface_cartesian() ;
   }
 
@@ -670,14 +749,14 @@ class Cloud_3D extends Cloud {
 
   public Cloud_3D(int num, String renderer_dimension, int distribution, int type) {
     super(num, renderer_dimension);
-    
+    this.type = type ;
     if(renderer_dimension == P2D && type == r.POLAR) {
       printErr("class Cloud_3D cannot work good with 2D String renderer_dimension and type int r.POLAR");
     }
 
     this.distribution = distribution ;
     this.orientation = Vec3(0,PI/2,0);
-    if(type == r.POLAR) {
+    if(this.type == r.POLAR) {
       polar(true);
     } else {
       polar(false);
@@ -807,7 +886,7 @@ class Cloud_3D extends Cloud {
     this.polar_is = polar_is;
   }
 
-  public void distribution(Vec3 pos, float radius) {
+  public void update(Vec3 pos, float radius) {
     this.pos.set(pos) ;
     this.radius = radius ;
     if(polar_is) {
