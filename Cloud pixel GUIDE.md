@@ -6,9 +6,6 @@ CLOUD
 --
 master method available for CLOUD_2D and CLOUD_3D
 
-ANGLE
---
-void angle(float angle)
 
 void list()
 > return the arraylist of Vec3 coord of point of this Pixel cloud
@@ -26,13 +23,18 @@ void spiral(int num);
 RANGE
 --
 void range(float min, float max);
->it's a multiplicator apply to radius, it's use in relation with the behavior to define the minimum radius and the meximum
+>it's a multiplicator apply to radius, it's use in relation with the behavior to define the minimum radius and the maximum
+
+
+TIME
+--
+void time_count(int value);
+>to pass count, this count is used with method beat(), maybe more in the future. by default the Processing frameCount is using.
 
 BEAT
 --
 void beat(int n);
-
-parameters: int n give the size of the beat
+>parameters: int n give the beat tempo, when trigonometric distribution is used.
 
 
 UPDATE
@@ -49,7 +51,7 @@ void update(Vec3 pos, float radius);
 
 
 
-CLOUD_2D
+CLOUD_2D extends CLOUD
 --
 this class use a pixel position to make a cloud pixel in 3D.
 
@@ -76,7 +78,7 @@ ROTATION
 rotation(float var, boolean static_rotation);
 >parameter: 
 float var define the speed or the distance of rotation
-boolean static_rotation definie if var is the speed or the distance of rotation, if it's true var is use like distance
+boolean static_rotation define if var is the speed or the distance of rotation, if it's true var is use like distance
 
 MISC
 --
@@ -88,7 +90,7 @@ void growth(float angle_growth)
 
 
 
-CLOUD_3D
+CLOUD_3D extends CLOUD
 --
 this class use a pixel position to make a cloud pixel in 3D.
 

@@ -51,42 +51,49 @@ CLASS
 
 
 
-METHODS
+METHOD
 --
-show
+SHOW
 --
-pix.show() ; 
+void show() ; 
 
-set
+
+SET
 --
-pix.set_costume(int ID) ;
+
+COSTUME
+--
+void set_costume(int ID) ;
+
+void costume_angle(float angle)
+>parameters float angle, set the angle start when costume() is used
 
 size
 --
-pix.size(float x) ;
+void size(float x) ;
 
-pix.size(float x, float y) ;
+void size(float x, float y) ;
 
-pix.size(float x, float y, float y) ;
+void size(float x, float y, float y) ;
 
-pix.size(Vec2 xy) ;
+void size(Vec2 xy);
 
-pix.size(Vec2 xyz) ;
+void size(Vec2 xyz);
 
 
-normal direction
+NORMAL DIRECTION
 --
 >Not used now
 
-pix.direction(Vec3 dir) ;
+void direction(Vec3 dir) ;
 
-pix.direction(float x, float y, float z) ;
+void direction(float x, float y, float z) ;
 
-pix.direction_x(float x) ;
+void direction_x(float x) ;
 
-pix.direction_y(float y) ;
+void direction_y(float y) ;
 
-pix.direction_z(float z) ;
+void direction_z(float z) ;
 
 
 ASPECT
@@ -172,6 +179,7 @@ Pixel pix = new Pixel (Vec3 pos, VVec4 color);
 Pixel pix = new Pixel (Vec2 pos, Vec2 size, Vec4 color);
 
 Pixel pix = new Pixel (Vec3 pos, Vec3 size, Vec4 color);
+
 
 with costume
 --

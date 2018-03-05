@@ -31,7 +31,7 @@ void pixel_primitive_2D_shape_angle() {
 
    p.aspect(Vec4(0), color_shape, 1) ;
    float new_angle =  sin(frameCount *.01) *TAU ;
-   p.angle(new_angle) ;
+   p.costume_angle(new_angle) ;
    p.show() ;
  }
 
@@ -144,7 +144,7 @@ void pixel_shape() {
   Vec3 size = Vec3(300) ;
   Pixel p = new Pixel(pos, size, costume_ID) ;
   p.aspect(Vec4(0),Vec4(255), 2) ;
-  p.angle(frameCount *.1) ;
+  p.costume_angle(frameCount *.1) ;
   p.show() ;
 }
 

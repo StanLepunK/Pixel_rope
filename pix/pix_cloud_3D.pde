@@ -76,7 +76,7 @@ void cloud_3D_orientation_angle_behavior_costume() {
 
   cloud_3D.size(20);
   // cloud_3D.orientation_y(map(mouseY,0,height,-PI,PI)) ;
-  cloud_3D.angle(frameCount *.01);
+  // cloud_3D.angle(frameCount *.01);
   cloud_3D.beat(8);
   //cloud_3D.behavior("SIN");
   //cloud_3D.behavior("SIN_TAN_POW_SIN");
