@@ -37,10 +37,13 @@ void beat(int n);
 >parameters: int n give the beat tempo, when trigonometric distribution is used.
 
 
-UPDATE
+RADIUS
 --
-void update(Vec3 pos, float radius);
->this method is an obligation, if you don't rebuilt your object to each frame
+void radius(float radius);
+>parameters float radius, change the radius of Cloud
+
+
+
 
 
 
@@ -71,19 +74,33 @@ r.CHAOS > random distribution
 float angle_step define the angle between the point, by default it's > TWO_PI div by num
 
 
+
+
+
+
 METHOD
 --
-ROTATION
+UPDATE
 --
-rotation(float var, boolean static_rotation);
->parameter: 
-float var define the speed or the distance of rotation
-boolean static_rotation define if var is the speed or the distance of rotation, if it's true var is use like distance
+void update();
 
-MISC
+void update(Vec pos);
+
+SHOW
 --
-void growth(float angle_growth)
->parameters float angle_growth add dist each frame between the point
+void show();
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -126,8 +143,18 @@ int build : choice between r.POLAR or r.CARTESIAN, with the cartesian distributi
 
 
 
-Method
+METHOD
 --
+UPDATE
+--
+void update();
+
+void update(Vec pos);
+
+SHOW
+--
+void show();
+
 ORIENTATION
 --
 change the orientation of each facets of the sphere

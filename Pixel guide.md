@@ -17,25 +17,12 @@ Default Arg of the class
 --
 P3D mode
 --
-Vec3 pos, new_pos ;
-
 Vec3 size = Vec3(1) ;
-
-Vec3 direction, acceleration, velocity ; 
-
-Vec2 orientation ;
-
-Vec3 grid_position ;
-
-Vec4 color_fill, color_stroke, new_color_fill, new_color_stroke ;
 
 int ID = 0 ;
 
-int rank = -1 ;
 int costume_ID = POINT_ROPE ;
 
-
-Vec4 original_color, new_color   ;
 
 
 
@@ -79,6 +66,14 @@ void size(float x, float y, float y) ;
 void size(Vec2 xy);
 
 void size(Vec2 xyz);
+
+POSITION
+--
+void position(Vec pos);
+
+void position(int x, int y);
+
+void position(int x, int y, int z);
 
 
 NORMAL DIRECTION
