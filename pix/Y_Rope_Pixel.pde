@@ -727,8 +727,7 @@ class Cloud_2D extends Cloud {
 
   public void update(Vec pos) {
     position(pos);
-    cartesian_pos_2D(dist);
-    distribution_surface_cartesian();
+    update();
   }
 
 
@@ -915,15 +914,18 @@ class Cloud_3D extends Cloud {
     this.polar_is = polar_is;
   }
 
-  public void update(Vec3 pos, float radius) {
-    this.pos.set(pos) ;
-    this.radius = radius ;
+  public void update() {
     if(polar_is) {
       distribution_surface_polar() ; 
     } else {
       cartesian_pos_3D();
       distribution_surface_cartesian() ;
     }
+  }
+
+  public void update(Vec3 pos) {
+    this.pos.set(pos);
+    update();
   }
 
 
