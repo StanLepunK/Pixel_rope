@@ -45,6 +45,21 @@ void radius(float radius);
 
 
 
+GROWTH
+--
+void growth(float angle_growth);
+
+float get_growth();
+
+void growth_size(float total_growth);
+
+
+ROTATION
+--
+void rotation(float rotation, boolean static_rot);
+
+float get_rotation();
+
 
 
 
