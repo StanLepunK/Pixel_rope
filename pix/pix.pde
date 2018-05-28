@@ -11,9 +11,9 @@ void setup() {
 void draw() {
   if(!keyPressed)background_rope(0,g.colorModeA *.05) ;
   // pixel_classic() ;
-  pixel_revolution();
+  // pixel_revolution();
  // pixel_cloud_2D() ;
- // pixel_cloud_3D() ;
+ pixel_cloud_3D() ;
 }
 
 
@@ -36,14 +36,15 @@ void pixel_revolution() {
   //println(radius);
   Vec3 pos = Vec3(width/2, height/2,0);
  
-  revolution.size(1);
+  revolution.size(radius);
   revolution.rotation(.02,false);
   // revolution.beat(10);
   //revolution.behavior(r.SIN);
   //revolution.range(.1,1);
 
 
-  revolution.update(pos,radius);
+  revolution.pos(pos);
+  revolution.update();
   revolution.aspect(Vec4(0), Vec4 (0,100,100,100), 1);
   revolution.costume(POINT_ROPE);
   revolution.show() ;
@@ -81,7 +82,9 @@ void pixel_cloud_2D() {
   Vec3 pos = Vec3(width/2, height/2,0);
   cloud_2D.spiral(4);
   cloud_2D.range(.5, 3.9);
-  cloud_2D.update(pos,radius) ;
+  cloud_2D.size(radius) ;
+  cloud_2D.pos(pos);
+  cloud_2D.update();
 
   // cloud_2D.aspect(Vec4(20,100,100,15), Vec4 (0), 1);
   // cloud_2D.costume(PENTAGON_ROPE) ;

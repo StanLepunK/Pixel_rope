@@ -1,10 +1,10 @@
 /**
-ROPE - Romanesco processing environment – 
+Rope UTILS 
+v 1.44.1
 * Copyleft (c) 2014-2018 
 * Stan le Punk > http://stanlepunk.xyz/
-Rope UTILS  2015 – 2018
-v 1.37.6
 Rope – Romanesco Processing Environment – 
+Processing 3.3.7
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Rope
 */
@@ -19,9 +19,6 @@ v 0.0.3
 
 Constant_list processing_constants_list = new Constant_list(PConstants.class);
 Constant_list rope_constants_list = new Constant_list(Rope_Constants.class);
-
-
-
 public void print_constants_rope() {
   if(rope_constants_list == null) {
     rope_constants_list = new Constant_list(Rope_Constants.class);
@@ -118,19 +115,19 @@ class Constant_list {
 
 /**
 FOLDER & FILE MANAGER
-v 0.1.0
+v 0.2.0
 */
 /*
-FILE PART
+INOUT PART
 */
 String selected_path_input = null;
 boolean input_selected_is;
 
-void select_file() {
-  select_file("");
+void select_input() {
+  select_input("");
 }
 
-void select_file(String message) {
+void select_input(String message) {
   // folder_selected_is = true ;
   selectInput(message, "input_selected");
 }
@@ -145,6 +142,18 @@ void input_selected(File selection) {
   }
 }
 
+boolean input_selected_is() {
+  return input_selected_is;
+}
+
+void reset_input_selection() {
+  input_selected_is = false;
+}
+
+String selected_path_input() {
+  return selected_path_input;
+}
+
 
 /*
 FOLDER PART
@@ -157,7 +166,6 @@ void select_folder() {
 }
 
 void select_folder(String message) {
-  // folder_selected_is = true ;
   selectFolder(message, "folder_selected");
 }
 
@@ -203,12 +211,17 @@ ArrayList<File> get_files() {
   return files ;
 }
 
-void explore_folder(String path_folder, boolean check_sub_folder, String... extension) {
-  if(folder_selected_is && path_folder != ("")) {
+void explore_folder(String path_folder, String... extension) {
+  explore_folder(path_folder, false, extension);
+
+}
+
+void explore_folder(String path, boolean check_sub_folder, String... extension) {
+  if((folder_selected_is || input_selected_is) && path != ("")) {
     count_selection++ ;
     set_media_list();
  
-    ArrayList allFiles = list_files(path_folder, check_sub_folder);
+    ArrayList allFiles = list_files(path, check_sub_folder);
   
     String fileName = "";
     int count_pertinent_file = 0 ;
@@ -229,6 +242,7 @@ void explore_folder(String path_folder, boolean check_sub_folder, String... exte
     }
     // to don't loop with this void
     folder_selected_is = false ;
+    input_selected_is = false ;
   }
 }
 
@@ -241,14 +255,16 @@ ArrayList list_files(String dir, boolean check_sub_folder) {
   if(check_sub_folder) { 
     explore_directory(fileList, dir);
   } else {
-    File file = new File(dir);
-    File[] subfiles = file.listFiles();
-    // println(subfiles.length);
-    for(int i = 0 ; i < subfiles.length ; i++) {
-      // println(subfiles[i]);
-      fileList.add(subfiles[i]);
+    if(folder_selected_is) {
+      File file = new File(dir);
+      File[] subfiles = file.listFiles();
+      for(int i = 0 ; i < subfiles.length ; i++) {
+        fileList.add(subfiles[i]);
+      }
+    } else if(input_selected_is) {
+      File file = new File(dir);
+      fileList.add(file);
     }
-
   }
   return fileList;
 }
@@ -677,7 +693,7 @@ v 0.0.2
 * resize your picture proportionaly to the window sketch of the a specificic PGraphics
 */
 void image_resize(PImage src) {
-  image_resize(src,g, true);
+  image_resize(src,g,true);
 }
 
 void image_resize(PImage src, boolean fullfit) {
@@ -1623,6 +1639,39 @@ void level(PGraphics p, PImage tex, float... ratio) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
 CANVAS
 v 0.1.2.1
@@ -1738,9 +1787,9 @@ void alpha_canvas(int target, float change) {
 
 /**
 show canvas
-v 0.0.3
+v 0.0.4
 */
-boolean fullscreen_is = false ;
+boolean fullscreen_canvas_is = false ;
 iVec2 show_pos ;
 /**
 Add to set the center of the canvas in relation with the window
@@ -1748,7 +1797,7 @@ Add to set the center of the canvas in relation with the window
 int offset_canvas_x = 0 ;
 int offset_canvas_y = 0 ;
 void set_show() {
-  if(!fullscreen_is) {
+  if(!fullscreen_canvas_is) {
     surface.setSize(get_canvas().width, get_canvas().height);
   } else {
     offset_canvas_x = width/2 - (get_canvas().width/2);
@@ -1770,7 +1819,7 @@ int get_offset_canvas_y() {
 }
 
 void show_canvas(int num) {
-  if(fullscreen_is) {
+  if(fullscreen_canvas_is) {
     image(get_canvas(num), show_pos);
   } else {
     image(get_canvas(num));
@@ -2090,6 +2139,12 @@ float camaieu(float max, float color_ref, float range) {
   if(camaieu > max) camaieu = camaieu -max ;
   return camaieu ;
 }
+
+
+
+
+
+
 
 /**
 color pool 
@@ -2426,54 +2481,23 @@ END COLOR
 
 
 /**
-EXPORT FILE PDF_PNG 0.0.3
-
+EXPORT FILE PDF_PNG 0.1.1
 */
-// global PDF / PNG
-String default_folder_shot_pdf = "pdf_folder" ;
-String default_folder_shot_png = "png_folder" ;
-String default_name_pdf = "pdf_file_" ;
-String default_name_png = "png_file_" ;
 String ranking_shot = "_######" ;
-
-void start_shot(String path_folder, String name_file) {
-  start_PDF(path_folder, name_file) ;
-  start_PNG(path_folder, name_file) ;
-}
-
-void start_shot(String name_file) {
-  start_PDF(default_folder_shot_pdf, name_file) ;
-  start_PNG(default_folder_shot_png, name_file) ;
-}
-
-void start_shot() {
-  start_PDF() ;
-  // start_PNG() ;
-}
-
-void save_shot() {
-  save_PDF() ;
-  save_PNG() ;
-}
-void event_shot() {
-  event_PNG() ;
-  event_PDF() ;
-}
-
-
-
-
 // PDF
 import processing.pdf.*;
 boolean record_PDF;
 void start_PDF() {
-  start_PDF(default_folder_shot_pdf, default_name_pdf+ranking_shot) ;
+  start_PDF(null,null) ;
 }
 
 void start_PDF(String name_file) {
-  start_PDF(default_folder_shot_pdf, name_file) ;
+  start_PDF(null, name_file) ;
 }
 void start_PDF(String path_folder, String name_file) {
+  if(path_folder == null) path_folder = "pdf_folder";
+  if(name_file == null) name_file = "pdf_file_"+ranking_shot;
+
   if (record_PDF && !record_PNG) {
     if(renderer_P3D()) {
       beginRaw(PDF, path_folder+"/"+name_file+".pdf"); 
@@ -2490,6 +2514,7 @@ void save_PDF() {
     } else {
       endRecord() ;
     }
+    println("PDF");
     record_PDF = false;
   }
 }
@@ -2505,7 +2530,6 @@ void event_PDF() {
 boolean record_PNG ;
 boolean naming_PNG ;
 String path_folder_png, name_file_png  ;
-
 void start_PNG(String path_folder, String name_file) {
   path_folder_png = path_folder ;
   name_file_png = name_file ;
@@ -2515,9 +2539,9 @@ void start_PNG(String path_folder, String name_file) {
 void save_PNG() {
   if(record_PNG) {
     if(!naming_PNG) {
-      saveFrame(default_folder_shot_png +"/"+ default_name_png + ranking_shot+".png");
+      saveFrame("png_folder/shot_" + ranking_shot + ".png");
     } else {
-      saveFrame(path_folder_png +"/"+ name_file_png +".png");
+      saveFrame(path_folder_png + "/" + name_file_png + ".png");
     }
     record_PNG = false ;
   }
@@ -2527,9 +2551,14 @@ void event_PNG() {
   record_PNG = true;
 }
 
-/**
-END EXPORT FILE PDF / PNG
-*/
+
+
+
+
+
+
+
+
 
 
 
@@ -2655,37 +2684,72 @@ void background_norm(float r_c, float g_c, float b_c, float a_c) {
 
 
 /**
-Background rope
+background rope
 */
-void background_rope(float colour) {
-  background_norm(colour / g.colorModeX, colour / g.colorModeY, colour / g.colorModeZ) ;
-  // background_2D(colour, g.colorModeA) ;
+void background_rope(int c) {
+  if(g.colorMode == 3) {
+    background_rope(hue(c),saturation(c),brightness(c));
+  } else {
+    background_rope(red(c),green(c),blue(c));
+  }
 }
 
-void background_rope(float colour, float alpha) {
-  background_norm(colour / g.colorModeX, colour / g.colorModeY, colour / g.colorModeZ, alpha / g.colorModeA) ;
+void background_rope(int c, float w) {
+  if(g.colorMode == 3) {
+    background_rope(hue(c),saturation(c),brightness(c),w);
+  } else {
+    background_rope(red(c),green(c),blue(c),w );
+  }
 }
 
-
-void background_rope(float red, float green, float blue, float alpha) {
-  background_norm(red / g.colorModeX, green / g.colorModeY, blue / g.colorModeZ, alpha / g.colorModeA) ;
+void background_rope(float c) {
+  background_rope(c,c,c);
 }
 
-void background_rope(float red, float green, float blue) {
-  background_norm(red / g.colorModeX, green / g.colorModeY, blue / g.colorModeZ) ;
+void background_rope(float c, float w) {
+  background_rope(c,c,c,w);
 }
 
 void background_rope(Vec4 c) {
-  background_norm(c.x / g.colorModeX, c.y / g.colorModeY, c.z / g.colorModeZ, c.w / g.colorModeA) ;
+  background_rope(c.x,c.y,c.z,c.w);
 }
 
 void background_rope(Vec3 c) {
-  background_norm(c.x / g.colorModeX, c.y / g.colorModeY, c.z / g.colorModeZ) ;
+  background_rope(c.x,c.y,c.z);
 }
 
 void background_rope(Vec2 c) {
-  background_norm(c.x / g.colorModeX, c.x / g.colorModeY, c.x / g.colorModeZ, c.y / g.colorModeA) ;
+  background_rope(c.x,c.x,c.x,c.y);
 }
+
+// master method
+void background_rope(float x, float y, float z, float w) {
+  background_norm(x/g.colorModeX, y/g.colorModeY, z/g.colorModeZ, w /g.colorModeA) ;
+}
+
+void background_rope(float x, float y, float z) {
+  background_norm(x/g.colorModeX, y/g.colorModeY, z/g.colorModeZ) ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2787,59 +2851,117 @@ void write_row(TableRow row, String col_name, Object o) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
 print
-v 0.0.7
+v 0.1.2
 */
 // util variable
 
-// print 
-void printErr(Object... obj_list) {
+// print Err
+void printErr(Object... obj) {
   String message= ("");
-  for(int i = 0 ; i < obj_list.length ; i++) {
-    String data = obj_list[i].toString();
-    message += data + " " ;
+  for(int i = 0 ; i < obj.length ; i++) {
+    message = write_print_message(message, obj[i], obj.length, i);
   }
-  System.err.println(message+System.getProperty("line.separator"));
+  System.err.println(message);
 }
-
 
 // print tempo
-void printErrTempo(int tempo, Object var) {
-  if(frameCount%tempo == 0 || frameCount <= 1) {
-    System.err.println(var+System.getProperty("line.separator"));
+void printErrTempo(int tempo, Object... obj) {
+  if(frameCount%tempo == 0 || frameCount <= 1) {
+    String message= ("");
+    for(int i = 0 ; i < obj.length ; i++) {
+      message = write_print_message(message, obj[i], obj.length, i);
+    }
+    System.err.println(message);
+    // System.err.println(message+"/n"); // don't work for unknow reason
+    // System.err.println(message+System.lineSeparator());
   }
 }
 
-void printTempo(int tempo, Object... var) {
-  if(frameCount%tempo == 0 || frameCount <= 1) {
-    println(var+System.getProperty("line.separator"));
+void printTempo(int tempo, Object... obj) {
+  if(frameCount%tempo == 0 || frameCount <= 1) {
+    String message= ("");
+    for(int i = 0 ; i < obj.length ; i++) {
+      message = write_print_message(message, obj[i], obj.length, i);
+    }
+    println(message);
   }
 }
 
-void printArrayTempo(int tempo, Object[] var) {
-  if(frameCount%tempo == 0 || frameCount <= 1) {
-    printArray(var);
+
+
+// local method
+String write_print_message(String message, Object obj, int length, int i) {
+  if(i == length -1) {
+    return message += obj.toString() ;
+  } else {
+    return message += obj.toString() + " ";
+  }
+}
+
+
+void printArrayTempo(int tempo, Object[] obj) {
+  if(frameCount%tempo == 0 || frameCount <= 1) {
+    printArray(obj);
   }
 }
 
 void printArrayTempo(int tempo, float[] var) {
-  if(frameCount%tempo == 0 || frameCount <= 10) {
+  if(frameCount%tempo == 0 || frameCount <= 10) {
     printArray(var);
   }
 }
 
 void printArrayTempo(int tempo, int[] var) {
-  if(frameCount%tempo == 0 || frameCount <= 1) {
+  if(frameCount%tempo == 0 || frameCount <= 10) {
     printArray(var);
   }
 }
 
 void printArrayTempo(int tempo, String[] var) {
-  if(frameCount%tempo == 0 || frameCount <= 1) {
+  if(frameCount%tempo == 0 || frameCount <= 10) {
     printArray(var);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3424,7 +3546,7 @@ public class Info_Vec_dict extends Info_dict {
 
 
 /**
-Info 0.1.0.1
+Info 0.1.0.2
 
 */
 interface Info {
@@ -3484,7 +3606,7 @@ class Info_int extends Info_method {
 
 
   // get
-  int [] get_all() {
+  int [] get() {
     int [] list = new int[]{a,b,c,d,e,f,g} ;
     return list ;
   }
@@ -3592,7 +3714,7 @@ class Info_String extends Info_method {
 
 
   // get
-  String [] get_all() {
+  String [] get() {
     String [] list = new String[]{a,b,c,d,e,f,g} ;
     return list ;
   }
@@ -3700,7 +3822,7 @@ class Info_float extends Info_method {
   }
 
   // get
-  float [] get_all() {
+  float [] get() {
     float [] list = new float[]{a,b,c,d,e,f,g} ;
     return list ;
   }
@@ -3812,7 +3934,7 @@ class Info_Vec extends Info_method {
 
 
   // get
-  Vec [] get_all() {
+  Vec [] get() {
     Vec [] list = new Vec[]{a,b,c,d,e,f,g} ;
     return list ;
   }
@@ -3926,7 +4048,7 @@ class Info_Object extends Info_method {
 
 
   // get
-  Object [] get_all() {
+  Object [] get() {
     Object [] list = new Object []{a,b,c,d,e,f,g} ;
     return list ;
   }
@@ -4261,50 +4383,120 @@ int [][] loadPixels_array_2D() {
 
 
 
+/**
+GRAPHICS METHOD
+v 0.3.1
+*/
+/**
+SCREEN
+*/
+void set_window(int px, int py, int sx, int sy) {
+  set_window(iVec2(px,py), iVec2(sx,sy), get_screen_location(0));
+}
+
+void set_window(int px, int py, int sx, int sy, int target) {
+  set_window(iVec2(px,py), iVec2(sx,sy), get_screen_location(target));
+}
+
+void set_window(iVec2 pos, iVec2 size) {
+  set_window(pos, size, get_screen_location(0));
+}
+
+void set_window(iVec2 pos, iVec2 size, int target) {
+  set_window(pos, size, get_screen_location(target));
+}
+
+void set_window(iVec2 pos, iVec2 size, iVec2 pos_screen) { 
+  int offset_x = pos.x;
+  int offset_y = pos.y;
+  int dx = pos_screen.x;
+  int dy = pos_screen.y;
+  surface.setSize(size.x,size.y);
+  surface.setLocation(offset_x +dx, offset_y +dy);
+}
 
 /**
-CHECK
-v 0.2.2
+check screen
 */
-
-
 /**
-check display
+screen size
 */
+iVec2 get_screen_size() {
+  return get_display_size(sketchDisplay() -1);
+}
+
+iVec2 get_screen_size(int target) {
+  return get_display_size(target);
+}
+
+@Deprecated
 iVec2 get_display_size() {
   return get_display_size(sketchDisplay() -1);
 }
 
 
-iVec2 get_display_size(int which_display) {
+iVec2 get_display_size(int which_display) {  
+  Rectangle display = get_screen(which_display);
+  return iVec2((int)display.getWidth(), (int)display.getHeight()); 
+}
+
+/**
+screen location
+*/
+
+iVec2 get_screen_location(int which_display) {
+  Rectangle display = get_screen(which_display);
+  return iVec2((int)display.getX(), (int)display.getY());
+}
+
+/**
+screen num
+*/
+int get_screen_num() {
+  return get_display_num();
+}
+
+int get_display_num() {
+  GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+  return environment.getScreenDevices().length;
+}
+
+
+/**
+screen
+*/
+Rectangle get_screen(int target_screen) {
   GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
   GraphicsDevice[] awtDevices = environment.getScreenDevices();
   int target = 0 ;
-  if(which_display < awtDevices.length) {
-    target = which_display ; 
+  if(target_screen < awtDevices.length) {
+    target = target_screen ; 
   } else {
-    printErr("No display match with your request, instead we use the current display");
+    printErr("No screen match with your request, instead we use the current screen");
     target = sketchDisplay() -1;
+    if(target >= awtDevices.length) target = awtDevices.length -1;
   }
   GraphicsDevice awtDisplayDevice = awtDevices[target];
   Rectangle display = awtDisplayDevice.getDefaultConfiguration().getBounds();
-  return iVec2((int)display.getWidth(), (int)display.getHeight());
+  return display;
 }
+
+
 
 
 /**
 Check renderer
 */
 boolean renderer_P3D() {
-  if(get_renderer_name(getGraphics()).equals("processing.opengl.PGraphics3D")) return true ; else return false ;
+  if(get_renderer(getGraphics()).equals("processing.opengl.PGraphics3D")) return true ; else return false ;
 }
 
 
-String get_renderer_name() {
-  return get_renderer_name(g);
+String get_renderer() {
+  return get_renderer(g);
 }
 
-String get_renderer_name(final PGraphics graph) {
+String get_renderer(final PGraphics graph) {
   try {
     if (Class.forName(JAVA2D).isInstance(graph))  return JAVA2D;
     if (Class.forName(FX2D).isInstance(graph))    return FX2D;
@@ -4326,9 +4518,33 @@ String get_renderer_name(final PGraphics graph) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+CHECK
+v 0.2.3
+*/
 /**
 Check Type
-v 0.0.2
+v 0.0.3
 */
 @Deprecated
 String object_type(Object obj) {
@@ -4360,6 +4576,8 @@ String get_type(Object obj) {
     return "Vec";
   } else if(obj instanceof iVec) {
     return "iVec";
+  } else if(obj instanceof bVec) {
+    return "bVec";
   } else return "Unknow" ;
 }
 
@@ -4453,82 +4671,100 @@ boolean in_range_wheel(float min, float max, float roof_max, float value) {
 
 /**
 STRING UTILS
-v 0.1.1
+v 0.3.2
 */
 
 //STRING SPLIT
-String [] split_text(String textToSplit, String separator) {
-  String [] text = textToSplit.split(separator) ;
+String [] split_text(String str, String separator) {
+  String [] text = str.split(separator) ;
   return text  ;
 }
 
 
 //STRING COMPARE LIST SORT
 //raw compare
-int longest_word( String[] listWordsToSort) {
-  int sizeWord = 0 ;
-  for ( int i = 0 ; i < listWordsToSort.length ; i++) {
-    if (listWordsToSort[i].length() > sizeWord )  sizeWord = listWordsToSort[i].length() ;
-  }
-  return  sizeWord ;
+int longest_String(String[] string_list) {
+  int finish = 0;
+  if(string_list != null) finish = string_list.length;
+  return longest_String(string_list, 0, finish);
 }
+
 //with starting and end keypoint in the String must be sort
-int longest_word( String[] listWordsToSort, int start, int finish ) {
-  int sizeWord = 0 ;
-
-  for ( int i = start ; i < finish ; i++) {
-    if (listWordsToSort[i].length() > sizeWord )  sizeWord = listWordsToSort[i].length() ;
+int longest_String(String[] string_list, int start, int finish) {
+  int length = 0;
+  if(string_list != null) {
+    for ( int i = start ; i < finish ; i++) {
+      if (string_list[i].length() > length ) length = string_list[i].length() ;
+    }
   }
-  return  sizeWord ;
+  return length;
+}
+
+/**
+Longuest String with PFont
+*/
+int longest_String_pixel(PFont font, String[] string_list) {
+  int [] size_font = new int[1];
+  size_font[0] = font.getSize();
+  int finish = 0;
+  if(string_list != null) finish = string_list.length;
+  return longest_String_pixel(font.getName(), string_list, size_font, 0, finish);
+}
+
+int longest_String_pixel(PFont font, String[] string_list, int... size_font) {
+  int finish = 0;
+  if(string_list != null) finish = string_list.length;
+  return longest_String_pixel(font.getName(), string_list, size_font, 0, finish);
+}
+
+int longest_String_pixel(PFont font, String[] string_list, int [] size_font, int start, int finish) {
+  return longest_String_pixel(font.getName(), string_list, size_font, start, finish);
+}
+
+/**
+Longuest String with String name Font
+*/
+int longest_String_pixel(String font_name, String[] string_list, int... size_font) {
+  int finish = 0;
+  if(string_list != null) finish = string_list.length;
+  return longest_String_pixel(font_name, string_list, size_font, 0, finish);
+}
+
+// diferrent size by line
+int longest_String_pixel(String font_name, String[] string_list, int size_font, int start, int finish) {
+  int [] s_font = new int[1];
+  s_font[0] = size_font;
+  return longest_String_pixel(font_name, string_list, s_font, start, finish);
+}
+
+int longest_String_pixel(String font_name, String[] string_list, int [] size_font, int start, int finish) {
+  int width_pix = 0 ;
+  if(string_list != null) {
+    int target_size_font = 0;
+    for (int i = start ; i < finish && i < string_list.length; i++) {
+      if(i >= size_font.length) target_size_font = 0 ;
+      if (width_String(font_name, string_list[i], size_font[target_size_font]) > width_pix) {
+        width_pix = width_String(string_list[i],size_font[target_size_font]);
+      }
+      target_size_font++;
+    }
+  }
+  return width_pix;
 }
 
 
 
-// with the same size_text for each line
-int longest_word_in_pixel(String[] listWordsToSort, int size_font) {
-  int sizeWord = 0 ;
-  for ( int i = 0 ; i < listWordsToSort.length ; i++) {
-    if (width_String(listWordsToSort[i], size_font) > sizeWord )  sizeWord = width_String(listWordsToSort[i],size_font) ;
-  }
-  return  sizeWord ;
-}
 
-// with the same size_text for each line, choice the which line you check
-int longest_word_in_pixel( String[] listWordsToSort, int size_font, int start, int finish ) {
-  int sizeWord = 0 ;
-  for ( int i = start ; i <= finish ; i++) {
-    if (width_String(listWordsToSort[i], size_font) > sizeWord )  sizeWord = width_String(listWordsToSort[i],size_font) ;
-  }
-  return  sizeWord ;
-}
-
-// with list of size_text for each line
-int longest_word_in_pixel( String[] listWordsToSort, int [] size_font) {
-  int sizeWord = 0 ;
-  for ( int i = 0 ; i < listWordsToSort.length ; i++) {
-    if (width_String(listWordsToSort[i], size_font[i]) > sizeWord )  sizeWord = width_String(listWordsToSort[i],size_font[i]) ;
-  }
-  return  sizeWord ;
-}
-
-// with list of size_text for each line, choice the which line you check
-int longest_word_in_pixel( String[] listWordsToSort, int [] size_font, int start, int finish ) {
-  int sizeWord = 0 ;
-  for ( int i = start ; i <= finish ; i++) {
-    if (width_String(listWordsToSort[i], size_font[i]) > sizeWord )  sizeWord = width_String(listWordsToSort[i],size_font[i]) ;
-  }
-  return  sizeWord ;
-}
-
-
-
-
-
-
+/**
+width String
+*/
 int width_String(String target, int size) {
   return width_String("defaultFont", target, size) ;
 }
 
+int width_String(PFont pfont, String target, int size) {
+  return width_String(pfont.getName(), target, size);
+}
 
 int width_String(String font_name, String target, int size) {
   Font font = new Font(font_name, Font.BOLD, size) ;
@@ -4538,16 +4774,23 @@ int width_String(String font_name, String target, int size) {
 }
 
 
+
+
 int width_char(char target, int size) {
   return width_char("defaultFont", target, size) ;
 }
 
+int width_char(PFont pfont, char target, int size) {
+  return width_char(pfont.getName(), target, size);
+}
 int width_char(String font_name, char target, int size) {
   Font font = new Font(font_name, Font.BOLD, size) ;
   BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
   FontMetrics fm = img.getGraphics().getFontMetrics(font);
   return fm.charWidth(target);
 }
+
+
 
 
 
@@ -4569,6 +4812,27 @@ boolean research_in_String(String research, String target) {
 /**
 String file utils
 */
+/**
+* remove element of the sketch path
+*/
+String sketchPath(int minus) {
+  minus = abs(minus);
+  String [] element = split(sketchPath(),"/");
+  String new_path ="" ;
+  if(minus < element.length ) {
+    for(int i = 0 ; i < element.length -minus ; i++) {
+      new_path +="/";
+      new_path +=element[i];
+    }
+    return new_path; 
+  } else {
+    printErr("The number of path elements is lower that elements must be remove, instead a data folder is used");
+    return sketchPath()+"/data";
+  }  
+}
+
+
+
 // remove the path of your file
 String file_name(String s) {
   String file_name = "" ;

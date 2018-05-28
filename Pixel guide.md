@@ -69,11 +69,13 @@ void size(Vec2 xyz);
 
 POSITION
 --
-void position(Vec pos);
+void pos(iVec pos);
 
-void position(int x, int y);
+void pos(Vec pos);
 
-void position(int x, int y, int z);
+void pos(int x, int y);
+
+void pos(int x, int y, int z);
 
 
 NORMAL DIRECTION

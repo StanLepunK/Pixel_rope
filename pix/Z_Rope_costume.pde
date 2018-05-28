@@ -1,6 +1,7 @@
 /**
-Rope Costume  2016-2018
-v 1.0.2
+Rope Costume
+* Copyleft (c) 2014-2018
+v 1.0.4
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Costume_rope
 */
@@ -281,8 +282,8 @@ int costumes_size() {
 
 
 /**
-ASPECT ROPE 2016-2017
-v 0.1.1
+ASPECT ROPE 2016-2018
+v 0.1.2
 */
 boolean fill_rope_is = true ;
 boolean stroke_rope_is = true ;
@@ -315,7 +316,7 @@ void aspect_rope(int fill, int stroke, float strokeWeight) {
 }
 
 void aspect_rope(int fill, int stroke, float strokeWeight, int costume) {
-  if(costume != POINT_ROPE) {
+  if(costume != POINT_ROPE || costume != POINT) {
     if(alpha(fill) <= 0 || !fill_rope_is) {
     	noFill() ; 
     } else {
@@ -362,7 +363,8 @@ void aspect_rope(Vec fill, Vec stroke, float strokeWeight) {
 }
 
 void aspect_rope(Vec fill, Vec stroke, float strokeWeight, int costume) {
-  if(costume != POINT_ROPE) {
+	//println("aspect_rope()", fill_rope_is, stroke_rope_is) ;
+  if(costume != POINT_ROPE || costume != POINT) {
     if(fill.w <= 0 || !fill_rope_is) {
     	noFill() ; 
     } else {
@@ -606,31 +608,6 @@ managing costume rope method
 void costume_rope(Vec pos, Vec size, float angle, Vec dir, int which_costume, String sentence) {
   Vec3 pos_final = Vec3(0) ;
   Vec3 size_final = Vec3(1) ;
-  // check instanceof Vec
-  if((pos instanceof Vec2 || pos instanceof Vec3)) {
-    // 
-  } else if(pos == null) {
-  	printErrTempo(180,"pos is null");
-  } else  {
-  	printErrTempo(180,"Vec pos not an instanceof Vec2 or Vec3, it's not possible to process costume_rope()");
-  }
-
-if((size instanceof Vec2 || size instanceof Vec3)) {
-    // 
-  } else if(size == null) {
-  	printErrTempo(180,"size is null");
-  } else  {
-  	printErrTempo(180,"Vec size not an instanceof Vec2 or Vec3, it's not possible to process costume_rope()");
-  }
-
-  if((dir instanceof Vec2 || dir instanceof Vec3)) {
-    // 
-  } else if(dir == null) {
-  	printErrTempo(180,"dir is null");
-  } else  {
-  	printErrTempo(180,"Vec dir not an instanceof Vec2 or Vec3, it's not possible to process costume_rope()");
-  }
-
 	if((pos instanceof Vec2 || pos instanceof Vec3) 
 			&& (size instanceof Vec2 || size instanceof Vec3)
 			&& (dir instanceof Vec2 || dir instanceof Vec3)) {
@@ -657,7 +634,7 @@ if((size instanceof Vec2 || size instanceof Vec3)) {
 			costume_rope(pos_final, size_final, angle, dir, sentence) ;
 		}
 	} else {
-		// printErrTempo(180,"Vec pos, size or dir if not an instanceof Vec2 or Vec3, it's not possible to process costume_rope()");
+		printErrTempo(180,"Vec pos or Vec size if not an instanceof Vec2 or Vec3, it's not possible to process costume_rope()");
 	}
 }
 

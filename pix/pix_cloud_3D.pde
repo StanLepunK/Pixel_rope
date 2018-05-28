@@ -34,7 +34,9 @@ void cloud_3D_angle_step() {
 
   int radius = int(width *.3);
   Vec3 pos = Vec3(width/2, height/2,0) ;
-  cloud_3D_angle.update(pos, radius) ;
+  cloud_3D_angle.size(pos);
+  cloud_3D_angle.pos(pos);
+  cloud_3D_angle.update();
 
   //cloud_3D_angle.costume(PENTAGON_ROPE) ;
   cloud_3D_angle.costume(POINT_ROPE) ;
@@ -74,7 +76,7 @@ void cloud_3D_orientation_angle_behavior_costume() {
   cloud_3D.ring(.01, false);
   // cloud_3D.helmet(.005, false);
 
-  cloud_3D.size(20);
+  cloud_3D.size(width *abs(sin(frameCount *.01)));
   // cloud_3D.orientation_y(map(mouseY,0,height,-PI,PI)) ;
   // cloud_3D.angle(frameCount *.01);
   cloud_3D.beat(8);
@@ -84,8 +86,10 @@ void cloud_3D_orientation_angle_behavior_costume() {
   cloud_3D.behavior("SIN_POW_SIN");
 
   int radius = int(width *.66);
-  Vec3 pos = Vec3(width/2, height/2,0) ;
-  cloud_3D.update(pos, radius) ;
+  Vec3 pos = Vec3(width/2, height/2,0);
+  cloud_3D.radius(radius);
+  cloud_3D.pos(pos);
+  cloud_3D.update();
 
   cloud_3D.costume(PENTAGON_ROPE) ;
   cloud_3D.show() ;
@@ -125,8 +129,9 @@ void cloud_3D_list_point() {
   p.aspect(col,1) ;
   Vec3 pos = Vec3(width/2,height/2, 0) ;
   int radius = 200 ;
-  
-  p.update(pos,radius);
+  p.size(radius);
+  p.pos(pos);
+  p.update();
 
   for(int i = 0 ; i < p.list().length ; i++ ) {
     point(p.list()[i].x,p.list()[i].y,p.list()[i].z) ;
@@ -144,7 +149,10 @@ void cloud_3D_connector() {
 
   int radius = 100 ;
   p.behavior("RANDOM") ;
-  p.update(Vec3(mouseX,mouseY,0), radius) ;
+  p.size(radius) ;
+  p.pos(Vec3(mouseX,mouseY,0));
+  p.update();
+  // p.update(Vec3(mouseX,mouseY,0), radius) ;
   for(int i = 0 ; i < p.list().length ; i++ ) {
     if(i > 1) 
       if(p.list()[i].dist(p.list()[i-1]) < dist_min_to_connect) line(p.list()[i].x,p.list()[i].y,p.list()[i].z, p.list()[i-1].x,p.list()[i-1].y,p.list()[i-1].z) ;

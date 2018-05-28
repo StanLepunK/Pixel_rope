@@ -99,7 +99,6 @@ UPDATE
 --
 void update();
 
-void update(Vec pos);
 
 SHOW
 --
