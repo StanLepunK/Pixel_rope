@@ -62,18 +62,18 @@ void pixel_cloud_2D() {
 
   
   //cloud_2D.angle_step(map(mouseX,0,width,0,TAU));
-  cloud_2D.angle_step(PI/6);
+  cloud_2D.set_angle_step(PI/6);
   
 
 
   cloud_2D.size(2) ;
 
- cloud_2D.growth(.0001);
- cloud_2D.beat(4);
+ cloud_2D.set_growth(.0001);
+ cloud_2D.set_beat(4);
  // cloud_2D.behavior(r.RANDOM_X_A);
 // cloud_2D.behavior(r.RANDOM_X_B);
  // cloud_2D.behavior(r.TRIG_1);
- cloud_2D.behavior(r.TRIG_0);
+ cloud_2D.set_behavior(r.TRIG_0);
  //cloud_2D.behavior(r.RANDOM_QUARTER);
  //cloud_2D.behavior(r.RANDOM_3);
  if(mousePressed) cloud_2D.rotation(map(mouseX, 0,width,-PI,PI), true); else cloud_2D.rotation(0.01, false);

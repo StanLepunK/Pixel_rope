@@ -82,15 +82,15 @@ NORMAL DIRECTION
 --
 >Not used now
 
-void direction(Vec3 dir) ;
+void dir(Vec3 dir) ;
 
-void direction(float x, float y, float z) ;
+void dir(float x, float y, float z) ;
 
-void direction_x(float x) ;
+void dir_x(float x) ;
 
-void direction_y(float y) ;
+void dir_y(float y) ;
 
-void direction_z(float z) ;
+void dir_z(float z) ;
 
 
 ASPECT
