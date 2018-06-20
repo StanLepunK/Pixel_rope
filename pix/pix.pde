@@ -9,7 +9,8 @@ void setup() {
 
 
 void draw() {
-  if(!keyPressed)background_rope(0,g.colorModeA *.05) ;
+  //if(!keyPressed)background_rope(0,g.colorModeA *.05) ;
+  background(0);
   // pixel_classic() ;
   // pixel_revolution();
  // pixel_cloud_2D() ;
@@ -69,7 +70,7 @@ void pixel_cloud_2D() {
   cloud_2D.size(2) ;
 
  cloud_2D.set_growth(.0001);
- cloud_2D.set_beat(4);
+ cloud_2D.set_tempo(40);
  // cloud_2D.behavior(r.RANDOM_X_A);
 // cloud_2D.behavior(r.RANDOM_X_B);
  // cloud_2D.behavior(r.TRIG_1);

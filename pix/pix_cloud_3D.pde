@@ -26,7 +26,7 @@ void cloud_3D_angle_step() {
   // printArray(cloud_3D_angle.list());
   // cloud_3D.orientation_y(map(mouseY,0,height,-PI,PI)) ;
   // cloud_3D_angle.angle(frameCount *.01);
- cloud_3D_angle.set_beat(8);
+ cloud_3D_angle.set_tempo(8);
   // cloud_3D_angle.behavior("SIN");
   //cloud_3D.behavior("SIN_TAN_POW_SIN");
   // cloud_3D.behavior("POW_SIN_PI");
@@ -73,19 +73,20 @@ void cloud_3D_orientation_angle_behavior_costume() {
   }
 
   // cloud_3D.rotation_fx_x(.005, false); // not interesting
-  cloud_3D.ring(.01, false);
+  // cloud_3D.ring(.01, false);
   // cloud_3D.helmet(.005, false);
 
-  cloud_3D.size(width *abs(sin(frameCount *.01)));
+  // cloud_3D.size(width *abs(sin(frameCount *.01)));
+  cloud_3D.size(20);
   // cloud_3D.orientation_y(map(mouseY,0,height,-PI,PI)) ;
   // cloud_3D.angle(frameCount *.01);
-  cloud_3D.set_beat(8);
-  //cloud_3D.behavior("SIN");
+  cloud_3D.set_tempo(4);
+  cloud_3D.set_behavior("COS");
   //cloud_3D.behavior("SIN_TAN_POW_SIN");
   // cloud_3D.behavior("POW_SIN_PI");
-  cloud_3D.set_behavior("SIN_POW_SIN");
+  //cloud_3D.set_behavior("SIN_POW_SIN");
 
-  int radius = int(width *.66);
+  int radius = int(height/4);
   Vec3 pos = Vec3(width/2, height/2,0);
   cloud_3D.set_radius(radius);
   cloud_3D.pos(pos);

@@ -12,7 +12,7 @@ void list()
 
 BEHAVIOR
 --
-void behavior(String behavior);
+void set_behavior(String behavior);
 >you can choice between few bahavior often it's mathematical ones.
 
 
@@ -31,15 +31,16 @@ TIME
 void time_count(int value);
 >to pass count, this count is used with method beat(), maybe more in the future. by default the Processing frameCount is using.
 
-BEAT
+TEMPO
 --
-void beat(int n);
->parameters: int n give the beat tempo, when trigonometric distribution is used.
+void set_tempo(int n);
+>parameters: int n give the tempo, when trigonometric distribution is used.
+@see void set_behavior();
 
 
 RADIUS
 --
-void radius(float radius);
+void set_radius(float radius);
 >parameters float radius, change the radius of Cloud
 
 
