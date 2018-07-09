@@ -1,7 +1,7 @@
 /**
 Rope Costume
 * Copyleft (c) 2014-2018
-v 1.0.4
+v 1.1.0
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Costume_rope
 */
@@ -363,7 +363,6 @@ void aspect_rope(Vec fill, Vec stroke, float strokeWeight) {
 }
 
 void aspect_rope(Vec fill, Vec stroke, float strokeWeight, int costume) {
-	//println("aspect_rope()", fill_rope_is, stroke_rope_is) ;
   if(costume != POINT_ROPE || costume != POINT) {
     if(fill.w <= 0 || !fill_rope_is) {
     	noFill() ; 
@@ -528,30 +527,25 @@ DISPLAY
 Costume selection in shape catalogue
 */
 void costume_rope(Vec pos, int size_int, int which_costume)  {
-	String s = null ;
-	Vec3 dir_null = Vec3() ;
-	Vec3 size = Vec3(size_int) ;
-	float angle = 0 ;
-	costume_rope(pos, size, angle, dir_null, which_costume, s) ;
+	Vec3 rotation = Vec3();
+	Vec3 size = Vec3(size_int);
+	costume_rope(pos, size, rotation, which_costume,null);
 }
 
 void costume_rope(Vec pos, Vec size, int which_costume)  {
-	String s = null ;
-	Vec3 dir_null = Vec3() ;
-	float angle = 0 ;
-	costume_rope(pos, size, angle, dir_null, which_costume, s) ;
+	Vec3 rotation = Vec3() ;
+	costume_rope(pos, size, rotation, which_costume,null);
 }
 
-void costume_rope(Vec pos, Vec size, float angle, int which_costume)  {
-	String s = null ;
-	Vec3 dir_null = Vec3() ;
-	costume_rope(pos, size, angle, dir_null, which_costume, s) ;
+void costume_rope(Vec pos, Vec size, float rotation, int which_costume)  {
+	costume_rope(pos, size, Vec3(0,0,rotation), which_costume,null);
 }
 
-void costume_rope(Vec pos, Vec size, Vec dir, int which_costume)  {
+
+void costume_rope(Vec pos, Vec size, Vec rotation, int which_costume)  {
 	String s = null ;
-	float angle = 0 ;
-	costume_rope(pos, size, angle, dir, which_costume, s) ;
+	//float angle = 0 ;
+	costume_rope(pos, size, rotation, which_costume, s);
 }
 
 
@@ -560,29 +554,26 @@ Costume selection with String
 */
 void costume_rope(Vec pos, int size_int, String s)  {
 	int which_costume = MAX_INT ;
-	Vec3 dir_null = Vec3() ;
+	Vec3 rotation = Vec3() ;
 	Vec3 size = Vec3(size_int) ;
-	float angle = 0 ;
-	costume_rope(pos, size, angle, dir_null, which_costume, s) ;
+	costume_rope(pos, size, rotation, which_costume, s);
 }
 
 void costume_rope(Vec pos, Vec size, String s)  {
 	int which_costume = MAX_INT ;
-	Vec3 dir_null = Vec3() ;
+	Vec3 rotation = Vec3() ;
 	float angle = 0 ;
-	costume_rope(pos, size, angle, dir_null, which_costume, s) ;
+	costume_rope(pos, size, rotation, which_costume, s);
 }
 
-void costume_rope(Vec pos, Vec size, float angle, String s)  {
+void costume_rope(Vec pos, Vec size, float rotation, String s)  {
 	int which_costume = MAX_INT ;
-	Vec3 dir_null = Vec3() ;
-	costume_rope(pos, size, angle, dir_null, which_costume, s) ;
+	costume_rope(pos, size, Vec3(0,0,rotation), which_costume, s);
 }
 
-void costume_rope(Vec pos, Vec size, Vec dir, String s)  {
+void costume_rope(Vec pos, Vec size, Vec rotation, String s)  {
 	int which_costume = MAX_INT ;
-	float angle = 0 ;
-	costume_rope(pos, size, angle, dir, which_costume, s) ;
+	costume_rope(pos, size, rotation, which_costume, s);
 }
 
 
@@ -605,34 +596,34 @@ void costume_rope(Vec pos, Vec size, Vec dir, String s)  {
 /**
 managing costume rope method
 */
-void costume_rope(Vec pos, Vec size, float angle, Vec dir, int which_costume, String sentence) {
+void costume_rope(Vec pos, Vec size, Vec rotation, int which_costume, String sentence) {
   Vec3 pos_final = Vec3(0) ;
   Vec3 size_final = Vec3(1) ;
 	if((pos instanceof Vec2 || pos instanceof Vec3) 
 			&& (size instanceof Vec2 || size instanceof Vec3)
-			&& (dir instanceof Vec2 || dir instanceof Vec3)) {
+			&& (rotation instanceof Vec2 || rotation instanceof Vec3)) {
 		// pos
 		if(pos instanceof Vec2) {
 			Vec2 temp_pos = (Vec2) pos ;
-			pos_final.set(temp_pos.x, temp_pos.y, 0) ;
+			pos_final.set(temp_pos.x, temp_pos.y, 0);
 		} else if(pos instanceof Vec3) {
-			Vec3 temp_pos = (Vec3) pos ;
-			pos_final.set(temp_pos) ;
+			Vec3 temp_pos = (Vec3) pos;
+			pos_final.set(temp_pos);
 		}
 		//size
 		if(size instanceof Vec2) {
 			Vec2 temp_size = (Vec2) size ;
-			size_final.set(temp_size.x, temp_size.y, 1) ;
+			size_final.set(temp_size.x, temp_size.y, 1);
 		} else if(size instanceof Vec3) {
 			Vec3 temp_size = (Vec3) size ;
 			size_final.set(temp_size) ;
 		}
 		//send
 		if(sentence == null ) {
-			costume_rope(pos_final, size_final, angle, dir, which_costume) ;
+			costume_rope(pos_final, size_final, rotation, which_costume);
 		} else {
-			costume_rope(pos_final, size_final, angle, dir, sentence) ;
-		}
+			costume_rope(pos_final, size_final, rotation, sentence);
+		}		
 	} else {
 		printErrTempo(180,"Vec pos or Vec size if not an instanceof Vec2 or Vec3, it's not possible to process costume_rope()");
 	}
@@ -656,28 +647,22 @@ void costume_rope(Vec pos, Vec size, float angle, Vec dir, int which_costume, St
 /**
 MAIN METHOD 
 String COSTUME
-
+v 0.1.0
 Change the method for method with 
 case and which_costume
 and 
 break
 */
-void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, String sentence) {
-	if(dir instanceof Vec2) {
-    // direction polar
-	} else if (dir instanceof Vec3) {
-    // direction cartesian
-	} else {
-    printErrTempo(180,"Vec dir if not an instanceof Vec2 or Vec3, it's not possible to process costume_rope()") ;
-	}
+void costume_rope(Vec3 pos, Vec3 size, Vec rot, String sentence) {
+	if(rot.x != 0) costume_rotate_x();
+	if(rot.y != 0) costume_rotate_y();
+	if(rot.z != 0) costume_rotate_z();
 
 	start_matrix() ;
-  if(angle != .0) rotate(angle) ;
-  translate(pos) ;
-  text(sentence, 0,0) ;
-	stop_matrix() ;
-
-
+	translate(pos);
+	rotate_behavior(rot);
+  text(sentence,0,0);
+	stop_matrix();
 }
 
 
@@ -713,20 +698,17 @@ void costume_rotate_z() {
 	costume_rot_z = true ;
 }
 
-void rotate_behavior(Vec3 angle) {
-	if(angle.x != 0 && !costume_rot_x && !costume_rot_y && !costume_rot_z) {
-		rotate(angle.x) ;
-	}
-	if(costume_rot_x && angle.x != 0) {
-		rotateX(angle.x) ;
+void rotate_behavior(Vec rotate) {
+	if(costume_rot_x && rotate.x != 0) {
+		rotateX(rotate.x) ;
 		costume_rot_x = false ;
 	}
-	if(costume_rot_y && angle.y != 0) {
-		rotateY(angle.y) ;
+	if(costume_rot_y && rotate.y != 0) {
+		rotateY(rotate.y) ;
 		costume_rot_y = false ;
 	}
-	if(costume_rot_z && angle.z != 0) {
-		rotateZ(angle.z) ;
+	if(costume_rot_z && rotate.z != 0) {
+		rotateZ(rotate.z) ;
 		costume_rot_z = false ;
 	}
 }
@@ -734,17 +716,14 @@ void rotate_behavior(Vec3 angle) {
 
 /**
 costume rope
-v 1.0.0
+v 1.1.0
 */
-void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) {
+void costume_rope(Vec3 pos, Vec3 size, Vec rot, int which_costume) {
 
-	if(dir instanceof Vec2) {
-    // direction polar
-	} else if (dir instanceof Vec3) {
-    // direction cartesian
-	} else {
-    printErrTempo(180,"Vec dir if not an instanceof Vec2 or Vec3, it's not possible to process costume_rope()") ;
-	}
+	if(rot.x != 0) costume_rotate_x();
+	if(rot.y != 0) costume_rotate_y();
+	if(rot.z != 0) costume_rotate_z();
+
 
 	if (which_costume == POINT_ROPE) {
     strokeWeight(size.x) ;
@@ -752,81 +731,81 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	} else if (which_costume == ELLIPSE_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		ellipse(0,0, size.x, size.y) ;
 		stop_matrix() ;
 
 	} else if (which_costume == RECT_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		start_matrix();
+		translate(pos);
+		rotate_behavior(rot) ;
 		rect(0,0, size.x, size.y) ;
-		stop_matrix() ;
+		stop_matrix();
 
 	} else if (which_costume == LINE_ROPE) {
-		primitive(pos, size.x, 2, angle) ;
+		primitive(pos, size.x, 2, rot.x);
 	}
 
 
 
 		else if (which_costume == TRIANGLE_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		start_matrix();
+		translate(pos);
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 3) ;
 		stop_matrix() ;
 	}  else if (which_costume == SQUARE_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		start_matrix();
+		translate(pos);
+		rotate_behavior(rot);
 		primitive(Vec3(0), size.x, 4) ;
 		stop_matrix() ;
 	} else if (which_costume == PENTAGON_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		start_matrix();
+		translate(pos);
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 5) ;
 		stop_matrix() ;
 	} else if (which_costume == HEXAGON_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 6) ;
 		stop_matrix() ;
 	} else if (which_costume == HEPTAGON_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 7) ;
 		stop_matrix() ;
 	} else if (which_costume == OCTOGON_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 8) ;
 		stop_matrix() ;
 	} else if (which_costume == NONAGON_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 9) ;
 		stop_matrix() ;
 	} else if (which_costume == DECAGON_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 10) ;
 		stop_matrix() ;
 	} else if (which_costume == HENDECAGON_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 11) ;
 		stop_matrix() ;
 	} else if (which_costume == DODECAGON_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		primitive(Vec3(0), size.x, 12) ;
 		stop_matrix() ;
 	}
@@ -834,19 +813,19 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	else if (which_costume == CROSS_RECT_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		cross_rect(iVec2(0), (int)size.y, (int)size.x) ;
 		stop_matrix() ;
 	} else if (which_costume == CROSS_BOX_2_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		cross_box_2(Vec2(size.x, size.y)) ;
 		stop_matrix() ;
 	} else if (which_costume == CROSS_BOX_3_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		cross_box_3(size) ;
 		stop_matrix() ;
 	}
@@ -856,7 +835,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	  else if(which_costume == TEXT_ROPE) {
 	  	start_matrix() ;
 	  	translate(pos) ;
-	  	rotate_behavior(Vec3(angle)) ;
+	  	rotate_behavior(rot) ;
 	  	textSize(size.x) ;
 	  	if(costume_text_rope != null) {
 	  		text(costume_text_rope, 0, 0) ;
@@ -873,33 +852,33 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		else if (which_costume == SPHERE_LOW_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		sphereDetail(5);
 		sphere(size.x) ;
 		stop_matrix() ;
 	} else if (which_costume == SPHERE_MEDIUM_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		sphereDetail(12);
 		sphere(size.x) ;
 		stop_matrix() ;
 	}else if (which_costume == SPHERE_HIGH_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		sphere(size.x) ;
 		stop_matrix() ;
 	} else if (which_costume == TETRAHEDRON_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		tetrahedron((int)size.x) ;
 		stop_matrix() ;
 	} else if (which_costume == BOX_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		box(size) ;
 		stop_matrix() ;
 	} 
@@ -908,7 +887,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 4, angle_null, ratio) ;
 		stop_matrix() ;
@@ -916,7 +895,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 5, angle_null, ratio) ;
 		stop_matrix() ;
@@ -924,7 +903,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 6, angle_null, ratio) ;
 		stop_matrix() ;
@@ -932,7 +911,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 7, angle_null, ratio) ;
 		stop_matrix() ;
@@ -940,7 +919,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 8, angle_null, ratio) ;
 		stop_matrix() ;
@@ -948,7 +927,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 9, angle_null, ratio) ;
 		stop_matrix() ;
@@ -956,7 +935,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 10, angle_null, ratio) ;
 		stop_matrix() ;
@@ -964,7 +943,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 11, angle_null, ratio) ;
 		stop_matrix() ;
@@ -972,7 +951,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 		float [] ratio = {.38} ;
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 12, angle_null, ratio) ;
 		stop_matrix() ;
@@ -983,14 +962,14 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	else if (which_costume == SUPER_STAR_8_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 8, angle_null, 2., .5, 1., .5) ;
 		stop_matrix() ;
 	} else if (which_costume == SUPER_STAR_12_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		float angle_null = 0 ;
 		star(Vec3(0), size, 12, angle_null, 2., .5, 1., .5, 1., .5) ;
 		stop_matrix() ;
@@ -1001,31 +980,31 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	else if (which_costume == TETRAHEDRON_LINE_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		polyhedron("TETRAHEDRON","LINE", (int)size.x) ;
 		stop_matrix() ;
 	} else if (which_costume == CUBE_LINE_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		polyhedron("CUBE","LINE", (int)size.x) ;
 		stop_matrix() ;
 	} else if (which_costume == OCTOHEDRON_LINE_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		polyhedron("OCTOHEDRON","LINE", (int)size.x) ;
 		stop_matrix() ;
 	} else if (which_costume == RHOMBIC_COSI_DODECAHEDRON_SMALL_LINE_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		polyhedron("RHOMBIC COSI DODECAHEDRON SMALL","LINE", (int)size.x) ;
 		stop_matrix() ;
 	} else if (which_costume == ICOSI_DODECAHEDRON_LINE_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		polyhedron("ICOSI DODECAHEDRON","LINE", (int)size.x) ;
 		stop_matrix() ;
 	}
@@ -1037,61 +1016,61 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	else if(which_costume == VIRUS_2_2_0_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 0, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_1_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 1, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_2_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 2, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_4_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 4, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_8_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 8, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_16_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 16, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_32_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 32, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_64_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 64, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_128_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 128, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_2_2_256_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 2, 2, 256, 0, -1) ;
 		stop_matrix() ;
 	}
@@ -1099,61 +1078,61 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	else if(which_costume == VIRUS_3_2_0_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 0, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_1_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 1, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_2_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 2, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_4_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 4, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_8_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 8, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_16_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 16, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_32_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 32, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_64_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 64, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_128_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 128, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_2_256_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 2, 256, 0, -1) ;
 		stop_matrix() ;
 	}
@@ -1161,61 +1140,61 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	else if(which_costume == VIRUS_3_4_0_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 0, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_1_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 1, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_2_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 2, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_4_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 4, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_8_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 8, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_16_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 16, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_32_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 32, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_64_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 64, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_128_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 128, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_4_256_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 4, 256, 0, -1) ;
 		stop_matrix() ;
 	}
@@ -1223,61 +1202,61 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	else if(which_costume == VIRUS_3_8_0_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 0, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_1_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 1, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_2_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 2, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_4_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 4, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_8_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 8, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_16_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 16, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_32_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 32, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_64_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 64, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_128_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 128, 0, -1) ;
 		stop_matrix() ;
 	} else if(which_costume == VIRUS_3_8_256_ROPE) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		virus(Vec3(), size, 3, 8, 256, 0, -1) ;
 		stop_matrix() ;
 	}
@@ -1291,7 +1270,7 @@ void costume_rope(Vec3 pos, Vec3 size, float angle, Vec dir, int which_costume) 
 	else if(which_costume < 0) {
 		start_matrix() ;
 		translate(pos) ;
-		rotate_behavior(Vec3(angle)) ;
+		rotate_behavior(rot) ;
 		for(int i = 0 ; i < costume_pic_list.size() ; i++) {
 			Costume_pic p = costume_pic_list.get(i) ;
 			if(p.ID == which_costume) {
