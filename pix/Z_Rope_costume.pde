@@ -1,106 +1,106 @@
 /**
 Rope Costume
 * Copyleft (c) 2014-2018
-v 1.1.0
+v 1.1.1
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Costume_rope
 */
-final int POINT_ROPE = 0 ;
-final int ELLIPSE_ROPE = 1 ;
-final int RECT_ROPE = 2 ;
-final int LINE_ROPE = 3 ;
+final int POINT_ROPE = 0;
+final int ELLIPSE_ROPE = 1;
+final int RECT_ROPE = 2;
+final int LINE_ROPE = 3;
 
-final int TRIANGLE_ROPE = 13 ;
-final int SQUARE_ROPE = 14 ;
-final int PENTAGON_ROPE = 15 ;
-final int HEXAGON_ROPE = 16 ;
-final int HEPTAGON_ROPE = 17 ;
-final int OCTOGON_ROPE = 18 ;
-final int NONAGON_ROPE = 19 ;
-final int DECAGON_ROPE = 20 ;
-final int HENDECAGON_ROPE = 21 ;
-final int DODECAGON_ROPE = 22 ;
+final int TRIANGLE_ROPE = 13;
+final int SQUARE_ROPE = 14;
+final int PENTAGON_ROPE = 15;
+final int HEXAGON_ROPE = 16;
+final int HEPTAGON_ROPE = 17;
+final int OCTOGON_ROPE = 18;
+final int NONAGON_ROPE = 19;
+final int DECAGON_ROPE = 20;
+final int HENDECAGON_ROPE = 21;
+final int DODECAGON_ROPE = 22;
 
-final int TEXT_ROPE = 26 ;
+final int TEXT_ROPE = 26;
 
 final int CROSS_RECT_ROPE = 52;
 final int CROSS_BOX_2_ROPE = 53;
 final int CROSS_BOX_3_ROPE = 54;
 
-final int SPHERE_LOW_ROPE = 100 ;
-final int SPHERE_MEDIUM_ROPE = 101 ;
-final int SPHERE_HIGH_ROPE = 102 ;
-final int TETRAHEDRON_ROPE = 103 ;
-final int BOX_ROPE = 104 ;
+final int SPHERE_LOW_ROPE = 100;
+final int SPHERE_MEDIUM_ROPE = 101;
+final int SPHERE_HIGH_ROPE = 102;
+final int TETRAHEDRON_ROPE = 103;
+final int BOX_ROPE = 104;
 
-final int STAR_4_ROPE = 504 ;
-final int STAR_5_ROPE = 505 ;
-final int STAR_6_ROPE = 506 ;
-final int STAR_7_ROPE = 507 ;
-final int STAR_8_ROPE = 508 ;
-final int STAR_9_ROPE = 509 ;
-final int STAR_10_ROPE = 510 ;
-final int STAR_11_ROPE = 511 ;
-final int STAR_12_ROPE = 512 ;
+final int STAR_4_ROPE = 504;
+final int STAR_5_ROPE = 505;
+final int STAR_6_ROPE = 506;
+final int STAR_7_ROPE = 507;
+final int STAR_8_ROPE = 508;
+final int STAR_9_ROPE = 509;
+final int STAR_10_ROPE = 510;
+final int STAR_11_ROPE = 511;
+final int STAR_12_ROPE = 512;
 
-final int SUPER_STAR_8_ROPE = 608 ;
-final int SUPER_STAR_12_ROPE = 612 ;
+final int SUPER_STAR_8_ROPE = 608;
+final int SUPER_STAR_12_ROPE = 612;
 
-final int TETRAHEDRON_LINE_ROPE = 1001 ;
-final int CUBE_LINE_ROPE = 1002 ;
-final int OCTOHEDRON_LINE_ROPE = 1003 ;
-final int RHOMBIC_COSI_DODECAHEDRON_SMALL_LINE_ROPE = 1004 ;
-final int ICOSI_DODECAHEDRON_LINE_ROPE = 1005 ;
+final int TETRAHEDRON_LINE_ROPE = 1001;
+final int CUBE_LINE_ROPE = 1002;
+final int OCTOHEDRON_LINE_ROPE = 1003;
+final int RHOMBIC_COSI_DODECAHEDRON_SMALL_LINE_ROPE = 1004;
+final int ICOSI_DODECAHEDRON_LINE_ROPE = 1005;
 
-final int VIRUS_2_2_0_ROPE = 2_002_000 ;
-final int VIRUS_2_2_1_ROPE = 2_002_001 ;
-final int VIRUS_2_2_2_ROPE = 2_002_002 ;
-final int VIRUS_2_2_4_ROPE = 2_002_004 ;
-final int VIRUS_2_2_8_ROPE = 2_002_008 ;
-final int VIRUS_2_2_16_ROPE = 2002_016 ;
-final int VIRUS_2_2_32_ROPE = 2002_032 ;
-final int VIRUS_2_2_64_ROPE = 2002_064 ;
-final int VIRUS_2_2_128_ROPE = 2002_128 ;
-final int VIRUS_2_2_256_ROPE = 2002_256 ;
+final int VIRUS_2_2_0_ROPE = 2_002_000;
+final int VIRUS_2_2_1_ROPE = 2_002_001;
+final int VIRUS_2_2_2_ROPE = 2_002_002;
+final int VIRUS_2_2_4_ROPE = 2_002_004;
+final int VIRUS_2_2_8_ROPE = 2_002_008;
+final int VIRUS_2_2_16_ROPE = 2002_016;
+final int VIRUS_2_2_32_ROPE = 2002_032;
+final int VIRUS_2_2_64_ROPE = 2002_064;
+final int VIRUS_2_2_128_ROPE = 2002_128;
+final int VIRUS_2_2_256_ROPE = 2002_256;
 
-final int VIRUS_3_2_0_ROPE = 3_002_000 ;
-final int VIRUS_3_2_1_ROPE = 3_002_001 ;
-final int VIRUS_3_2_2_ROPE = 3_002_002 ;
-final int VIRUS_3_2_4_ROPE = 3_002_004 ;
-final int VIRUS_3_2_8_ROPE = 3_002_008 ;
-final int VIRUS_3_2_16_ROPE = 3_002_016 ;
-final int VIRUS_3_2_32_ROPE = 3_002_032 ;
-final int VIRUS_3_2_64_ROPE = 3_002_064 ;
-final int VIRUS_3_2_128_ROPE = 3_002_128 ;
-final int VIRUS_3_2_256_ROPE = 3_002_256 ;
+final int VIRUS_3_2_0_ROPE = 3_002_000;
+final int VIRUS_3_2_1_ROPE = 3_002_001;
+final int VIRUS_3_2_2_ROPE = 3_002_002;
+final int VIRUS_3_2_4_ROPE = 3_002_004;
+final int VIRUS_3_2_8_ROPE = 3_002_008;
+final int VIRUS_3_2_16_ROPE = 3_002_016;
+final int VIRUS_3_2_32_ROPE = 3_002_032;
+final int VIRUS_3_2_64_ROPE = 3_002_064;
+final int VIRUS_3_2_128_ROPE = 3_002_128;
+final int VIRUS_3_2_256_ROPE = 3_002_256;
 
-final int VIRUS_3_4_0_ROPE = 3_004_000 ;
-final int VIRUS_3_4_1_ROPE = 3_004_001 ;
-final int VIRUS_3_4_2_ROPE = 3_004_002 ;
-final int VIRUS_3_4_4_ROPE = 3_004_004 ;
-final int VIRUS_3_4_8_ROPE = 3_004_008 ;
-final int VIRUS_3_4_16_ROPE = 3_004_016 ;
-final int VIRUS_3_4_32_ROPE = 3_004_032 ;
-final int VIRUS_3_4_64_ROPE = 3_004_064 ;
-final int VIRUS_3_4_128_ROPE = 3_004_128 ;
-final int VIRUS_3_4_256_ROPE = 3_004_256 ;
+final int VIRUS_3_4_0_ROPE = 3_004_000;
+final int VIRUS_3_4_1_ROPE = 3_004_001;
+final int VIRUS_3_4_2_ROPE = 3_004_002;
+final int VIRUS_3_4_4_ROPE = 3_004_004;
+final int VIRUS_3_4_8_ROPE = 3_004_008;
+final int VIRUS_3_4_16_ROPE = 3_004_016;
+final int VIRUS_3_4_32_ROPE = 3_004_032;
+final int VIRUS_3_4_64_ROPE = 3_004_064;
+final int VIRUS_3_4_128_ROPE = 3_004_128;
+final int VIRUS_3_4_256_ROPE = 3_004_256;
 
-final int VIRUS_3_8_0_ROPE = 3_008_000 ;
-final int VIRUS_3_8_1_ROPE = 3_008_001 ;
-final int VIRUS_3_8_2_ROPE = 3_008_002 ;
-final int VIRUS_3_8_4_ROPE = 3_008_004 ;
-final int VIRUS_3_8_8_ROPE = 3_008_008 ;
-final int VIRUS_3_8_16_ROPE = 3_008_016 ;
-final int VIRUS_3_8_32_ROPE = 3_008_032 ;
-final int VIRUS_3_8_64_ROPE = 3_008_064 ;
-final int VIRUS_3_8_128_ROPE = 3_008_128 ;
-final int VIRUS_3_8_256_ROPE = 3_008_256 ;
-
-
+final int VIRUS_3_8_0_ROPE = 3_008_000;
+final int VIRUS_3_8_1_ROPE = 3_008_001;
+final int VIRUS_3_8_2_ROPE = 3_008_002;
+final int VIRUS_3_8_4_ROPE = 3_008_004;
+final int VIRUS_3_8_8_ROPE = 3_008_008;
+final int VIRUS_3_8_16_ROPE = 3_008_016;
+final int VIRUS_3_8_32_ROPE = 3_008_032;
+final int VIRUS_3_8_64_ROPE = 3_008_064;
+final int VIRUS_3_8_128_ROPE = 3_008_128;
+final int VIRUS_3_8_256_ROPE = 3_008_256;
 
 
 
-Info_int_dict costume_dict = new Info_int_dict() ;
+
+
+Info_int_dict costume_dict = new Info_int_dict();
 boolean list_costume_is_built = false ;
 int ref_size_pic = -1 ;
 
@@ -112,39 +112,39 @@ void costume_list() {
 		* render: 2 = 2D ; 3 = 3D ;
 		* type : 0 = shape ; 1 = bitmap ; 2 = svg  ; 3 = shape with just stroke component ; 4 = text
 		*/
-		costume_dict.add("POINT_ROPE", POINT_ROPE, 2, 0) ;
-		costume_dict.add("ELLIPSE_ROPE", ELLIPSE_ROPE, 2, 0) ;
-		costume_dict.add("RECT_ROPE", RECT_ROPE, 2, 0) ;
-		costume_dict.add("LINE_ROPE", LINE_ROPE, 2, 0) ;
+		costume_dict.add("POINT_ROPE", POINT_ROPE,2,0);
+		costume_dict.add("ELLIPSE_ROPE", ELLIPSE_ROPE,2,0);
+		costume_dict.add("RECT_ROPE", RECT_ROPE,2,0);
+		costume_dict.add("LINE_ROPE", LINE_ROPE,2,0);
 
-		costume_dict.add("TRIANGLE_ROPE", TRIANGLE_ROPE, 2, 0) ;
-		costume_dict.add("SQUARE_ROPE", SQUARE_ROPE, 2, 0) ;
-		costume_dict.add("PENTAGON_ROPE", PENTAGON_ROPE, 2, 0) ;
-		costume_dict.add("HEXAGON_ROPE", HEXAGON_ROPE, 2, 0) ;
-		costume_dict.add("HEPTAGON_ROPE", HEPTAGON_ROPE, 2, 0) ;
-		costume_dict.add("OCTOGON_ROPE", OCTOGON_ROPE, 2, 0) ;
-		costume_dict.add("NONAGON_ROPE", NONAGON_ROPE, 2, 0) ;
-		costume_dict.add("DECAGON_ROPE", DECAGON_ROPE, 2, 0) ;
-		costume_dict.add("HENDECAGON_ROPE", HENDECAGON_ROPE, 2, 0) ;
-		costume_dict.add("DODECAGON_ROPE", DODECAGON_ROPE, 2, 0) ;
+		costume_dict.add("TRIANGLE_ROPE", TRIANGLE_ROPE,2,0);
+		costume_dict.add("SQUARE_ROPE", SQUARE_ROPE,2,0);
+		costume_dict.add("PENTAGON_ROPE", PENTAGON_ROPE,2,0);
+		costume_dict.add("HEXAGON_ROPE", HEXAGON_ROPE,2,0);
+		costume_dict.add("HEPTAGON_ROPE", HEPTAGON_ROPE,2,0);
+		costume_dict.add("OCTOGON_ROPE", OCTOGON_ROPE,2,0);
+		costume_dict.add("NONAGON_ROPE", NONAGON_ROPE,2,0);
+		costume_dict.add("DECAGON_ROPE", DECAGON_ROPE,2,0);
+		costume_dict.add("HENDECAGON_ROPE", HENDECAGON_ROPE,2,0);
+		costume_dict.add("DODECAGON_ROPE", DODECAGON_ROPE,2,0);
 
-		costume_dict.add("TEXT_ROPE", TEXT_ROPE, 2, 4) ;
+		costume_dict.add("TEXT_ROPE", TEXT_ROPE,2,4);
     
-    costume_dict.add("CROSS_RECT_ROPE", CROSS_RECT_ROPE, 2, 0) ;
-		costume_dict.add("CROSS_BOX_2_ROPE", CROSS_BOX_2_ROPE, 3, 0) ;
-		costume_dict.add("CROSS_BOX_3_ROPE", CROSS_BOX_3_ROPE, 3, 0) ;
+    costume_dict.add("CROSS_RECT_ROPE", CROSS_RECT_ROPE,2,0);
+		costume_dict.add("CROSS_BOX_2_ROPE", CROSS_BOX_2_ROPE,3,0);
+		costume_dict.add("CROSS_BOX_3_ROPE", CROSS_BOX_3_ROPE,3,0);
 
-		costume_dict.add("SPHERE_LOW_ROPE", SPHERE_LOW_ROPE, 3, 0) ;
-		costume_dict.add("SPHERE_MEDIUM_ROPE", SPHERE_MEDIUM_ROPE, 3, 0) ;
-		costume_dict.add("SPHERE_HIGH_ROPE", SPHERE_HIGH_ROPE, 3, 0) ;
-		costume_dict.add("TETRAHEDRON_ROPE", TETRAHEDRON_ROPE, 3, 0) ;
-		costume_dict.add("BOX_ROPE", BOX_ROPE, 3, 0) ;
+		costume_dict.add("SPHERE_LOW_ROPE", SPHERE_LOW_ROPE,3,0);
+		costume_dict.add("SPHERE_MEDIUM_ROPE", SPHERE_MEDIUM_ROPE,3,0);
+		costume_dict.add("SPHERE_HIGH_ROPE", SPHERE_HIGH_ROPE,3,0);
+		costume_dict.add("TETRAHEDRON_ROPE", TETRAHEDRON_ROPE,3,0);
+		costume_dict.add("BOX_ROPE", BOX_ROPE,3,0);
 
 
-		costume_dict.add("SPHERE_LOW_ROPE", SPHERE_LOW_ROPE, 3, 0) ;
-		costume_dict.add("SPHERE_MEDIUM_ROPE", SPHERE_MEDIUM_ROPE, 3, 0) ;
-		costume_dict.add("SPHERE_HIGH_ROPE", SPHERE_HIGH_ROPE, 3, 0) ;
-		costume_dict.add("TETRAHEDRON_ROPE", TETRAHEDRON_ROPE, 3, 0) ;
+		costume_dict.add("SPHERE_LOW_ROPE", SPHERE_LOW_ROPE,3,0);
+		costume_dict.add("SPHERE_MEDIUM_ROPE", SPHERE_MEDIUM_ROPE,3,0);
+		costume_dict.add("SPHERE_HIGH_ROPE", SPHERE_HIGH_ROPE,3,0);
+		costume_dict.add("TETRAHEDRON_ROPE", TETRAHEDRON_ROPE,3,0);
 		costume_dict.add("BOX_ROPE", BOX_ROPE, 3, 0) ;
 
 		costume_dict.add("STAR_4_ROPE", STAR_4_ROPE, 2, 3) ;
@@ -389,7 +389,9 @@ void aspect_rope(Vec fill, Vec stroke, float strokeWeight, int costume) {
 }
 
 
-// manage componenent color Vec
+// manage componenent color Vec for aspect method
+// local method
+
 void manage_fill(Vec f) {
 	if(f instanceof Vec2) {
 		Vec2 fill = (Vec2) f ;
@@ -432,6 +434,40 @@ void manage_stroke(Vec s) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+COSTUME
+v 0.0.1
+*/
+
+
 /**
 simple text 
 v 0.0.1
@@ -441,6 +477,60 @@ String costume_text_rope = null ;
 void costume_text(String s) {
 	costume_text_rope = s ;
 }
+
+
+/**
+rotate behavior
+v 0.1.0
+*/
+boolean costume_rot_x;
+boolean costume_rot_y;
+boolean costume_rot_z;
+
+void costume_rotate_x() {
+	costume_rot_x = true;
+}
+
+void costume_rotate_y() {
+	costume_rot_y = true;
+}
+
+void costume_rotate_z() {
+	costume_rot_z = true;
+}
+
+void rotate_behavior(Vec rotate) {
+	if(costume_rot_x && rotate.x != 0) {
+		rotateX(rotate.x);
+		costume_rot_x = false;
+	}
+	if(costume_rot_y && rotate.y != 0) {
+		rotateY(rotate.y);
+		costume_rot_y = false;
+	}
+	if(costume_rot_z && rotate.z != 0) {
+		rotateZ(rotate.z);
+		costume_rot_z = false;
+	}
+}
+
+
+/**
+ratio size costume
+*/
+float ratio_costume_size = 1;
+void set_ratio_costume_size(float ratio) {
+	ratio_costume_size = ratio;
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -526,24 +616,24 @@ DISPLAY
 /**
 Costume selection in shape catalogue
 */
-void costume_rope(Vec pos, int size_int, int which_costume)  {
+void costume_rope(Vec pos, int size_int, int which_costume) {
 	Vec3 rotation = Vec3();
 	Vec3 size = Vec3(size_int);
 	costume_rope(pos, size, rotation, which_costume,null);
 }
 
-void costume_rope(Vec pos, Vec size, int which_costume)  {
+void costume_rope(Vec pos, Vec size, int which_costume) {
 	Vec3 rotation = Vec3() ;
 	costume_rope(pos, size, rotation, which_costume,null);
 }
 
-void costume_rope(Vec pos, Vec size, float rotation, int which_costume)  {
+void costume_rope(Vec pos, Vec size, float rotation, int which_costume) {
 	costume_rope(pos, size, Vec3(0,0,rotation), which_costume,null);
 }
 
 
-void costume_rope(Vec pos, Vec size, Vec rotation, int which_costume)  {
-	String s = null ;
+void costume_rope(Vec pos, Vec size, Vec rotation, int which_costume) {
+	String s = null;
 	//float angle = 0 ;
 	costume_rope(pos, size, rotation, which_costume, s);
 }
@@ -552,28 +642,27 @@ void costume_rope(Vec pos, Vec size, Vec rotation, int which_costume)  {
 /**
 Costume selection with String
 */
-void costume_rope(Vec pos, int size_int, String s)  {
-	int which_costume = MAX_INT ;
-	Vec3 rotation = Vec3() ;
-	Vec3 size = Vec3(size_int) ;
-	costume_rope(pos, size, rotation, which_costume, s);
+void costume_rope(Vec pos, int size_int, String s) {
+	int which_costume = MAX_INT;
+	Vec3 rotation = Vec3();
+	Vec3 size = Vec3(size_int);
+	costume_rope(pos,size,rotation,which_costume,s);
 }
 
-void costume_rope(Vec pos, Vec size, String s)  {
-	int which_costume = MAX_INT ;
-	Vec3 rotation = Vec3() ;
-	float angle = 0 ;
-	costume_rope(pos, size, rotation, which_costume, s);
+void costume_rope(Vec pos, Vec size, String s) {
+	int which_costume = MAX_INT;
+	Vec3 rotation = Vec3();
+	costume_rope(pos,size,rotation,which_costume,s);
 }
 
 void costume_rope(Vec pos, Vec size, float rotation, String s)  {
 	int which_costume = MAX_INT ;
-	costume_rope(pos, size, Vec3(0,0,rotation), which_costume, s);
+	costume_rope(pos,size,Vec3(0,0,rotation),which_costume,s);
 }
 
 void costume_rope(Vec pos, Vec size, Vec rotation, String s)  {
 	int which_costume = MAX_INT ;
-	costume_rope(pos, size, rotation, which_costume, s);
+	costume_rope(pos,size,rotation,which_costume,s);
 }
 
 
@@ -604,19 +693,19 @@ void costume_rope(Vec pos, Vec size, Vec rotation, int which_costume, String sen
 			&& (rotation instanceof Vec2 || rotation instanceof Vec3)) {
 		// pos
 		if(pos instanceof Vec2) {
-			Vec2 temp_pos = (Vec2) pos ;
+			Vec2 temp_pos = (Vec2)pos;
 			pos_final.set(temp_pos.x, temp_pos.y, 0);
 		} else if(pos instanceof Vec3) {
-			Vec3 temp_pos = (Vec3) pos;
+			Vec3 temp_pos = (Vec3)pos;
 			pos_final.set(temp_pos);
 		}
 		//size
 		if(size instanceof Vec2) {
-			Vec2 temp_size = (Vec2) size ;
+			Vec2 temp_size = (Vec2)size;
 			size_final.set(temp_size.x, temp_size.y, 1);
 		} else if(size instanceof Vec3) {
-			Vec3 temp_size = (Vec3) size ;
-			size_final.set(temp_size) ;
+			Vec3 temp_size = (Vec3)size;
+			size_final.set(temp_size);
 		}
 		//send
 		if(sentence == null ) {
@@ -678,40 +767,7 @@ and
 break
 */
 
-/**
-rotate behavior
-v 0.1.0
-*/
-boolean costume_rot_x = false ;
-boolean costume_rot_y = false ;
-boolean costume_rot_z = false ;
 
-void costume_rotate_x() {
-	costume_rot_x = true ;
-}
-
-void costume_rotate_y() {
-	costume_rot_y = true ;
-}
-
-void costume_rotate_z() {
-	costume_rot_z = true ;
-}
-
-void rotate_behavior(Vec rotate) {
-	if(costume_rot_x && rotate.x != 0) {
-		rotateX(rotate.x) ;
-		costume_rot_x = false ;
-	}
-	if(costume_rot_y && rotate.y != 0) {
-		rotateY(rotate.y) ;
-		costume_rot_y = false ;
-	}
-	if(costume_rot_z && rotate.z != 0) {
-		rotateZ(rotate.z) ;
-		costume_rot_z = false ;
-	}
-}
 
 
 /**
@@ -726,20 +782,20 @@ void costume_rope(Vec3 pos, Vec3 size, Vec rot, int which_costume) {
 
 
 	if (which_costume == POINT_ROPE) {
-    strokeWeight(size.x) ;
-		point(pos) ;
+    strokeWeight(size.x);
+		point(pos);
 	} else if (which_costume == ELLIPSE_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
-		rotate_behavior(rot) ;
-		ellipse(0,0, size.x, size.y) ;
-		stop_matrix() ;
+		start_matrix();
+		translate(pos);
+		rotate_behavior(rot);
+		ellipse(Vec2(),size);
+		stop_matrix();
 
 	} else if (which_costume == RECT_ROPE) {
 		start_matrix();
 		translate(pos);
-		rotate_behavior(rot) ;
-		rect(0,0, size.x, size.y) ;
+		rotate_behavior(rot);
+		rect(Vec2(),Vec2(size.x,size.y));
 		stop_matrix();
 
 	} else if (which_costume == LINE_ROPE) {
@@ -800,50 +856,52 @@ void costume_rope(Vec3 pos, Vec3 size, Vec rot, int which_costume) {
 		start_matrix() ;
 		translate(pos) ;
 		rotate_behavior(rot) ;
-		primitive(Vec3(0), size.x, 11) ;
+		primitive(Vec3(0), size.x, 11);
 		stop_matrix() ;
 	} else if (which_costume == DODECAGON_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
+		start_matrix();
+		translate(pos);
 		rotate_behavior(rot) ;
-		primitive(Vec3(0), size.x, 12) ;
-		stop_matrix() ;
+		primitive(Vec3(0), size.x, 12);
+		stop_matrix();
 	}
 
 	else if (which_costume == CROSS_RECT_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
-		rotate_behavior(rot) ;
-		cross_rect(iVec2(0), (int)size.y, (int)size.x) ;
+		start_matrix();
+		translate(pos);
+		rotate_behavior(rot);
+		cross_rect(iVec2(0),(int)size.y,(int)size.x);
 		stop_matrix() ;
 	} else if (which_costume == CROSS_BOX_2_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
-		rotate_behavior(rot) ;
-		cross_box_2(Vec2(size.x, size.y)) ;
+		start_matrix();
+		translate(pos);
+		rotate_behavior(rot);
+		//cross_box_2(Vec2(size.x, size.y),ratio_size);
+		cross_box_2(Vec2(size.x, size.y));
 		stop_matrix() ;
 	} else if (which_costume == CROSS_BOX_3_ROPE) {
-		start_matrix() ;
-		translate(pos) ;
-		rotate_behavior(rot) ;
-		cross_box_3(size) ;
-		stop_matrix() ;
+		start_matrix();
+		translate(pos);
+		rotate_behavior(rot);
+		//cross_box_3(size,ratio_size);
+		cross_box_3(size);
+		stop_matrix();
 	}
 
 
 
 	  else if(which_costume == TEXT_ROPE) {
-	  	start_matrix() ;
-	  	translate(pos) ;
-	  	rotate_behavior(rot) ;
+	  	start_matrix();
+	  	translate(pos);
+	  	rotate_behavior(rot);
 	  	textSize(size.x) ;
 	  	if(costume_text_rope != null) {
-	  		text(costume_text_rope, 0, 0) ;
+	  		text(costume_text_rope,0,0);
 	  	} else {
-	  		costume_text_rope = "ROPE" ;
-	  		text(costume_text_rope, 0, 0) ;
+	  		costume_text_rope = "ROPE";
+	  		text(costume_text_rope,0,0);
 	  	}
-	  	stop_matrix() ;
+	  	stop_matrix();
 	  }
 
 
@@ -1300,6 +1358,9 @@ void costume_rope(Vec3 pos, Vec3 size, Vec rot, int which_costume) {
 		}
 		stop_matrix() ;
 	}
+
+  // reset variable can be change the other costume, if the effect is don't use.
+	ratio_costume_size = 1;
 }
 
 
@@ -1433,36 +1494,38 @@ void cross_rect(iVec2 pos, int thickness, int radius) {
 	Vec2 size = Vec2(thickness, radius *2);
 	Vec2 pos_temp = Vec2(pos.x, pos.y -floor(size.y/2) +(thickness /2));
 	pos_temp.sub(thickness/2);
-	rect(pos_temp, size);
+	rect(pos_temp,size);
 	  // horizontal one
 	size.set(radius *2, thickness);
 	pos_temp.set(pos.x -floor(size.x/2) +(thickness /2),pos.y);
 	pos_temp.sub(thickness/2);
-	rect(pos_temp, size);
+	rect(pos_temp,size);
 
 
 	//rect(pos, size);
 	//rect(small_part, size.y, small_part);
 }
 
-void cross_box_2(Vec2 size) {
-	float ratio_cross = .3 ;
-	float scale_cross = size.sum() *.5;
-	float small_part = scale_cross *ratio_cross ;
 
-	box(size.x, small_part, small_part) ;
-	box(small_part, size.y, small_part) ;
+void cross_box_2(Vec2 size) {
+	// float ratio = map(ratio_costume_size,0,1,.3,.9);
+//void cross_box_2(Vec2 size, float ratio) {
+	float scale_cross = size.sum() *.5;
+	float small_part = scale_cross *ratio_costume_size;
+
+	box(size.x,small_part,small_part);
+	box(small_part,size.y,small_part);
 }
 
-
 void cross_box_3(Vec3 size) {
-	float ratio_cross = .3 ;
-	float scale_cross = size.sum() *.3 ;
-	float small_part = scale_cross *ratio_cross ;
+	// float ratio = .3;
+// void cross_box_3(Vec3 size, float ratio) {
+	float scale_cross = size.sum() *.3;
+	float small_part = scale_cross *ratio_costume_size;
    
-	box(size.x, small_part, small_part) ;
-	box(small_part, size.y, small_part) ;
-	box(small_part, small_part, size.z) ;
+	box(size.x,small_part,small_part);
+	box(small_part,size.y,small_part);
+	box(small_part,small_part,size.z);
 }
 
 
@@ -1472,10 +1535,10 @@ void cross_box_3(Vec3 size) {
 VIRUS
 */
 class Virus {
-	Vec3 [][] branch ;
-	Vec3 size  ;
-	Vec3 pos  ;
-	int node, num ;
+	Vec3 [][] branch;
+	Vec3 size;
+	Vec3 pos ;
+	int node, num;
 	float angle = 0 ;
 	Virus(int node, int num) {
 		this.node = node ;
