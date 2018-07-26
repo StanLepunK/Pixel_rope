@@ -2,10 +2,12 @@ Cloud, Cloud_2D and Cloud_3D is an extends of Pix class
 
 
 
-CLOUD
---
+*CLOUD
+
 master method available for CLOUD_2D and CLOUD_3D
 
+int length()
+>return the num of pixel of Cloud
 
 void list()
 > return the arraylist of Vec3 coord of point of this Pixel cloud

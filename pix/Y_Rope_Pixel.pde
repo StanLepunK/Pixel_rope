@@ -1,7 +1,7 @@
 
 /**
 CLASS PIX 
-v 0.7.0
+v 0.7.1
 2016-2018
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Pixel
@@ -464,8 +464,7 @@ abstract class Pix implements Rope_Constants {
     return roof ;
   }
 }
-// END MOTHER CLASS
-//////////////////////
+
 
 
 
@@ -484,7 +483,7 @@ abstract class Pix implements Rope_Constants {
 
 /**
 CLOUD
-v 0.3.1
+v 0.3.2
 */
 class Cloud extends Pix implements Rope_Constants {
   int num ;
@@ -685,6 +684,8 @@ class Cloud extends Pix implements Rope_Constants {
     return coord;   
   }
 
+
+
   public void set_behavior(String behavior) {
     this.behavior = behavior ;
   }
@@ -833,6 +834,10 @@ class Cloud extends Pix implements Rope_Constants {
 
   public float get_rotation() {
     return dist ;
+  }
+
+  public int length() {
+    return num;
   }
 }
 

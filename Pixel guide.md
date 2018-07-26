@@ -32,9 +32,7 @@ SHAPE available for the PIXEL
 
 
 
-CLASS
---
-
+*CLASS
 
 
 
@@ -48,8 +46,8 @@ void show() ;
 SET
 --
 
-COSTUME
---
+*COSTUME
+
 void set_costume(int ID) ;
 
 void costume_angle(float angle)
@@ -67,8 +65,8 @@ void size(Vec2 xy);
 
 void size(Vec2 xyz);
 
-POSITION
---
+*POSITION
+
 void pos(iVec pos);
 
 void pos(Vec pos);
@@ -78,8 +76,8 @@ void pos(int x, int y);
 void pos(int x, int y, int z);
 
 
-NORMAL DIRECTION
---
+*NORMAL DIRECTION
+
 >Not used now
 
 void dir(Vec3 dir) ;
@@ -93,8 +91,8 @@ void dir_y(float y) ;
 void dir_z(float z) ;
 
 
-ASPECT
---
+*ASPECT
+
 @ aspect define fill, stroke and strokeWeight
 > basic
 void aspect();
@@ -144,8 +142,8 @@ info : if you don't use the method with the thivkness, the strokeWeight is based
 
 
 
-PIXEL extends Pix
---
+*PIXEL extends Pix
+
 Constructor
 --
 > Costume is DISC like the shape ellipse of Processing by default
