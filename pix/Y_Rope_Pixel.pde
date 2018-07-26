@@ -483,7 +483,7 @@ abstract class Pix implements Rope_Constants {
 
 /**
 CLOUD
-v 0.3.2
+v 0.3.3
 */
 class Cloud extends Pix implements Rope_Constants {
   int num ;
@@ -695,6 +695,15 @@ class Cloud extends Pix implements Rope_Constants {
     if(type != r.CARTESIAN) {
       printErrTempo(180, "class Cloud method spiral() is available only for type r.CARTESIAN, not for type r.POLAR");
     }
+  }
+
+
+  /**
+  void range();
+  Use with the bahavior, it's ratio mult for the radius
+  */
+  public void range(Vec2 range) {
+    range(range.x,range.y);
   }
   public void range(float min, float max) {
     if(range == null) {
