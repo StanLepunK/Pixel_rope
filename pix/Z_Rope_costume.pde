@@ -1,14 +1,15 @@
 /**
 Rope Costume
 * Copyleft (c) 2014-2018
-v 1.1.1
+v 1.1.3
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Costume_rope
 */
-final int POINT_ROPE = 0;
-final int ELLIPSE_ROPE = 1;
-final int RECT_ROPE = 2;
-final int LINE_ROPE = 3;
+
+final int POINT_ROPE = 1;
+final int ELLIPSE_ROPE = 2;
+final int RECT_ROPE = 3;
+final int LINE_ROPE = 4;
 
 final int TRIANGLE_ROPE = 13;
 final int SQUARE_ROPE = 14;
@@ -112,6 +113,8 @@ void costume_list() {
 		* render: 2 = 2D ; 3 = 3D ;
 		* type : 0 = shape ; 1 = bitmap ; 2 = svg  ; 3 = shape with just stroke component ; 4 = text
 		*/
+		costume_dict.add("NULL", r.NULL,0,0);
+
 		costume_dict.add("POINT_ROPE", POINT_ROPE,2,0);
 		costume_dict.add("ELLIPSE_ROPE", ELLIPSE_ROPE,2,0);
 		costume_dict.add("RECT_ROPE", RECT_ROPE,2,0);
@@ -316,7 +319,9 @@ void aspect_rope(int fill, int stroke, float strokeWeight) {
 }
 
 void aspect_rope(int fill, int stroke, float strokeWeight, int costume) {
-  if(costume != POINT_ROPE || costume != POINT) {
+	if(costume == r.NULL) {
+    // 
+	} else if(costume != r.NULL || costume != POINT_ROPE || costume != POINT) {
     if(alpha(fill) <= 0 || !fill_rope_is) {
     	noFill() ; 
     } else {
@@ -329,7 +334,7 @@ void aspect_rope(int fill, int stroke, float strokeWeight, int costume) {
     	stroke(stroke) ;
       strokeWeight(strokeWeight) ;
     }   
-  } else  {
+  } else {
     if(alpha(fill) == 0) {
     	noStroke() ; 
     } else {
@@ -363,7 +368,9 @@ void aspect_rope(Vec fill, Vec stroke, float strokeWeight) {
 }
 
 void aspect_rope(Vec fill, Vec stroke, float strokeWeight, int costume) {
-  if(costume != POINT_ROPE || costume != POINT) {
+  if(costume == r.NULL) {
+    // 
+	} else if(costume != r.NULL || costume != POINT_ROPE || costume != POINT) {
     if(fill.w <= 0 || !fill_rope_is) {
     	noFill() ; 
     } else {
