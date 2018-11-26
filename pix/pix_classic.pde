@@ -11,7 +11,7 @@ void pixel_choice_primitive_2D_shape() {
    WHEN you use the shape "POINT" you must declare this one in the CONSTRUCTOR,
    if you don't do that the SHAPE is  NOT USE immadiatly in the method aspect, because this one is before in order of rendering
    */
-   Pixel p = new Pixel(pos, size, color_shape, PENTAGON_ROPE) ;
+   Pixel p = new Pixel(pos,size,color_shape) ;
 
    p.aspect(color_shape, 1) ;
      /**
@@ -27,8 +27,8 @@ void pixel_primitive_2D_shape_angle() {
   Vec2 pos = Vec2(width/2, height/2) ;
    Vec2 size = Vec2(mouseX) ;
    Vec4 color_shape = Vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
-   Pixel p = new Pixel(pos, size, color_shape, PENTAGON_ROPE) ;
-
+   Pixel p = new Pixel(pos, size, color_shape) ;
+   p.costume(PENTAGON_ROPE);
    p.aspect(Vec4(0), color_shape, 1) ;
    float new_angle =  sin(frameCount *.01) *TAU ;
    p.costume_angle(new_angle) ;
@@ -40,7 +40,8 @@ void pixel_primitive_2D_shape_angle() {
   Vec2 pos = Vec2(width/2, height/2) ;
    Vec2 size = Vec2(mouseX) ;
    Vec4 color_shape = Vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
-   Pixel p = new Pixel(pos, size, color_shape, PENTAGON_ROPE) ;
+   Pixel p = new Pixel(pos, size, color_shape) ;
+   p.costume(PENTAGON_ROPE);
 
    p.aspect(Vec4(0), color_shape, 1) ;
    float dir_x = sin(frameCount *.1) ;
@@ -60,7 +61,8 @@ void pixel_change_color() {
     Vec3 pos = Vec3(i, pos_y,0) ;
     Vec3 size = Vec3(pos_y *.03) ;
     Vec4 color_shape = Vec4(100, 100,100, 100) ;
-    Pixel p = new Pixel(pos, size, color_shape, POINT_ROPE) ;
+    Pixel p = new Pixel(pos, size, color_shape);
+    p.costume(POINT_ROPE);
    // Pixel p = new Pixel(pos, size, color_shape) ;
     /**
     Problem we must change only one time the color because the algorithm start from the original color
@@ -142,7 +144,8 @@ void pixel_shape() {
 
   Vec3 pos = Vec3(width/2,height/2,0) ;
   Vec3 size = Vec3(300) ;
-  Pixel p = new Pixel(pos, size, costume_ID) ;
+  Pixel p = new Pixel(pos, size) ;
+  p.costume(costume_ID);
   p.aspect(Vec4(0),Vec4(255), 2) ;
   p.costume_angle(frameCount *.1) ;
   p.show() ;

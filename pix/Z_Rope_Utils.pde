@@ -1,13 +1,180 @@
 /**
 Rope UTILS 
-v 1.47.1
+v 1.49.1
 * Copyleft (c) 2014-2018 
 * Stan le Punk > http://stanlepunk.xyz/
 Rope – Romanesco Processing Environment – 
-Processing 3.3.7
+Processing 3.4
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Rope
 */
+
+
+/**
+Layer method
+*/
+PGraphics [] rope_layer;
+boolean warning_rope_layer;
+int which_rope_layer = 0;
+
+// init
+void init_layer() {
+  init_layer(width,height,get_renderer(),1);
+}
+
+void init_layer(int num) {
+  init_layer(width,height,get_renderer(),num);
+}
+
+void init_layer(int x, int y) {
+  init_layer(x,y, get_renderer(),1);
+}
+
+void init_layer(int x, int y, int num) {
+  init_layer(x,y, get_renderer(),num);
+}
+
+void init_layer(int x, int y, String type, int num) {
+  rope_layer = new PGraphics[num];
+  for(int i = 0 ; i < num ; i++) {
+    rope_layer[i] = createGraphics(x,y,type);
+  }
+  
+  if(!warning_rope_layer) {
+    warning_rope_layer = true;
+  }
+  String warning = ("WARNING LAYER METHOD\nAll classical method used on the main rendering,\nwill return the PGraphics selected PGraphics layer :\nimage(), set(), get(), fill(), stroke(), rect(), ellipse(), pushMatrix(), popMatrix(), box()...\nto use those methods on the main PGraphics write g.image() for example");
+  printErr(warning);
+}
+
+
+
+
+// begin and end draw
+void begin_layer() {
+  if(get_layer() != null) {
+    get_layer().beginDraw();
+  }
+}
+
+void end_layer() {
+  if(get_layer() != null) {
+    get_layer().endDraw();
+  }
+}
+
+
+
+// num
+int get_layer_num() {
+  if(rope_layer != null) {
+    return  rope_layer.length ;
+  } else return -1;  
+}
+
+
+
+
+// clear layer
+void clear_layer() {
+  if(rope_layer != null && rope_layer.length > 0) {
+    for(int i = 0 ; i < rope_layer.length ; i++) {
+      String type = get_renderer(rope_layer[i]);
+      int w = rope_layer[i].width;
+      int h = rope_layer[i].height;
+      rope_layer[i] = createGraphics(w,h,type);
+    }
+  } else {
+    String warning = ("void clear_layer(): there is no layer can be clear maybe you forget to create one :)");
+    printErr(warning);
+  }
+  
+}
+
+void clear_layer(int target) {
+  if(target > -1 && target < rope_layer.length) {
+    String type = get_renderer(rope_layer[target]);
+    int w = rope_layer[target].width;
+    int h = rope_layer[target].height;
+    rope_layer[target] = createGraphics(w,h,type);
+  } else {
+    String warning = ("void clear_layer(): target "+target+" is out the range of the layers available,\n no layer can be clear");
+    printErr(warning);
+  }
+}
+
+
+
+
+/**
+GET LAYER
+* May be the method can be improve by using a PGraphics template for buffering instead usin a calling method ????
+*/
+// get layer
+PGraphics get_layer() {
+  return get_layer(which_rope_layer);
+}
+
+
+PGraphics get_layer(int target) {
+  if(rope_layer == null) {
+//    printErrTempo(180,"void get_layer(): Your layer system has not been init use method init_layer() in first",frameCount);
+    return g;
+  } else if(target > -1 && target < rope_layer.length) {
+    return rope_layer[target];
+  } else {
+    String warning = ("PGraphics get_layer(int target): target "+target+" is out the range of the layers available,\n instead target 0 is used");
+    printErr(warning);
+    return rope_layer[0];
+  }
+}
+
+
+
+
+// select layer
+void select_layer(int target) {
+  if(rope_layer != null) {
+    if(target > -1 && target < rope_layer.length) {
+      which_rope_layer = target;
+    } else {
+      which_rope_layer = 0;
+      String warning = ("void select_layer(int target): target "+target+" is out the range of the layers available,\n instead target 0 is used");
+      printErr(warning);
+    }
+  } else {
+    printErrTempo(180,"void select_layer(): Your layer system has not been init use method init_layer() in first",frameCount);
+  } 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -16,7 +183,6 @@ Processing 3.3.7
 print Constants
 v 0.0.3
 */
-
 Constant_list processing_constants_list = new Constant_list(PConstants.class);
 Constant_list rope_constants_list = new Constant_list(rope.core.RConstants.class);
 public void print_constants_rope() {
@@ -34,7 +200,7 @@ public void print_constants_processing() {
     processing_constants_list = new Constant_list(PConstants.class);
   }
   println("PROCESSING CONSTANTS");
-  for(String s: processing_constants_list.list()){
+  for(String s: processing_constants_list.list()) {
     println(s);
   }
 } 
@@ -336,20 +502,16 @@ v 0.3.1
 Save Frame
 V 0.1.1
 */
-
 void saveFrame(String where, String filename, PImage img) {
   float compression = 1. ;
   saveFrame(where, filename, compression, img) ;
 }
-
 
 void saveFrame(String where, String filename) {
   float compression = 1. ;
   PImage img = null;
   saveFrame(where, filename, compression, img) ;
 }
-
-
 
 void saveFrame(String where, String filename, float compression) {
   PImage img = null;
@@ -764,7 +926,7 @@ PImage image_copy_window(PImage src, PGraphics pg, int where) {
 
 /**
 IMAGE
-v 0.2.0
+v 0.2.2
 2016-2018
 */
 
@@ -778,55 +940,70 @@ void image(PImage img) {
 }
 
 void image(PImage img, int what) {
-  float x = 0 ;
-  float y = 0 ;
-  int w = img.width;
-  int h = img.height;
-  int where = CENTER;
-  if(what == r.FIT || what == LANDSCAPE || what == PORTRAIT || what == SCREEN) {
-    float ratio = 1.;
-    int diff_w = width-w;
-    int diff_h = height-h;
-    if(what == r.FIT) {
-      if(diff_w > diff_h) {
-        ratio = (float)height / (float)h;
-      } else {
-        ratio = (float)width / (float)w;
-      }
-    } else if(what == SCREEN) {
-      if(diff_w > diff_h) {
-        ratio = (float)width / (float)w;
-      } else {
-        ratio = (float)height/ (float)h;
-      }
-    } else if(what == PORTRAIT) {
-      ratio = (float)height / (float)h;
-    } else if(what == LANDSCAPE) {
-      ratio = (float)width / (float)w;
-    }
-    w *= ratio;
-    h *= ratio;
-  } else {
-    where = what;
-  }
+  if(img != null) {
+    float x = 0 ;
+    float y = 0 ;
+    int w = img.width;
+    int h = img.height;
+    int where = CENTER;
+    if(what == r.FIT || what == LANDSCAPE || what == PORTRAIT || what == SCREEN) {
+      float ratio = 1.;
+      int diff_w = width-w;
+      int diff_h = height-h;
 
-  if(where == CENTER) {
-    x = (width /2.) -(w /2.);
-    y = (height /2.) -(h /2.);   
-  } else if(where == LEFT) {
-    x = 0;
-    y = (height /2.) -(h /2.);
-  } else if(where == RIGHT) {
-    x = width -w;
-    y = (height /2.) -(h /2.);
-  } else if(where == TOP) {
-    x = (width /2.) -(w /2.);
-    y = 0;
-  } else if(where == BOTTOM) {
-    x = (width /2.) -(w /2.);
-    y = height -h; 
-  }
-  image(img,x,y,w,h);
+
+      if(what == r.FIT) {
+        if(diff_w > diff_h) {
+          ratio = (float)height / (float)h;
+        } else {
+          ratio = (float)width / (float)w;
+        }
+      } else if(what == SCREEN) {
+        float ratio_w = (float)width / (float)w;
+        float ratio_h = (float)height / (float)h;
+        if(ratio_w > ratio_h) {
+          ratio = ratio_w;
+        } else {
+          ratio = ratio_h;
+        }
+        /*
+        if(diff_w > diff_h) {
+          ratio = (float)width / (float)w;
+        } else {
+          ratio = (float)height/ (float)h;
+        }
+        */
+      } else if(what == PORTRAIT) {
+        ratio = (float)height / (float)h;
+      } else if(what == LANDSCAPE) {
+        ratio = (float)width / (float)w;
+      }
+      w *= ratio;
+      h *= ratio;
+    } else {
+      where = what;
+    }
+
+    if(where == CENTER) {
+      x = (width /2.) -(w /2.);
+      y = (height /2.) -(h /2.);   
+    } else if(where == LEFT) {
+      x = 0;
+      y = (height /2.) -(h /2.);
+    } else if(where == RIGHT) {
+      x = width -w;
+      y = (height /2.) -(h /2.);
+    } else if(where == TOP) {
+      x = (width /2.) -(w /2.);
+      y = 0;
+    } else if(where == BOTTOM) {
+      x = (width /2.) -(w /2.);
+      y = height -h; 
+    }
+    image(img,x,y,w,h);
+  } else {
+    printErrTempo(60,"image(); no PImage has pass to the method, img is null");
+  } 
 }
 
 void image(PImage img, float coor) {
@@ -1604,7 +1781,15 @@ void mix(PGraphics p, PImage tex, PImage inc, float... ratio) {
   } else {
     rope_shader_mix.set("texture_PGraphics",tex);
     rope_shader_mix.set("PGraphics_renderer_is",true);
+    // Problem with MacBook Pro 2018 Grapichs 560X OSX Mojave
     p.filter(rope_shader_mix);
+    /*
+    try {
+      p.filter(rope_shader_mix);
+    } catch(java.lang.RuntimeException ArrayIndexOutBoundsException) { 
+      printErrTempo(60,"void mix(PGraphics p, PImage tex, PImage inc, float... ratio): ArrayIndexOutBoundsException",frameCount);
+    }
+    */
   }
 }
 
@@ -2603,52 +2788,29 @@ void write_row(TableRow row, String col_name, Object o) {
 
 /**
 print
-v 0.1.2
+v 0.2.0
 */
-// util variable
-
 // print Err
 void printErr(Object... obj) {
-  String message= ("");
-  for(int i = 0 ; i < obj.length ; i++) {
-    message = write_print_message(message, obj[i], obj.length, i);
-  }
-  System.err.println(message);
+  System.err.println(write_message(obj));
 }
 
 // print tempo
 void printErrTempo(int tempo, Object... obj) {
   if(frameCount%tempo == 0 || frameCount <= 1) {
-    String message= ("");
-    for(int i = 0 ; i < obj.length ; i++) {
-      message = write_print_message(message, obj[i], obj.length, i);
-    }
+    String message = write_message(obj);
     System.err.println(message);
-    // System.err.println(message+"/n"); // don't work for unknow reason
-    // System.err.println(message+System.lineSeparator());
   }
 }
 
 void printTempo(int tempo, Object... obj) {
   if(frameCount%tempo == 0 || frameCount <= 1) {
-    String message= ("");
-    for(int i = 0 ; i < obj.length ; i++) {
-      message = write_print_message(message, obj[i], obj.length, i);
-    }
+    String message = write_message(obj);
     println(message);
   }
 }
 
 
-
-// local method
-String write_print_message(String message, Object obj, int length, int i) {
-  if(i == length -1) {
-    return message += obj.toString() ;
-  } else {
-    return message += obj.toString() + " ";
-  }
-}
 
 
 void printArrayTempo(int tempo, Object[] obj) {
@@ -4122,7 +4284,7 @@ int [][] loadPixels_array_2D() {
 
 /**
 GRAPHICS METHOD
-v 0.3.1
+v 0.3.3
 */
 /**
 SCREEN
@@ -4163,6 +4325,10 @@ iVec2 get_screen_size() {
 }
 
 iVec2 get_screen_size(int target) {
+  if(target >= get_display_num()) {
+    target = 0;
+    printErr("method get_screen_size(int target): target screen",target,"don't match with any screen device instead target '0' is used");
+  }
   return get_display_size(target);
 }
 
@@ -4172,8 +4338,12 @@ iVec2 get_display_size() {
 }
 
 
-iVec2 get_display_size(int which_display) {  
-  Rectangle display = get_screen(which_display);
+iVec2 get_display_size(int target) {
+  if(target >= get_display_num()) {
+    target = 0;
+    printErr("method get_screen_size(int target): target screen",target,"don't match with any screen device instead target '0' is used");
+  }  
+  Rectangle display = get_screen(target);
   return iVec2((int)display.getWidth(), (int)display.getHeight()); 
 }
 
@@ -4181,8 +4351,8 @@ iVec2 get_display_size(int which_display) {
 screen location
 */
 
-iVec2 get_screen_location(int which_display) {
-  Rectangle display = get_screen(which_display);
+iVec2 get_screen_location(int target) {
+  Rectangle display = get_screen(target);
   return iVec2((int)display.getX(), (int)display.getY());
 }
 
@@ -4217,6 +4387,53 @@ Rectangle get_screen(int target_screen) {
   Rectangle display = awtDisplayDevice.getDefaultConfiguration().getBounds();
   return display;
 }
+
+
+
+/**
+sketch location 
+0.0.2
+*/
+iVec2 get_sketch_location() {
+  return iVec2(get_sketch_location_x(),get_sketch_location_y());
+}
+
+int get_sketch_location_x() {
+  if(get_renderer() != P3D && get_renderer() != P2D) {
+    return getJFrame(surface).getX();
+  } else {
+    return get_rectangle(surface).getX();
+
+  }
+  
+}
+
+int get_sketch_location_y() {
+  if(get_renderer() != P3D && get_renderer() != P2D) {
+    return getJFrame(surface).getY();
+  } else {
+    return get_rectangle(surface).getY();
+  }
+}
+
+
+com.jogamp.nativewindow.util.Rectangle get_rectangle(PSurface surface) {
+  com.jogamp.newt.opengl.GLWindow window = (com.jogamp.newt.opengl.GLWindow) surface.getNative();
+  com.jogamp.nativewindow.util.Rectangle rectangle = window.getBounds();
+  return rectangle;
+}
+
+
+static final javax.swing.JFrame getJFrame(final PSurface surface) {
+  return (javax.swing.JFrame)
+  (
+    (processing.awt.PSurfaceAWT.SmoothCanvas) surface.getNative()
+  ).getFrame();
+}
+
+
+
+
 
 
 
@@ -4277,17 +4494,12 @@ String get_renderer(final PGraphics graph) {
 
 /**
 CHECK
-v 0.2.3
+v 0.2.4
 */
 /**
 Check Type
-v 0.0.3
+v 0.0.4
 */
-@Deprecated
-String object_type(Object obj) {
-  return get_type(obj);
-}
-
 String get_type(Object obj) {
   if(obj instanceof Integer) {
     return "Integer";
@@ -4315,6 +4527,8 @@ String get_type(Object obj) {
     return "iVec";
   } else if(obj instanceof bVec) {
     return "bVec";
+  } else if(obj == null) {
+    return "null";
   } else return "Unknow" ;
 }
 
@@ -4408,8 +4622,42 @@ boolean in_range_wheel(float min, float max, float roof_max, float value) {
 
 /**
 STRING UTILS
-v 0.3.2
+v 0.3.3
 */
+String write_message(Object... obj) {
+  String mark = " ";
+  return write_message_sep(mark,obj);
+}
+String write_message_sep(String mark, Object... obj) {
+  String m = "";
+  for(int i = 0 ; i < obj.length ; i++) {
+    m += write_message(obj[i], obj.length,i,mark);
+  }
+  return m;
+}
+
+// local method
+String write_message(Object obj, int length, int i, String mark) {
+  String message = "";
+  String add = "";
+  if(i == length -1) { 
+    if(obj == null) {
+      add = "null";
+    } else {
+      add = obj.toString();
+    }
+    return message += add;
+  } else {
+    if(obj == null) {
+      add = "null";
+    } else {
+      add = obj.toString();
+    }
+    return message += add + mark;
+  }
+}
+
+
 
 //STRING SPLIT
 String [] split_text(String str, String separator) {
@@ -4507,6 +4755,10 @@ int width_String(String font_name, String target, int size) {
   Font font = new Font(font_name, Font.BOLD, size) ;
   BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
   FontMetrics fm = img.getGraphics().getFontMetrics(font);
+  if(target ==null) {
+    printErr("method width_String(): String target =",target);
+    target = "";
+  }
   return fm.stringWidth(target);
 }
 
@@ -4580,5 +4832,9 @@ String file_name(String s) {
 
 
 String extension(String filename) {
-  return filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+  if(filename != null) {
+    return filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+  } else {
+    return null;
+  }
 }
