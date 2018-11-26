@@ -1,7 +1,7 @@
 
 /**
 CLASS PIX 
-v 0.7.2
+v 0.8.0
 2016-2018
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Pixel

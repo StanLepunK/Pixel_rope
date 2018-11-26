@@ -1,7 +1,7 @@
 /**
 Rope Costume
 * Copyleft (c) 2014-2018
-v 1.4.1
+v 1.4.3
 * @author Stan le Punk
 * @see https://github.com/StanLepunK/Costume_rope
 */
@@ -185,7 +185,7 @@ int costumes_size() {
 
 /**
 ASPECT ROPE 2016-2018
-v 0.1.2
+v 0.1.3
 */
 void aspect_is(boolean fill_is, boolean stroke_is) {
 	fill_rope_is = fill_is ;
@@ -213,6 +213,10 @@ void aspect_rope(int fill, int stroke, float thickness) {
   }
   //
   init_bool_aspect();
+}
+
+void aspect_rope(int fill, int stroke, float thickness, Costume costume) {
+	aspect_rope(fill,stroke,thickness,costume.get_type());
 }
 
 void aspect_rope(int fill, int stroke, float thickness, int costume) {
@@ -264,6 +268,11 @@ void aspect_rope(Vec fill, Vec stroke, float thickness) {
   //
   init_bool_aspect();
 }
+
+void aspect_rope(Vec fill, Vec stroke, float thickness, Costume costume) {
+	aspect_rope(fill,stroke,thickness,costume.get_type());
+}
+
 
 void aspect_rope(Vec fill, Vec stroke, float thickness, int costume) {
   if(costume == r.NULL) {
@@ -554,54 +563,90 @@ DISPLAY
 /**
 Costume selection in shape catalogue
 */
-void costume(Vec pos, int size_int, int which_costume) {
+void costume(Vec pos, int size_int, Object data) {
+	int which_costume = 0;
+	String sentence = null;
+	if(data instanceof Costume) {
+		which_costume = ((Costume)data).get_type();
+	} else if(data instanceof Integer) {
+		which_costume = (int)data;
+	} else if(data instanceof String) {
+		sentence = (String)data;
+		which_costume = MAX_INT;
+	}
+
+	// int which_costume = cast_data(costume_obj);
 	Vec3 rotation = Vec3();
 	Vec3 size = Vec3(size_int);
-	costume(pos, size, rotation, which_costume,null);
+	if(sentence == null) {
+		costume(pos, size, rotation, which_costume,null);
+	} else {
+		costume(pos,size,rotation,which_costume,sentence);
+	}
 }
 
-void costume(Vec pos, Vec size, int which_costume) {
+void costume(Vec pos, Vec size, Object data) {
+	int which_costume = 0;
+	String sentence = null;
+	if(data instanceof Costume) {
+		which_costume = ((Costume)data).get_type();
+	} else if(data instanceof Integer) {
+		which_costume = (int)data;
+	} else if(data instanceof String) {
+		sentence = (String)data;
+		which_costume = MAX_INT;
+	}
+
 	Vec3 rotation = Vec3() ;
-	costume(pos, size, rotation, which_costume,null);
+	if(sentence == null) {
+		costume(pos,size,rotation,which_costume,null);
+	} else {
+		costume(pos,size,rotation,which_costume,sentence);
+	}
+	// costume(pos, size, rotation, which_costume,null);
 }
 
-void costume(Vec pos, Vec size, float rotation, int which_costume) {
-	costume(pos, size, Vec3(0,0,rotation), which_costume,null);
+void costume(Vec pos, Vec size, float rotation, Object data) {
+	int which_costume = 0;
+	String sentence = null;
+	if(data instanceof Costume) {
+		which_costume = ((Costume)data).get_type();
+	} else if(data instanceof Integer) {
+		which_costume = (int)data;
+	} else if(data instanceof String) {
+		sentence = (String)data;
+		which_costume = MAX_INT;
+	}
+
+	if(sentence == null) {
+		costume(pos, size, Vec3(0,0,rotation),which_costume,null);
+	} else {
+		costume(pos,size,Vec3(0,0,rotation),which_costume,sentence);
+	}
 }
 
 
-void costume(Vec pos, Vec size, Vec rotation, int which_costume) {
-	String s = null;
-	//float angle = 0 ;
-	costume(pos, size, rotation, which_costume, s);
+void costume(Vec pos, Vec size, Vec rotation, Object data) {
+	int which_costume = 0;
+	String sentence = null;
+	if(data instanceof Costume) {
+		which_costume = ((Costume)data).get_type();
+	} else if(data instanceof Integer) {
+		which_costume = (int)data;
+	} else if(data instanceof String) {
+		sentence = (String)data;
+		which_costume = MAX_INT;
+	}
+
+	if(sentence == null) {
+		costume(pos,size,rotation,which_costume);
+	} else {
+		costume(pos,size,rotation,which_costume,sentence);
+	}
 }
 
 
-/**
-Costume selection with String
-*/
-void costume(Vec pos, int size_int, String s) {
-	int which_costume = MAX_INT;
-	Vec3 rotation = Vec3();
-	Vec3 size = Vec3(size_int);
-	costume(pos,size,rotation,which_costume,s);
-}
 
-void costume(Vec pos, Vec size, String s) {
-	int which_costume = MAX_INT;
-	Vec3 rotation = Vec3();
-	costume(pos,size,rotation,which_costume,s);
-}
-
-void costume(Vec pos, Vec size, float rotation, String s)  {
-	int which_costume = MAX_INT ;
-	costume(pos,size,Vec3(0,0,rotation),which_costume,s);
-}
-
-void costume(Vec pos, Vec size, Vec rotation, String s)  {
-	int which_costume = MAX_INT ;
-	costume(pos,size,rotation,which_costume,s);
-}
 
 
 
