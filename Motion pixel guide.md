@@ -5,18 +5,18 @@ PIXEL MOTION
 Constructor
 --
 > constructor 2D
-Pixel_motion(Vec2 pos, float field, int colour_int);
+Pixel_motion(vec2 pos, float field, int colour_int);
 
-Pixel_motion(Vec2 pos, float field, Vec4 colour_vec);
+Pixel_motion(vec2 pos, float field, vec4 colour_vec);
 
-Pixel_motion(Vec2 pos, float field);
+Pixel_motion(vec2 pos, float field);
 
 > constructor 3D
-Pixel_motion(Vec3 pos, float field, int colour_int);
+Pixel_motion(vec3 pos, float field, int colour_int);
 
-Pixel_motion(Vec3 pos, float field, Vec4 colour_vec);
+Pixel_motion(vec3 pos, float field, vec4 colour_vec);
 
-Pixel_motion(Vec3 pos, float field);
+Pixel_motion(vec3 pos, float field);
 
 
 

@@ -10,7 +10,7 @@ int length()
 >return the num of pixel of Cloud
 
 void list()
-> return the arraylist of Vec3 coord of point of this Pixel cloud
+> return the arraylist of vec3 coord of point of this Pixel cloud
 
 BEHAVIOR
 --
@@ -181,7 +181,7 @@ void orientation_y(float y);
 
 void orientation_z(float z);
 
-void orientation(Vec3 orientation);
+void orientation(vec3 orientation);
 
 void orientation(float x, float y, float z);
 

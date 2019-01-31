@@ -3,9 +3,9 @@
 
 // method
 void pixel_choice_primitive_2D_shape() {
-  Vec2 pos = Vec2(width/2, height/2) ;
-  Vec2 size = Vec2(40) ;
-  Vec4 color_shape = Vec4(random(g.colorModeX), g.colorModeY,g.colorModeZ, g.colorModeA) ;
+  vec2 pos = vec2(width/2, height/2) ;
+  vec2 size = vec2(40) ;
+  vec4 color_shape = vec4(random(g.colorModeX), g.colorModeY,g.colorModeZ, g.colorModeA) ;
    
    /**
    WHEN you use the shape "POINT" you must declare this one in the CONSTRUCTOR,
@@ -24,12 +24,12 @@ void pixel_choice_primitive_2D_shape() {
 }
 
 void pixel_primitive_2D_shape_angle() {
-  Vec2 pos = Vec2(width/2, height/2) ;
-   Vec2 size = Vec2(mouseX) ;
-   Vec4 color_shape = Vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
+  vec2 pos = vec2(width/2, height/2) ;
+   vec2 size = vec2(mouseX) ;
+   vec4 color_shape = vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
    Pixel p = new Pixel(pos, size, color_shape) ;
    p.costume(PENTAGON_ROPE);
-   p.aspect(Vec4(0), color_shape, 1) ;
+   p.aspect(vec4(0), color_shape, 1) ;
    float new_angle =  sin(frameCount *.01) *TAU ;
    p.costume_angle(new_angle) ;
    p.show() ;
@@ -37,17 +37,17 @@ void pixel_primitive_2D_shape_angle() {
 
  void pixel_primitive_2D_shape_direction() {
   // Don't work, cartesian direction is a problem 
-  Vec2 pos = Vec2(width/2, height/2) ;
-   Vec2 size = Vec2(mouseX) ;
-   Vec4 color_shape = Vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
+  vec2 pos = vec2(width/2, height/2) ;
+   vec2 size = vec2(mouseX) ;
+   vec4 color_shape = vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
    Pixel p = new Pixel(pos, size, color_shape) ;
    p.costume(PENTAGON_ROPE);
 
-   p.aspect(Vec4(0), color_shape, 1) ;
+   p.aspect(vec4(0), color_shape, 1) ;
    float dir_x = sin(frameCount *.1) ;
    float dir_y = cos(frameCount *.05) ;
    float dir_z = sin(frameCount *.01) ;
-   p.direction(new Vec3(dir_x,dir_y,dir_z)) ;
+   p.direction(new vec3(dir_x,dir_y,dir_z)) ;
    p.show() ;
  }
 
@@ -58,9 +58,9 @@ void pixel_primitive_2D_shape_angle() {
 void pixel_change_color() {
    for (int i = 0 ; i < width ; i++) {
     float pos_y = random(height) ;
-    Vec3 pos = Vec3(i, pos_y,0) ;
-    Vec3 size = Vec3(pos_y *.03) ;
-    Vec4 color_shape = Vec4(100, 100,100, 100) ;
+    vec3 pos = vec3(i, pos_y,0) ;
+    vec3 size = vec3(pos_y *.03) ;
+    vec4 color_shape = vec4(100, 100,100, 100) ;
     Pixel p = new Pixel(pos, size, color_shape);
     p.costume(POINT_ROPE);
    // Pixel p = new Pixel(pos, size, color_shape) ;
@@ -94,9 +94,9 @@ void change_specific_component_of_color(Pixel p) {
 void pixel_change_color_range() {
    for (int i = 0 ; i < width ; i++) {
     float pos_y = random(height) ;
-    Vec3 pos = Vec3(i, pos_y,0) ;
-    Vec3 size = Vec3(pos_y *.03) ;
-    Vec4 color_shape = Vec4(random(g.colorModeX), random(g.colorModeY),random(g.colorModeZ), 100) ;
+    vec3 pos = vec3(i, pos_y,0) ;
+    vec3 size = vec3(pos_y *.03) ;
+    vec4 color_shape = vec4(random(g.colorModeX), random(g.colorModeY),random(g.colorModeZ), 100) ;
     Pixel p = new Pixel(pos, size, color_shape) ;
     /**
     Problem we must change only one time the color because the algorithm start from the original color,
@@ -117,9 +117,9 @@ void pixel_change_color_range() {
 
 void pixel_color() {
    // Pixel color chack automaticly the colorMode of your sketch.
-   Vec2 pos = Vec2(width/2, height/2) ;
-   Vec2 size = Vec2(20) ;
-   Vec4 color_shape = Vec4(random(g.colorModeX), random(g.colorModeY),random(g.colorModeZ), 100) ;
+   vec2 pos = vec2(width/2, height/2) ;
+   vec2 size = vec2(20) ;
+   vec4 color_shape = vec4(random(g.colorModeX), random(g.colorModeY),random(g.colorModeZ), 100) ;
    Pixel p = new Pixel(pos, size, color_shape) ;
    p.aspect() ;
    p.costume(POINT_ROPE) ;
@@ -130,10 +130,10 @@ void pixel_color() {
 void pixel_basic() {
   for (int i = 0 ; i < width ; i++) {
     float pos_y = random(height) ;
-    Vec3 pos = Vec3(i, pos_y,0) ;
-    Vec3 size = Vec3(pos_y *.03) ;
+    vec3 pos = vec3(i, pos_y,0) ;
+    vec3 size = vec3(pos_y *.03) ;
     Pixel p = new Pixel(pos, size) ;
-    p.aspect(Vec4(255)) ;
+    p.aspect(vec4(255)) ;
     p.costume(POINT_ROPE) ;
     p.show() ;
   }
@@ -142,11 +142,11 @@ void pixel_basic() {
 void pixel_shape() {
   int costume_ID = POINT_ROPE ; 
 
-  Vec3 pos = Vec3(width/2,height/2,0) ;
-  Vec3 size = Vec3(300) ;
+  vec3 pos = vec3(width/2,height/2,0) ;
+  vec3 size = vec3(300) ;
   Pixel p = new Pixel(pos, size) ;
   p.costume(costume_ID);
-  p.aspect(Vec4(0),Vec4(255), 2) ;
+  p.aspect(vec4(0),vec4(255), 2) ;
   p.costume_angle(frameCount *.1) ;
   p.show() ;
 }
@@ -162,14 +162,14 @@ void pixel_costume_fill_stroke_strokeWeight() {
   
   for (int i = 0 ; i < width ; i++) {
     float pos_y = random(height) ;
-    Vec3 pos = Vec3(i, pos_y,0) ;
-    Vec3 size = Vec3(pos_y *.03) ;
+    vec3 pos = vec3(i, pos_y,0) ;
+    vec3 size = vec3(pos_y *.03) ;
     Pixel p = new Pixel(pos, size) ;
     
-    Vec3 color_fill = new Vec3("RANDOM",360,100,100);
-    Vec4 final_color_fill = new Vec4(color_fill.x,color_fill.y,color_fill.z,100) ;
-    Vec3 color_stroke = new Vec3("RANDOM",360,100,100);
-    Vec4 final_color_stroke = new Vec4(color_stroke.x,color_stroke.y,color_stroke.z,100) ;
+    vec3 color_fill = new vec3("RANDOM",360,100,100);
+    vec4 final_color_fill = new vec4(color_fill.x,color_fill.y,color_fill.z,100) ;
+    vec3 color_stroke = new vec3("RANDOM",360,100,100);
+    vec4 final_color_stroke = new vec4(color_stroke.x,color_stroke.y,color_stroke.z,100) ;
     float thickness = 3 ;
     
     p.aspect(final_color_fill, final_color_stroke, thickness) ;

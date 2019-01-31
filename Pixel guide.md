@@ -17,7 +17,7 @@ Default Arg of the class
 --
 P3D mode
 --
-Vec3 size = Vec3(1) ;
+vec3 size = vec3(1) ;
 
 int ID = 0 ;
 
@@ -61,13 +61,13 @@ void size(float x, float y) ;
 
 void size(float x, float y, float y) ;
 
-void size(Vec2 xy);
+void size(vec2 xy);
 
-void size(Vec2 xyz);
+void size(vec2 xyz);
 
 *POSITION
 
-void pos(iVec pos);
+void pos(ivec pos);
 
 void pos(Vec pos);
 
@@ -80,7 +80,7 @@ void pos(int x, int y, int z);
 
 >Not used now
 
-void dir(Vec3 dir) ;
+void dir(vec3 dir) ;
 
 void dir(float x, float y, float z) ;
 
@@ -112,12 +112,12 @@ void aspect(boolean new_or_original_color,float thickness);
 void aspect(int color_arg); 
 > use the int arg for the fill and the stroke
 
-void aspect(Vec4 color_arg);
+void aspect(vec4 color_arg);
 > use the vec arg for the fill and the stroke
 
-void aspect(Vec4 color_arg, float thickness);
+void aspect(vec4 color_arg, float thickness);
 
-void aspect(Vec4 color arg_fill, Vec4 color arg_stroke, float thickness);
+void aspect(vec4 color arg_fill, vec4 color arg_stroke, float thickness);
 
 info : if you don't use the method with the thivkness, the strokeWeight is based on the size of your Pixel
 
@@ -155,52 +155,52 @@ The other Arg are not set
 
 Pixel pix = new Pixel (int rank);
 
-Pixel pix = new Pixel (int rank, Vec2 grid_position);
+Pixel pix = new Pixel (int rank, vec2 grid_position);
 
-Pixel pix = new Pixel (int rank, Vec3 grid_position);
+Pixel pix = new Pixel (int rank, vec3 grid_position);
 
-Pixel pix = new Pixel (Vec2 pos);
+Pixel pix = new Pixel (vec2 pos);
 
-Pixel pix = new Pixel (Vec3 pos);
+Pixel pix = new Pixel (vec3 pos);
 
-Pixel pix = new Pixel (Vec2 pos, Vec2 size);
+Pixel pix = new Pixel (vec2 pos, vec2 size);
 
-Pixel pix = new Pixel (Vec3 pos, Vec3 size);
+Pixel pix = new Pixel (vec3 pos, vec3 size);
 
-Pixel pix = new Pixel (Vec2 pos, Vec4 color);
+Pixel pix = new Pixel (vec2 pos, vec4 color);
 
-Pixel pix = new Pixel (Vec3 pos, VVec4 color);
+Pixel pix = new Pixel (vec3 pos, Vvec4 color);
 
-Pixel pix = new Pixel (Vec2 pos, Vec2 size, Vec4 color);
+Pixel pix = new Pixel (vec2 pos, vec2 size, vec4 color);
 
-Pixel pix = new Pixel (Vec3 pos, Vec3 size, Vec4 color);
+Pixel pix = new Pixel (vec3 pos, vec3 size, vec4 color);
 
 
 with costume
 --
-Pixel pix = new Pixel (Vec2 pos, Vec2 size, String costume);
+Pixel pix = new Pixel (vec2 pos, vec2 size, String costume);
 
-Pixel pix = new Pixel (Vec3 pos, Vec3 size, String costume);
-Pixel pix = new Pixel (Vec2 pos, Vec4 color, String costume);
+Pixel pix = new Pixel (vec3 pos, vec3 size, String costume);
+Pixel pix = new Pixel (vec2 pos, vec4 color, String costume);
 
-Pixel pix = new Pixel (Vec3 pos, VVec4 color, String costume);
+Pixel pix = new Pixel (vec3 pos, Vvec4 color, String costume);
 
-Pixel pix = new Pixel (Vec2 pos, Vec2 size, Vec4 color, String costume);
+Pixel pix = new Pixel (vec2 pos, vec2 size, vec4 color, String costume);
 
-Pixel pix = new Pixel (Vec3 pos, Vec3 size, Vec4 color, String costume);
+Pixel pix = new Pixel (vec3 pos, vec3 size, vec4 color, String costume);
 
 with summits
-Pixel pix = new Pixel (Vec2 pos, Vec2 size, int summits);
+Pixel pix = new Pixel (vec2 pos, vec2 size, int summits);
 
-Pixel pix = new Pixel (Vec3 pos, Vec3 size, int summits);
+Pixel pix = new Pixel (vec3 pos, vec3 size, int summits);
 
-Pixel pix = new Pixel (Vec2 pos, Vec4 color, int summits);
+Pixel pix = new Pixel (vec2 pos, vec4 color, int summits);
 
-Pixel pix = new Pixel (Vec3 pos, VVec4 color, int summits);
+Pixel pix = new Pixel (vec3 pos, Vvec4 color, int summits);
 
-Pixel pix = new Pixel (Vec2 pos, Vec2 size, Vec4 color, int summits);
+Pixel pix = new Pixel (vec2 pos, vec2 size, vec4 color, int summits);
 
-Pixel pix = new Pixel (Vec3 pos, Vec3 size, Vec4 color, int summits);
+Pixel pix = new Pixel (vec3 pos, vec3 size, vec4 color, int summits);
 
 
 

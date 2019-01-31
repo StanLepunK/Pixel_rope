@@ -35,7 +35,7 @@ void pixel_revolution() {
   float radius = map(rythme, -1,1, radius_min, radius_max);
 
   //println(radius);
-  Vec3 pos = Vec3(width/2, height/2,0);
+  ivec3 pos = ivec3(width/2, height/2,0);
  
   revolution.size(radius);
   revolution.rotation(.02,false);
@@ -46,7 +46,7 @@ void pixel_revolution() {
 
   revolution.pos(pos);
   revolution.update();
-  revolution.aspect(Vec4(0), Vec4 (0,100,100,100), 1);
+  revolution.aspect(vec4(0), vec4 (0,100,100,100), 1);
   revolution.costume(POINT_ROPE);
   revolution.show() ;
 
@@ -80,17 +80,17 @@ void pixel_cloud_2D() {
  if(mousePressed) cloud_2D.rotation(map(mouseX, 0,width,-PI,PI), true); else cloud_2D.rotation(0.01, false);
 
   int radius = height /3;
-  Vec3 pos = Vec3(width/2, height/2,0);
+  ivec3 pos = ivec3(width/2, height/2,0);
   cloud_2D.spiral(4);
   cloud_2D.range(.5, 3.9);
   cloud_2D.size(radius) ;
   cloud_2D.pos(pos);
   cloud_2D.update();
 
-  // cloud_2D.aspect(Vec4(20,100,100,15), Vec4 (0), 1);
+  // cloud_2D.aspect(vec4(20,100,100,15), vec4 (0), 1);
   // cloud_2D.costume(PENTAGON_ROPE) ;
   float red_val = abs (sin(frameCount *.01) *50);
-  cloud_2D.aspect(Vec4(0), Vec4 (red_val,100,100,100), 1);
+  cloud_2D.aspect(vec4(0), vec4 (red_val,100,100,100), 1);
   cloud_2D.costume(POINT_ROPE) ;
   cloud_2D.show() ;
 

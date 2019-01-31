@@ -18,7 +18,7 @@ void cloud_3D_angle_step() {
   }
 
   float red_val = abs (sin(frameCount *.01) *50);
-  cloud_3D_angle.aspect(Vec4(red_val,100,100,100), Vec4(red_val,100,100,100), 100) ;
+  cloud_3D_angle.aspect(vec4(red_val,100,100,100), vec4(red_val,100,100,100), 100) ;
 
 
   cloud_3D_angle.size(2);
@@ -33,7 +33,7 @@ void cloud_3D_angle_step() {
   cloud_3D_angle.set_behavior("SIN_POW_SIN");
 
   int radius = int(width *.3);
-  Vec3 pos = Vec3(width/2, height/2,0) ;
+  vec3 pos = vec3(width/2, height/2,0) ;
   cloud_3D_angle.size(pos);
   cloud_3D_angle.pos(pos);
   cloud_3D_angle.update();
@@ -62,7 +62,7 @@ void cloud_3D_orientation_angle_behavior_costume() {
   if(cloud_3D == null) cloud_3D = new Cloud_3D(num, P3D, r.ORDER, r.POLAR);
   // if(mousePressed) p.polar(true) ; else p.polar(false);
   float red_val = abs ( sin(frameCount *.01) *50) ;
-  cloud_3D.aspect(Vec4(red_val,100,100,15), Vec4(0), .1) ;
+  cloud_3D.aspect(vec4(red_val,100,100,15), vec4(0), .1) ;
 
   if(mousePressed) {
     cloud_3D.rotation_x(map(mouseX, 0,width, -PI, PI), true);
@@ -87,7 +87,7 @@ void cloud_3D_orientation_angle_behavior_costume() {
   //cloud_3D.set_behavior("SIN_POW_SIN");
 
   int radius = int(height/4);
-  Vec3 pos = Vec3(width/2, height/2,0);
+  vec3 pos = vec3(width/2, height/2,0);
   cloud_3D.set_radius(radius);
   cloud_3D.pos(pos);
   cloud_3D.update();
@@ -130,9 +130,9 @@ void cloud_3D_list_point() {
 
   Cloud_3D p = new Cloud_3D(num, P3D, r.CHAOS) ;
 
-  Vec4 col = new Vec4(200, 0,100,100) ;
+  vec4 col = new vec4(200, 0,100,100) ;
   p.aspect(col,1) ;
-  Vec3 pos = Vec3(width/2,height/2, 0) ;
+  vec3 pos = vec3(width/2,height/2, 0) ;
   int radius = 200 ;
   p.size(radius);
   p.pos(pos);
@@ -155,9 +155,9 @@ void cloud_3D_connector() {
   int radius = 100 ;
   p.set_behavior("RANDOM") ;
   p.size(radius) ;
-  p.pos(Vec3(mouseX,mouseY,0));
+  p.pos(vec3(mouseX,mouseY,0));
   p.update();
-  // p.update(Vec3(mouseX,mouseY,0), radius) ;
+  // p.update(vec3(mouseX,mouseY,0), radius) ;
   for(int i = 0 ; i < p.list().length ; i++ ) {
     if(i > 1) 
       if(p.list()[i].dist(p.list()[i-1]) < dist_min_to_connect) line(p.list()[i].x,p.list()[i].y,p.list()[i].z, p.list()[i-1].x,p.list()[i-1].y,p.list()[i-1].z) ;
