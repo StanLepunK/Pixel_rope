@@ -165,10 +165,11 @@ void pixel_costume_fill_stroke_strokeWeight() {
     vec3 pos = vec3(i, pos_y,0) ;
     vec3 size = vec3(pos_y *.03) ;
     Pixel p = new Pixel(pos, size) ;
-    
-    vec3 color_fill = new vec3("RANDOM",360,100,100);
+    vec3 color_fill = vec3().rand(vec2(0,360),vec2(0,100),vec2(0,100));
+    // vec3 color_fill = new vec3("RANDOM",360,100,100);
     vec4 final_color_fill = new vec4(color_fill.x,color_fill.y,color_fill.z,100) ;
-    vec3 color_stroke = new vec3("RANDOM",360,100,100);
+    vec3 color_stroke = vec3().rand(vec2(0,360),vec2(0,100),vec2(0,100));
+    //vec3 color_stroke = new vec3("RANDOM",360,100,100);
     vec4 final_color_stroke = new vec4(color_stroke.x,color_stroke.y,color_stroke.z,100) ;
     float thickness = 3 ;
     
