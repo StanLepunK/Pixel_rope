@@ -27,7 +27,7 @@ Cloud_2D revolution ;
 void pixel_revolution() {
   int num = 1;
   if(revolution == null ) {
-    revolution = new Cloud_2D(num, r.ORDER);
+    revolution = new Cloud_2D(this,num, r.ORDER);
   }
   int radius_max = height /3 ;
   int radius_min = height /6 ;
@@ -59,7 +59,7 @@ void pixel_revolution() {
 Cloud_2D cloud_2D ;
 void pixel_cloud_2D() {
   int num = 5000;
-  if(cloud_2D == null ) cloud_2D = new Cloud_2D(num, r.ORDER) ;
+  if(cloud_2D == null ) cloud_2D = new Cloud_2D(this,num, r.ORDER) ;
 
   
   //cloud_2D.angle_step(map(mouseX,0,width,0,TAU));

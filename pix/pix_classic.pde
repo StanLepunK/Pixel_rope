@@ -11,7 +11,7 @@ void pixel_choice_primitive_2D_shape() {
    WHEN you use the shape "POINT" you must declare this one in the CONSTRUCTOR,
    if you don't do that the SHAPE is  NOT USE immadiatly in the method aspect, because this one is before in order of rendering
    */
-   Pixel p = new Pixel(pos,size,color_shape) ;
+   Pixel p = new Pixel(this,pos,size,color_shape) ;
 
    p.aspect(color_shape, 1) ;
      /**
@@ -27,7 +27,7 @@ void pixel_primitive_2D_shape_angle() {
   vec2 pos = vec2(width/2, height/2) ;
    vec2 size = vec2(mouseX) ;
    vec4 color_shape = vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
-   Pixel p = new Pixel(pos, size, color_shape) ;
+   Pixel p = new Pixel(this,pos, size, color_shape) ;
    p.costume(PENTAGON_ROPE);
    p.aspect(vec4(0), color_shape, 1) ;
    float new_angle =  sin(frameCount *.01) *TAU ;
@@ -40,7 +40,7 @@ void pixel_primitive_2D_shape_angle() {
   vec2 pos = vec2(width/2, height/2) ;
    vec2 size = vec2(mouseX) ;
    vec4 color_shape = vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
-   Pixel p = new Pixel(pos, size, color_shape) ;
+   Pixel p = new Pixel(this,pos, size, color_shape) ;
    p.costume(PENTAGON_ROPE);
 
    p.aspect(vec4(0), color_shape, 1) ;
@@ -61,7 +61,7 @@ void pixel_change_color() {
     vec3 pos = vec3(i, pos_y,0) ;
     vec3 size = vec3(pos_y *.03) ;
     vec4 color_shape = vec4(100, 100,100, 100) ;
-    Pixel p = new Pixel(pos, size, color_shape);
+    Pixel p = new Pixel(this,pos, size, color_shape);
     p.costume(POINT_ROPE);
    // Pixel p = new Pixel(pos, size, color_shape) ;
     /**
@@ -97,7 +97,7 @@ void pixel_change_color_range() {
     vec3 pos = vec3(i, pos_y,0) ;
     vec3 size = vec3(pos_y *.03) ;
     vec4 color_shape = vec4(random(g.colorModeX), random(g.colorModeY),random(g.colorModeZ), 100) ;
-    Pixel p = new Pixel(pos, size, color_shape) ;
+    Pixel p = new Pixel(this, pos, size, color_shape) ;
     /**
     Problem we must change only one time the color because the algorithm start from the original color,
     So if you want use the new color, you must ask that by a boolean
@@ -120,7 +120,7 @@ void pixel_color() {
    vec2 pos = vec2(width/2, height/2) ;
    vec2 size = vec2(20) ;
    vec4 color_shape = vec4(random(g.colorModeX), random(g.colorModeY),random(g.colorModeZ), 100) ;
-   Pixel p = new Pixel(pos, size, color_shape) ;
+   Pixel p = new Pixel(this, pos, size, color_shape) ;
    p.aspect() ;
    p.costume(POINT_ROPE) ;
    p.show() ;
@@ -132,7 +132,7 @@ void pixel_basic() {
     float pos_y = random(height) ;
     vec3 pos = vec3(i, pos_y,0) ;
     vec3 size = vec3(pos_y *.03) ;
-    Pixel p = new Pixel(pos, size) ;
+    Pixel p = new Pixel(this, pos, size) ;
     p.aspect(vec4(255)) ;
     p.costume(POINT_ROPE) ;
     p.show() ;
@@ -144,7 +144,7 @@ void pixel_shape() {
 
   vec3 pos = vec3(width/2,height/2,0) ;
   vec3 size = vec3(300) ;
-  Pixel p = new Pixel(pos, size) ;
+  Pixel p = new Pixel(this, pos, size) ;
   p.costume(costume_ID);
   p.aspect(vec4(0),vec4(255), 2) ;
   p.costume_angle(frameCount *.1) ;
@@ -164,7 +164,7 @@ void pixel_costume_fill_stroke_strokeWeight() {
     float pos_y = random(height) ;
     vec3 pos = vec3(i, pos_y,0) ;
     vec3 size = vec3(pos_y *.03) ;
-    Pixel p = new Pixel(pos, size) ;
+    Pixel p = new Pixel(this, pos, size) ;
     vec3 color_fill = vec3().rand(vec2(0,360),vec2(0,100),vec2(0,100));
     // vec3 color_fill = new vec3("RANDOM",360,100,100);
     vec4 final_color_fill = new vec4(color_fill.x,color_fill.y,color_fill.z,100) ;

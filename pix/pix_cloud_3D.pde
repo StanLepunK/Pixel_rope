@@ -13,7 +13,7 @@ void cloud_3D_angle_step() {
   if(cloud_3D_angle == null || angle_ref != angle_distribution) {
     angle_ref = angle_distribution;
     // cloud_3D_angle = new Cloud_3D(num, P3D, angle_distribution);
-    cloud_3D_angle = new Cloud_3D(num, P3D, r.ORDER, r.CARTESIAN);
+    cloud_3D_angle = new Cloud_3D(this, num, P3D, r.ORDER, r.CARTESIAN);
     //cloud_3D_angle = new Cloud_3D(num, P3D, r.ORDER, r.POLAR);
   }
 
@@ -59,7 +59,7 @@ void cloud_3D_angle_step() {
 Cloud_3D cloud_3D ;
 void cloud_3D_orientation_angle_behavior_costume() {
   int num = 20 ;
-  if(cloud_3D == null) cloud_3D = new Cloud_3D(num, P3D, r.ORDER, r.POLAR);
+  if(cloud_3D == null) cloud_3D = new Cloud_3D(this, num, P3D, r.ORDER, r.POLAR);
   // if(mousePressed) p.polar(true) ; else p.polar(false);
   float red_val = abs ( sin(frameCount *.01) *50) ;
   cloud_3D.aspect(vec4(red_val,100,100,15), vec4(0), .1) ;
@@ -128,7 +128,7 @@ void cloud_3D_orientation_angle_behavior_costume() {
 void cloud_3D_list_point() {
   int num = 600 ;
 
-  Cloud_3D p = new Cloud_3D(num, P3D, r.CHAOS) ;
+  Cloud_3D p = new Cloud_3D(this, num, P3D, r.CHAOS);
 
   vec4 col = new vec4(200, 0,100,100) ;
   p.aspect(col,1) ;
@@ -150,7 +150,7 @@ void cloud_3D_list_point() {
 void cloud_3D_connector() {
   float dist_min_to_connect = 10.5 ;
   int num = 50 ;
-  Cloud_3D p = new Cloud_3D(num, P2D, r.ORDER);
+  Cloud_3D p = new Cloud_3D(this, num, P2D, r.ORDER);
 
   int radius = 100 ;
   p.set_behavior("RANDOM") ;
