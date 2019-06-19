@@ -39,8 +39,8 @@ void cloud_3D_angle_step() {
   cloud_3D_angle.update();
 
   //cloud_3D_angle.costume(PENTAGON_ROPE) ;
-  cloud_3D_angle.costume(POINT_ROPE) ;
-  cloud_3D_angle.show() ;
+  cloud_3D_angle.costume(POINT);
+  cloud_3D_angle.show();
 }
 
 
@@ -96,7 +96,7 @@ void cloud_3D_orientation_angle_behavior_costume() {
   // cloud_3D.costume(PENTAGON_ROPE);
   float ratio_size = sin(frameCount *.01);
   cloud_3D.costume_ratio_size(ratio_size);
-  cloud_3D.costume(CROSS_BOX_3_ROPE);
+  cloud_3D.costume(CROSS_BOX_3);
   cloud_3D.show() ;
 }
 

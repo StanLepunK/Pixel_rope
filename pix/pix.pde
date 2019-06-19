@@ -47,7 +47,7 @@ void pixel_revolution() {
   revolution.pos(pos);
   revolution.update();
   revolution.aspect(vec4(0), vec4 (0,100,100,100), 1);
-  revolution.costume(POINT_ROPE);
+  revolution.costume(POINT);
   revolution.show() ;
 
   point(width/2,height/2);
@@ -91,7 +91,7 @@ void pixel_cloud_2D() {
   // cloud_2D.costume(PENTAGON_ROPE) ;
   float red_val = abs (sin(frameCount *.01) *50);
   cloud_2D.aspect(vec4(0), vec4 (red_val,100,100,100), 1);
-  cloud_2D.costume(POINT_ROPE) ;
+  cloud_2D.costume(POINT) ;
   cloud_2D.show() ;
 
 }
@@ -124,42 +124,3 @@ void pixel_classic() {
   // pixel_change_color() ;
    //pixel_change_color_range() ;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
