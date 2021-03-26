@@ -18,7 +18,7 @@ void pixel_choice_primitive_2D_shape() {
    WHEN you use the shape "POINT" you must declare this one in the CONSTRUCTOR,
    if you don't do that the SHAPE is  NOT USE immadiatly in the method aspect, because this one is before in order of rendering
    */
-    p.costume(PENTAGON) ;
+    p.costume(r.PENTAGON) ;
   //  p.costume(PENTAGON_ROPE) ; // you can change the shape here too, but if you have choice point in the CONSTRUCTOR, maybe the thickness can be the size and not your thickness aspect ?
    p.show() ;
 }
@@ -28,7 +28,7 @@ void pixel_primitive_2D_shape_angle() {
    vec2 size = vec2(mouseX) ;
    vec4 color_shape = vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
    Pixel p = new Pixel(this,pos, size, color_shape) ;
-   p.costume(PENTAGON);
+   p.costume(r.PENTAGON);
    p.aspect(vec4(0), color_shape, 1) ;
    float new_angle =  sin(frameCount *.01) *TAU ;
    p.costume_angle(new_angle) ;
@@ -41,7 +41,7 @@ void pixel_primitive_2D_shape_angle() {
    vec2 size = vec2(mouseX) ;
    vec4 color_shape = vec4(sin(frameCount *.01) *g.colorModeX, g.colorModeY,g.colorModeZ, g.colorModeA) ;
    Pixel p = new Pixel(this,pos, size, color_shape) ;
-   p.costume(PENTAGON);
+   p.costume(r.PENTAGON);
 
    p.aspect(vec4(0), color_shape, 1) ;
    float dir_x = sin(frameCount *.1) ;
@@ -109,7 +109,7 @@ void pixel_change_color_range() {
     p.set_brightness(100, 0,100, ask_to_use_new_color) ;
     
     p.aspect(true) ;
-    p.costume(TRIANGLE) ;
+    p.costume(r.TRIANGLE) ;
     p.show() ;
   }
 }
@@ -122,7 +122,7 @@ void pixel_color() {
    vec4 color_shape = vec4(random(g.colorModeX), random(g.colorModeY),random(g.colorModeZ), 100) ;
    Pixel p = new Pixel(this, pos, size, color_shape) ;
    p.aspect() ;
-   p.costume(POINT) ;
+   p.costume(r.POINT) ;
    p.show() ;
 }
 
@@ -134,13 +134,13 @@ void pixel_basic() {
     vec3 size = vec3(pos_y *.03) ;
     Pixel p = new Pixel(this, pos, size) ;
     p.aspect(vec4(255));
-    p.costume(POINT);
+    p.costume(r.POINT);
     p.show() ;
   }
 }
 
 void pixel_shape() {
-  int costume_ID = POINT; 
+  int costume_ID = r.POINT; 
 
   vec3 pos = vec3(width/2,height/2,0) ;
   vec3 size = vec3(300) ;
@@ -165,10 +165,10 @@ void pixel_costume_fill_stroke_strokeWeight() {
     vec3 pos = vec3(i, pos_y,0) ;
     vec3 size = vec3(pos_y *.03) ;
     Pixel p = new Pixel(this, pos, size) ;
-    vec3 color_fill = vec3().rand(vec2(0,360),vec2(0,100),vec2(0,100));
+    vec3 color_fill = vec3().rand(vec3(0),vec3(360,100,100));
     // vec3 color_fill = new vec3("RANDOM",360,100,100);
     vec4 final_color_fill = new vec4(color_fill.x,color_fill.y,color_fill.z,100) ;
-    vec3 color_stroke = vec3().rand(vec2(0,360),vec2(0,100),vec2(0,100));
+    vec3 color_stroke = vec3().rand(vec3(0),vec3(360,100,100));
     //vec3 color_stroke = new vec3("RANDOM",360,100,100);
     vec4 final_color_stroke = new vec4(color_stroke.x,color_stroke.y,color_stroke.z,100) ;
     float thickness = 3 ;

@@ -1,7 +1,7 @@
 /**
 * Rope framework image
-* v 0.5.10
-* Copyleft (c) 2014-2019
+* v 0.6.1
+* Copyleft (c) 2014-2021
 *
 * dependencies
 * Processing 3.5.3
@@ -65,13 +65,160 @@ int entry(PGraphics pg, int rank, boolean constrain_is) {
 
 
 
+
+
+
+
+
 /**
-PATTERN GENERATOR
-v 0.0.3
-2018-2018
+* method PATTERN
+* v 0.0.2
+* 2021-2021
 */
+R_Pattern rope_pattern;
+
+
+void init_pattern() {
+  if(rope_pattern == null) {
+    rope_pattern = new R_Pattern(this); 
+  }
+}
+
+// reset
+void reset_pattern() {
+  rope_pattern = null;
+  init_pattern();
+}
+void set_pattern_no_angle() {
+  init_pattern();
+  rope_pattern.set_no_angle();
+}
+
+void set_pattern_no_increment() {
+  init_pattern();
+  rope_pattern.set_no_increment();
+}
+
+void set_pattern_no_smooth() {
+  init_pattern();
+  rope_pattern.set_no_smooth();
+}
+
+//setting
+void set_pattern_turbulence(float turbulence) {
+  init_pattern();
+  rope_pattern.set_turbulence(turbulence);
+}
+
+void set_pattern_size(int w, int h) {
+  init_pattern();
+  rope_pattern.set_size(w,h);
+}
+
+void set_pattern_range(float min, float max) {
+  init_pattern();
+  rope_pattern.set_range(min,max);
+}
+
+
+void set_pattern_increment(float inc) {
+  init_pattern();
+  rope_pattern.set_increment(inc);
+}
+
+void set_pattern_increment(float x, float y, float z) {
+  init_pattern();
+  rope_pattern.set_increment(x,y,z);
+}
+
+void set_pattern_smooth(float smooth) {
+  init_pattern();
+  rope_pattern.set_smooth(smooth);
+}
+
+void set_pattern_angle(float a_x, float a_y, float a_z) {
+  init_pattern();
+  rope_pattern.set_angle(a_x, a_y, a_z);
+}
+
+void set_pattern_period(float x, float y) {
+  init_pattern();
+  rope_pattern.set_period(x,y);
+}
+
+
+// build
+PGraphics pattern_rand(int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix_rand_mono();
+  return rope_pattern.map_mono(w, h);
+}
+
+PGraphics pattern_rand_xyz(int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix_rand_xyz();
+  return rope_pattern.map_xyz(w, h);
+}
+
+PGraphics pattern_noise(int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix_noise_mono();
+  return rope_pattern.map_mono(w, h);
+}
+
+PGraphics pattern_noise_xyz(int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix_noise_xyz();
+  return rope_pattern.map_xyz(w, h);
+}
+
+PGraphics pattern_img(PImage src, int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix(src, r.BRIGHTNESS);
+  return rope_pattern.map_mono(w, h);
+}
+
+PGraphics pattern_marble_brightness(PImage src, int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix(src, r.BRIGHTNESS);
+  return rope_pattern.marble_mono(w, h);
+}
+
+PGraphics pattern_marble_rgb(PImage src, int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix(src, RGB);
+  return rope_pattern.marble_xyz(w, h);
+}
+
+PGraphics pattern_marble_hsb(PImage src, int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix(src, HSB);
+  return rope_pattern.marble_xyz(w, h);
+}
+
+PGraphics pattern_marble(int w, int h) {
+  init_pattern();
+  rope_pattern.build_matrix_rand_mono();
+  return rope_pattern.marble_mono(w, h);
+}
+
+
+
+
+
+
+
+
+
+
+/**
+* Patttern noise
+* inspired by Daniel Shiffman
+* https://www.youtube.com/watch?v=8ZEMLCnn8v0
+*/
+@Deprecated
 PGraphics pattern_noise(int w, int h, float... inc) {
-  PGraphics pg ;
+  PGraphics pg;
   noiseSeed((int)random(MAX_INT));
   if(w > 0 && h > 0 && inc.length > 0 && inc.length < 5) {
     float [] cm = getColorMode(false);
@@ -98,7 +245,6 @@ PGraphics pattern_noise(int w, int h, float... inc) {
     }
     colorMode((int)cm[0],cm[1],cm[2],cm[3],cm[4]);
 
-    
     pg.beginDraw();
     for(int i = 0 ; i < inc.length ; i++) {
       offset_y[i] = 0;
@@ -283,241 +429,6 @@ void select_layer(int target) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/**
-PImage manager library
-v 0.7.3
-*/
-public class R_Image_Manager {
-  ArrayList<R_Image> library ;
-  int which_img;
-
-  public R_Image_Manager() {}
-
-  private void build() {
-    if(library == null) {
-      library = new ArrayList<R_Image>();
-    }
-  }
-
-  public void load(String... path_img) {
-    build();
-    for(int i = 0 ; i <path_img.length ; i++) {
-      String [] temp = path_img[i].split("/");
-      PImage img = loadImage(path_img[i]);
-      R_Image rop_img = new R_Image(img,temp[temp.length-1],i);
-      library.add(rop_img);
-    }  
-  }
-
-  public void add(PImage img_src) {
-    build();
-    R_Image rop_img = new R_Image(img_src, "unknow" ,library.size());
-    library.add(rop_img);
-  }
-
-  public void add(PImage img_src, String name) {
-    build();
-    R_Image rop_img = new R_Image(img_src, name, library.size());
-    library.add(rop_img);
-  }
-
-  public void clear() {
-    if(library != null) {
-      library.clear();
-    }
-  }
-
-
-
-  public void select(int which_one) {
-    which_img = which_one ;
-  }
-
-  public void select(String target_name) {
-    if(library.size() > 0) {
-      for(int i = 0 ; i < library.size() ; i++) {
-        if(target_name.equals(library.get(i).name)) {
-          which_img = i ;
-          break ;
-        }
-      }
-    } else {
-      printErr("the String target name don't match with any name of image library") ;
-    }
-  }
-
-
-  public int size() {
-    if(library != null) {
-      return library.size() ;
-    } else return -1 ;  
-  }
-
-  public void set(PImage src_img, int target) {
-    build();
-    if(target < library.size()) {
-      if(src_img.width == get(target).width && src_img.height == get(target).height){
-        get(target).pixels = src_img.pixels ;
-        get(target).updatePixels();
-      } else {
-        get(target).resize(src_img.width, src_img.height);
-        get(target).pixels = src_img.pixels ;
-        get(target).updatePixels();
-      }
-    } else {
-      printErr("Neither target image match with your request");
-    }
-  }
-
-  public void set(PImage src_img, String target_name) {
-    build();
-    if(library.size() > 0) {
-      if(src_img.width == get(target_name).width && src_img.height == get(target_name).height){
-        get(target_name).pixels = src_img.pixels ;
-        get(target_name).updatePixels();
-      } else {
-        get(target_name).resize(src_img.width, src_img.height);
-        get(target_name).pixels = src_img.pixels ;
-        get(target_name).updatePixels();
-      }
-    } else {
-      printErr("Neither target image match with your request");
-    }
-  }
-
-  public String get_current_name() {
-    return get_name(which_img);
-  }
-
-  public String get_name(int target) {
-    if(library != null && library.size() > 0) {
-      if(target < library.size()) {
-        return library.get(target).get_name() ;
-      } else return null ;
-    } else return null ;
-  }
-
-
-
-  public int get_rank(String target_name) {
-    if(library != null && library.size() > 0) {
-      int rank = 0 ;
-      for(int i = 0 ; i < library.size() ; i++) {
-        String final_name = target_name.split("/")[target_name.split("/").length -1].split("\\.")[0] ;
-        if(final_name.equals(library.get(i).name) ) {
-          rank = i ;
-          break;
-        } 
-      }
-      return rank;
-    } else return -1;
-  }
-  
-
-  public ArrayList<R_Image> list() {
-    return library;
-  }
-
-  R_Image [] get() {
-    if(library != null && library.size() > 0) {
-      return library.toArray(new R_Image[library.size()]);
-    } else return null;
-  }
-
- 
-  public PImage get_current() {
-    if(library != null && library.size() > 0 ) {
-      if(which_img < library.size()) return library.get(which_img).img; 
-      else return library.get(0).get_image(); 
-    } else return null ;
-  }
-  
-
-  public PImage get(int target){
-    if(library != null && target >= 0 && target < library.size()) {
-      return library.get(target).get_image();
-    } else return null;
-  }
-
-  public PImage get(String target_name){
-    if(library.size() > 0) {
-      int target = 0 ;
-      for(int i = 0 ; i < library.size() ; i++) {
-        String final_name = target_name.split("/")[target_name.split("/").length -1].split("\\.")[0] ;
-        if(final_name.equals(library.get(i).name) ) {
-          target = i ;
-          break;
-        } 
-      }
-      return get(target);
-    } else return null;
-  }
-
-
-  public R_Image rand() {
-    if(library != null && library.size() > 0) {
-      int target = floor(random(library.size()));
-      return library.get(target);
-    } else return null;
-  }
-}
-
-
-
-/**
-* R_Image
-* 2019-2019
-* v 0.0.2
-*/
-public class R_Image {
-  private PImage img ;
-  private String name = "no name" ;
-  private int id = -1;
-
-  public R_Image(String path) {
-    this.name = path.split("/")[path.split("/").length -1].split("\\.")[0];
-    this.img = loadImage(path);
-  }
-
-  public R_Image(PImage img) {
-    this.img = img;
-  }
-
-  public R_Image(PImage img, String name, int id) {
-    this.img = img;
-    this.name = name;
-    this.id = id;
-  }
-  
-
-  public R_Image get() {
-    return this;
-  }
-
-  public int get_id() {
-    return id;
-  }
-
-  public String get_name() {
-    return name ;
-  }
-
-  public PImage get_image() {
-    return img ;
-  }
-}
 
 /**
 resize image

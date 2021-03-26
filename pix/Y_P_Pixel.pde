@@ -1,9 +1,9 @@
 /**
 * CLASS PIX 
-* v 0.11.0
-* 2016-2018
-* Processing 3.5.3
-* Rope library 0.8.1.26
+* v 0.12.0
+* 2016-2021
+* Processing 3.5.4
+*
 * @author @stanlepunk
 * @see https://github.com/StanLepunK/Pixel
 */
@@ -27,6 +27,9 @@ static final String RANDOM_X_A = "SPECIAL_A_RANDOM";
 @Deprecated
 static final String RANDOM_X_B = "SPECIAL_B_RANDOM";
 
+
+import rope.costume.R_Costume;
+
 abstract class Pix implements rope.core.R_Constants {
   PApplet p5;
 
@@ -42,7 +45,7 @@ abstract class Pix implements rope.core.R_Constants {
 
   vec3 grid_position ;
   int ID, rank ;
-  Costume costume; // 0 is for point
+  R_Costume costume; // 0 is for point
   float ratio_costume_size = Float.MAX_VALUE;
   float costume_angle = 0 ;
   vec4 colour, new_colour  ;
@@ -127,13 +130,13 @@ abstract class Pix implements rope.core.R_Constants {
   // set costume
   public void costume(int type) {
     if(costume == null) {
-      costume = new Costume(p5,type);
+      costume = new R_Costume(p5,type);
     } else {
       this.costume.set_type(type);
     }
   }
 
-  public void costume(Costume costume) {
+  public void costume(R_Costume costume) {
     this.costume = costume;
   }
 
@@ -310,7 +313,7 @@ abstract class Pix implements rope.core.R_Constants {
   */
   public void aspect() {
     float thickness = 1 ;
-    if(costume == null) costume = new Costume(p5);
+    if(costume == null) costume = new R_Costume(p5);
     costume.aspect(colour,colour,thickness);
   }
 
@@ -322,7 +325,7 @@ abstract class Pix implements rope.core.R_Constants {
     } else {
       color_choice.set(colour);
     }
-    if(costume == null) costume = new Costume(p5);
+    if(costume == null) costume = new R_Costume(p5);
     costume.aspect(color_choice,color_choice,thickness) ;
   }
 
@@ -333,35 +336,35 @@ abstract class Pix implements rope.core.R_Constants {
     } else {
       color_choice.set(colour);
     }
-    if(costume == null) costume = new Costume(p5);
+    if(costume == null) costume = new R_Costume(p5);
     costume.aspect(color_choice,color_choice,thickness);
   }
 
   public void aspect(float thickness) {
-    if(costume == null) costume = new Costume(p5);
+    if(costume == null) costume = new R_Costume(p5);
     costume.aspect(colour,colour,thickness);
   }
 
   public void aspect(int c) {
     float thickness = 1 ;
     vec4 color_pix = int_color_to_vec4_color(c).copy();
-    if(costume == null) costume = new Costume(p5);
+    if(costume == null) costume = new R_Costume(p5);
     costume.aspect(color_pix, color_pix, thickness);
   }
 
   public void aspect(vec4 color_pix) {
     float thickness = 1 ;
-    if(costume == null) costume = new Costume(p5);
+    if(costume == null) costume = new R_Costume(p5);
     costume.aspect(color_pix, color_pix, thickness) ;
   }
 
   public void aspect(vec4 color_pix, float thickness) {
-    if(costume == null) costume = new Costume(p5);
+    if(costume == null) costume = new R_Costume(p5);
     costume.aspect(color_pix, color_pix, thickness) ;
   }
   
   public void aspect(vec4 color_fill, vec4 color_stroke, float thickness) {
-    if(costume == null) costume = new Costume(p5);
+    if(costume == null) costume = new R_Costume(p5);
     costume.aspect(color_fill,color_stroke,thickness);
   }
   
